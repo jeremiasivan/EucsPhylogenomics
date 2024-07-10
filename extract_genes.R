@@ -1,11 +1,11 @@
 # Extract Genes from Assemblies
-dir_output <- ""
+dir_output <- "/data/jeremias/eucs/genes/proteome/"
 thread <- 10
 
 fn_refseq <- "eucs_refseq.txt"
 fn_refseq_chr <- "eucs_refseq_chr.txt"
 
-prefix_dir_fasta <- "/data/jeremias/eucs/roadies/assemblies"
+prefix_dir_fasta <- "/data/jeremias/eucs/roadies/assemblies/"
 prefix_dir_gtf <- "/data/jeremias/eucs/genes/"
 
 exe_gffread <- "gffread"
@@ -16,6 +16,11 @@ exe_gffread <- "gffread"
 # require(data.table)
 # require(tidyr)
 library(doSNOW)
+
+# create output directory
+if (!dir.exists(dir_output)) {
+    dir.create(dir_output, recursive=T)
+}
 
 # open data.table
 df_refseq <- data.table::fread(fn_refseq)
@@ -54,7 +59,7 @@ foreach (i = 1:nrow(df_refseq)) %dopar% {
     data.table::fwrite(df_gtf, file=fn_gtf, sep="\t", quote=F, col.names=F)
 
     # run Gffread
-    cmd_gffread <- paste(exe_gffread, "-g", fn_fasta, "-x", fn_outfile, fn_gtf)
+    cmd_gffread <- paste(exe_gffread, "-g", fn_fasta, "-y", fn_outfile, fn_gtf)
     system(cmd_gffread)
 }
 
