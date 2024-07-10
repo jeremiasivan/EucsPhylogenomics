@@ -14,6 +14,7 @@ exe_gffread <- "gffread"
 
 # load libraries
 # require(data.table)
+# require(tidyr)
 library(doSNOW)
 
 # open data.table
@@ -26,12 +27,31 @@ doSNOW::registerDoSNOW(nwcl)
 # iterate over reference sequences
 foreach (i = 1:nrow(df_refseq)) %dopar% {
     # update the directories
-    ref <- df_refseq$id[i]
+    ref_sp <- df_refseq$species[i]
+    ref_id <- df_refseq$id[i]
     fn_fasta <- paste0(prefix_dir_fasta, df_refseq$dir_fasta[i])
     fn_gtf <- paste0(prefix_dir_gtf, df_refseq$dir_gtf[i])
 
     # output file
-    fn_outfile <- paste0(dir_output, "/", ref, ".faa")
+    fn_outfile <- paste0(dir_output, "/", ref_id, ".faa")
+
+    # read GTF file
+    df_gtf <- data.table::fread(fn_gtf)
+    data.table::setnames(df_gtf, c("seqname", "source", "feature", "start", "end", "score", "strand", "frame", "attribute"))
+    df_refseq_chr <- data.table::fread(fn_refseq_chr)
+
+    # convert GTF file to match naming convention
+    df_refseq_chr_long <- tidyr::pivot_longer(df_refseq_chr, cols=-chr, names_to="species", values_to="assembly")
+    df_refseq_chr_subset <- df_refseq_chr_long[df_refseq_chr_long$species==ref_sp,]
+
+    # iterate over chromosomes
+    for (j in 1:nrow(df_refseq_chr_subset)) {
+        # update the name of the chromosome following the assembly
+        df_gtf$seqname <- gsub(df_refseq_chr_subset$chr[j], df_refseq_chr_subset$assembly[j], df_gtf$seqname)
+    }
+
+    # save the GTF file
+    data.table::fwrite(df_gtf, file=fn_gtf, sep="\t", quote=F, col.names=F)
 
     # run Gffread
     cmd_gffread <- paste(exe_gffread, "-g", fn_fasta, "-x", fn_outfile, fn_gtf)
