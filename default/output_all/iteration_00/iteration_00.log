@@ -1,0 +1,12 @@
+Building DAG of jobs...
+WorkflowError:
+MissingInputException: Missing input files for rule pasta:
+    output: /data/jeremias/eucs/roadies/output/genes/gene_1_filtered.fa.aln
+    wildcards: id=1_filtered
+    affected files:
+        /data/jeremias/eucs/roadies/output/genes/gene_1_filtered.fa
+MissingInputException: Missing input files for rule sequence_select:
+    output: /data/jeremias/eucs/roadies/output/samples/GCA_004368105.3_ASM436810v3_genomic_temp.fa
+    wildcards: sample=GCA_004368105.3_ASM436810v3_genomic
+    affected files:
+        /data/jeremias/eucs/roadies/assemblies/GCA_004368105.3_ASM436810v3_genomic.fa

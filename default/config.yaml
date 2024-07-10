@@ -1,0 +1,17 @@
+ALL_OUT_DIR: /data/jeremias/eucs/roadies/output_all
+CONTINUITY: 85
+COVERAGE: 85
+FILTERFRAGMENTS: 0.5
+GENE_COUNT: 2000
+GENOMES: /data/jeremias/eucs/roadies/assemblies
+IDENTITY: 65
+LENGTH: 500
+MASKSITES: 0.02
+MAX_DUP: 10
+MIN_ALIGN: 4
+NUM_INSTANCES: 4
+OUT_DIR: /data/jeremias/eucs/roadies/output
+REFERENCE: null
+STEPS: 1
+SUPPORT_THRESHOLD: 0.95
+UPPER_CASE: 0.9
