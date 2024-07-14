@@ -15,12 +15,9 @@ GCA_014182695.1	E.albens	GCA_014182695.1.fa	E_albens.gtf
 GCA_014182705.1	E.camaldulensis	GCA_014182705.1.fa	E_camaldulensis.gtf
 GCA_014182715.1	E.cloeziana	GCA_014182715.1.fa	E_cloeziana.gtf
 GCA_014182725.1	E.brandiana	GCA_014182725.1.fa	E_brandiana.gtf
-GCA_014182735.1	C.maculata	GCA_014182735.1.fa	C_maculata.gtf
-GCA_014182845.1	C.calophylla	GCA_014182845.1.fa	C_calophylla.gtf
 GCA_014182855.1	E.regnans	GCA_014182855.1.fa	E_regnans.gtf
 GCA_014182885.2	E.caleyi	GCA_014182885.2.fa	E_caleyi.gtf
-GCA_014182895.1	A.floribunda	GCA_014182895.1.fa	A_floribunda.gtf
-GCA_016097485.1	E.sid_E.mel	GCA_016097485.1.fa	E_melliodora_x_E_sideroxylo.gtf
+GCA_016097485.1	E.sid_E.mel	GCA_016097485.1.fa	E_melliodora_x_E_sideroxylon.gtf
 GCA_016097545.1	E.victrix	GCA_016097545.1.fa	E_victrix.gtf
 GCA_016097595.1	E.pumila	GCA_016097595.1.fa	E_pumila.gtf
 GCA_016097605.1	E.guilfoylei	GCA_016097605.1.fa	E_guilfoylei.gtf

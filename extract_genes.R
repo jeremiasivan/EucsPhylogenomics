@@ -59,7 +59,7 @@ foreach (i = 1:nrow(df_refseq)) %dopar% {
     data.table::fwrite(df_gtf, file=fn_gtf, sep="\t", quote=F, col.names=F)
 
     # run Gffread
-    cmd_gffread <- paste(exe_gffread, "-g", fn_fasta, "-y", fn_outfile, fn_gtf)
+    cmd_gffread <- paste(exe_gffread, "-g", fn_fasta, "-V -y", fn_outfile, fn_gtf)
     system(cmd_gffread)
 }
 
