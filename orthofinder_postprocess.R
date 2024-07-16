@@ -71,17 +71,17 @@ if (prefix_dir_fasta != "") {
 
     # iterate over FASTAs
     foreach (gene=ls_genes) %dopar% {
-        aln <- ape::read.FASTA(paste0(prefix_dir_fasta,"/",gene))
+        aln <- readLines(paste0(prefix_dir_fasta,"/",gene))
 
         gene_updated <- gsub(".fa","",gene)
 
         for (ref in ls_refseq) {
             ref_suffix <- df_orthogroup[[ref]][df_orthogroup$Orthogroup==gene_updated]
 
-            names(aln) <- gsub(ref_suffix, df_refseq$species[df_refseq$id==ref], names(aln))
+            aln <- gsub(ref_suffix, df_refseq$species[df_refseq$id==ref], aln)
         }
 
-        ape::write.FASTA(tre, file=paste0(prefix_dir_fasta,"/",gene,".species"))
+        writeLines(aln, con=paste0(prefix_dir_fasta,"/",gene,".species"))
     }
 
     stopCluster(nwcl)
