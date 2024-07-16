@@ -24,8 +24,8 @@ ls_refseq <- unique(df_refseq$id)
 if (fn_species_tree != "") {
     tre <- ape::read.tree(fn_species_tree)
 
-    for (tips in tre$tip.label) {
-        tre$tip.label <- gsub(tips, df_refseq$species[df_refseq$id==tips], tre$tip.label)
+    for (ref in ls_refseq) {
+        tre$tip.label <- gsub(ref, df_refseq$species[df_refseq$id==ref], tre$tip.label)
     }
 
     ape::write.tree(tre, file=paste0(fn_species_tree, ".species"))
