@@ -31,3 +31,4 @@ GCA_017140475.1	E.fibrosa	GCA_017140475.1.fa	E_fibrosa.gtf
 GCA_017140595.1	E.curtisii	GCA_017140595.1.fa	E_curtisii.gtf
 GCA_017140615.1	E.cladocalyx	GCA_017140615.1.fa	E_cladocalyx.gtf
 GCF_016545825.1	E.grandis	GCF_016545825.1.fa	E_grandis.gtf
+GCA_007663325.1 E.pauciflora    GCA_007663325.1.fa  E.pauciflora.gtf

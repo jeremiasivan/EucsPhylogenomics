@@ -1,28 +1,28 @@
-PASTA INFO: Directory for temporary files created at /home/jeremias/.pasta/gene_169/temptfhiWW
+PASTA INFO: Directory for temporary files created at /home/jeremias/.pasta/gene_169/tempuOotTN
 PASTA INFO: Name translation information saved to /data/jeremias/eucs/roadies/output/genes/gene_169_temp_name_translation.txt as safe name, original name, blank line format.
 PASTA INFO: Creating a starting tree for the PASTA algorithm...
 PASTA INFO: Performing initial alignment of the entire data matrix...
 PASTA INFO: Performing initial tree search to get starting tree...
 PASTA INFO: Starting PASTA algorithm on initial tree...
-PASTA INFO: Max subproblem set to 175
+PASTA INFO: Max subproblem set to 180
 PASTA INFO: Step 0. Realigning with decomposition strategy set to mincluster
 PASTA INFO: Step 0. Alignment obtained. Tree inference beginning...
-PASTA INFO: realignment accepted and score improved.
-PASTA INFO: current score: -18761.61, best score: -18761.61
+PASTA INFO: realignment accepted despite the score not improving.
+PASTA INFO: current score: -31105.617, best score: -31105.617
 PASTA INFO: TreeShrink option has been turned off!
 PASTA INFO: Step 1. Realigning with decomposition strategy set to mincluster
 PASTA INFO: Step 1. Alignment obtained. Tree inference beginning...
 PASTA INFO: realignment accepted despite the score not improving.
-PASTA INFO: current score: -18701.286, best score: -18701.286
+PASTA INFO: current score: -31135.359, best score: -31105.617
 PASTA INFO: TreeShrink option has been turned off!
 PASTA INFO: Step 2. Realigning with decomposition strategy set to mincluster
 PASTA INFO: Step 2. Alignment obtained. Tree inference beginning...
 PASTA INFO: realignment accepted despite the score not improving.
-PASTA INFO: current score: -18702.188, best score: -18701.286
+PASTA INFO: current score: -31130.654, best score: -31105.617
 PASTA INFO: TreeShrink option has been turned off!
 PASTA INFO: Writing resulting alignment to /data/jeremias/eucs/roadies/output/genes/gene_169.fa.aln
 PASTA INFO: Writing resulting tree to /data/jeremias/eucs/roadies/output/genes/gene_169.tre
 PASTA INFO: Writing resulting likelihood score to /data/jeremias/eucs/roadies/output/genes/gene_169.score.txt
 PASTA INFO: The resulting alignment (with the names in a "safe" form) was first written as the file "/data/jeremias/eucs/roadies/output/genes/gene_169_temp_iteration_2_seq_alignment.txt"
 PASTA INFO: The resulting tree (with the names in a "safe" form) was first written as the file "/data/jeremias/eucs/roadies/output/genes/gene_169_temp_iteration_2_tree.tre"
-PASTA INFO: Total time spent: 197.769958019s
+PASTA INFO: Total time spent: 215.268074989s

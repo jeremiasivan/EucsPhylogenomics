@@ -1,183 +1,117 @@
-gca00436810530
-GCA_004368105.3_0
+afloribunda0
+A_floribunda_0
 
-gca00436810531
-GCA_004368105.3_1
+afloribunda1
+A_floribunda_1
 
-gca00436810532
-GCA_004368105.3_2
+ccalophylla0
+C_calophylla_0
 
-gca00436810533
-GCA_004368105.3_3
+cmaculata0
+C_maculata_0
 
-gca01418236510
-GCA_014182365.1_0
+ealbens0
+E_albens_0
 
-gca01418238510
-GCA_014182385.1_0
+eanbg98061690
+E_ANBG9806169_0
 
-gca01418238511
-GCA_014182385.1_1
+ebrandiana0
+E_brandiana_0
 
-gca01418238512
-GCA_014182385.1_2
+ecaleyi0
+E_caleyi_0
 
-gca01418239510
-GCA_014182395.1_0
+ecamaldulensis0
+E_camaldulensis_0
 
-gca01418239511
-GCA_014182395.1_1
+ecladocalyx0
+E_cladocalyx_0
 
-gca01418251510
-GCA_014182515.1_0
+ecloeziana0
+E_cloeziana_0
 
-gca01418254510
-GCA_014182545.1_0
+ecoolabah0
+E_coolabah_0
 
-gca01418255510
-GCA_014182555.1_0
+ecurtisii0
+E_curtisii_0
 
-gca01418255511
-GCA_014182555.1_1
+ecurtisii1
+E_curtisii_1
 
-gca01418255512
-GCA_014182555.1_2
+edawsonii0
+E_dawsonii_0
 
-gca01418257510
-GCA_014182575.1_0
+edecipiens0
+E_decipiens_0
 
-gca01418257511
-GCA_014182575.1_1
+eerythrocorys0
+E_erythrocorys_0
 
-gca01418257512
-GCA_014182575.1_2
+efibrosa0
+E_fibrosa_0
 
-gca01418257513
-GCA_014182575.1_3
+eglobulus0
+E_globulus_0
 
-gca01418257514
-GCA_014182575.1_4
+egrandis0
+E_grandis_0
 
-gca01418258510
-GCA_014182585.1_0
+eguilfoylei0
+E_guilfoylei_0
 
-gca01418258511
-GCA_014182585.1_1
+elansdowneana0
+E_lansdowneana_0
 
-gca01418269510
-GCA_014182695.1_0
+eleucophloia0
+E_leucophloia_0
 
-gca01418269511
-GCA_014182695.1_1
+emarginata0
+E_marginata_0
 
-gca01418269512
-GCA_014182695.1_2
+emelliodora0
+E_melliodora_0
 
-gca01418269513
-GCA_014182695.1_3
+emicrocorys0
+E_microcorys_0
 
-gca01418271510
-GCA_014182715.1_0
+emicrocorys1
+E_microcorys_1
 
-gca01418273510
-GCA_014182735.1_0
+epaniculata0
+E_paniculata_0
 
-gca01418273511
-GCA_014182735.1_1
+epauciflora0
+E_pauciflora_0
 
-gca01418284510
-GCA_014182845.1_0
+epolyanthemos0
+E_polyanthemos_0
 
-gca01418285510
-GCA_014182855.1_0
+epumila0
+E_pumila_0
 
-gca01418285511
-GCA_014182855.1_1
+eregnans0
+E_regnans_0
 
-gca01418285512
-GCA_014182855.1_2
+eshirleyi0
+E_shirleyi_0
 
-gca01418288520
-GCA_014182885.2_0
+esidemel0
+E_sid_E_mel_0
 
-gca01418288521
-GCA_014182885.2_1
+esideroxylon0
+E_sideroxylon_0
 
-gca01418288522
-GCA_014182885.2_2
+etenuipes0
+E_tenuipes_0
 
-gca01418289510
-GCA_014182895.1_0
+evictrix0
+E_victrix_0
 
-gca01418289511
-GCA_014182895.1_1
+eviminalis0
+E_viminalis_0
 
-gca01418289512
-GCA_014182895.1_2
-
-gca01609748510
-GCA_016097485.1_0
-
-gca01609748511
-GCA_016097485.1_1
-
-gca01609748512
-GCA_016097485.1_2
-
-gca01609754510
-GCA_016097545.1_0
-
-gca01609754511
-GCA_016097545.1_1
-
-gca01609759510
-GCA_016097595.1_0
-
-gca01609759511
-GCA_016097595.1_1
-
-gca01609761510
-GCA_016097615.1_0
-
-gca01714016510
-GCA_017140165.1_0
-
-gca01714016511
-GCA_017140165.1_1
-
-gca01714018510
-GCA_017140185.1_0
-
-gca01714018511
-GCA_017140185.1_1
-
-gca01714018512
-GCA_017140185.1_2
-
-gca01714018513
-GCA_017140185.1_3
-
-gca01714025510
-GCA_017140255.1_0
-
-gca01714025511
-GCA_017140255.1_1
-
-gca01714032510
-GCA_017140325.1_0
-
-gca01714032511
-GCA_017140325.1_1
-
-gca01714032512
-GCA_017140325.1_2
-
-gca01714039510
-GCA_017140395.1_0
-
-gca01714047510
-GCA_017140475.1_0
-
-gcf01654582510
-GCF_016545825.1_0
+evirginea0
+E_virginea_0
 

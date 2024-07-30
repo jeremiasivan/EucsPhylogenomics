@@ -7,14 +7,14 @@ Questions/problems/suggestions? Please visit: https://groups.google.com/forum/#!
 
 System: AMD EPYC 7742 64-Core Processor, 128 cores, 1007 GB RAM
 
-RAxML-NG was called at 03-Jul-2024 20:40:59 as follows:
+RAxML-NG was called at 29-Jul-2024 14:11:53 as follows:
 
 raxml-ng --msa /data/jeremias/eucs/roadies/output/genes/gene_123_filtered.fa.aln --model GTR+G+F --redo --threads auto{4} --blopt nr_safe
 
 Analysis options:
   run mode: ML tree search
   start tree(s): random (10) + parsimony (10)
-  random seed: 1720003259
+  random seed: 1722226313
   tip-inner: OFF
   pattern compression: ON
   per-rate scalers: OFF
@@ -30,274 +30,172 @@ Analysis options:
 WARNING: Running in REDO mode: existing checkpoints are ignored, and all result files will be overwritten!
 
 [00:00:00] Reading alignment from file: /data/jeremias/eucs/roadies/output/genes/gene_123_filtered.fa.aln
-[00:00:00] Loaded alignment with 178 taxa and 542 sites
+[00:00:00] Loaded alignment with 75 taxa and 557 sites
 
-WARNING: Sequences GCA_016097605.1_3 and GCA_016097605.1_2 are exactly identical!
-WARNING: Sequences GCA_016097605.1_3 and GCA_016097605.1_1 are exactly identical!
-WARNING: Sequences GCA_016097605.1_3 and GCA_016097605.1_7 are exactly identical!
-WARNING: Sequences GCA_016097605.1_3 and GCA_016097605.1_6 are exactly identical!
-WARNING: Sequences GCA_016097605.1_3 and GCA_016097605.1_5 are exactly identical!
-WARNING: Sequences GCA_016097605.1_3 and GCA_016097605.1_4 are exactly identical!
-WARNING: Sequences GCA_016097605.1_3 and GCA_016097605.1_9 are exactly identical!
-WARNING: Sequences GCA_016097605.1_3 and GCA_016097605.1_8 are exactly identical!
-WARNING: Sequences GCA_014182845.1_0 and GCA_014182895.1_0 are exactly identical!
-WARNING: Sequences GCA_014182395.1_1 and GCA_014182855.1_2 are exactly identical!
-WARNING: Sequences GCA_014182395.1_1 and GCA_014182855.1_1 are exactly identical!
-WARNING: Sequences GCA_014182395.1_1 and GCA_014182395.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182385.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182705.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_7 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182405.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182405.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182585.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140255.1_4 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140255.1_5 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140255.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140255.1_3 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140255.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_8 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_9 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_3 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_6 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_7 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_4 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140185.1_5 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140165.1_6 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140165.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182545.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140165.1_3 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182575.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140325.1_4 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140325.1_5 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140325.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140325.1_3 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140325.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182515.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182515.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182545.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_4 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_5 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_6 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_7 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_3 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_8 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097615.1_9 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097545.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097485.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182555.1_0 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182555.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140165.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182375.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCF_016545825.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCF_016545825.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_004368105.3_8 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_004368105.3_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_004368105.3_3 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_004368105.3_4 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_004368105.3_5 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_9 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_8 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182365.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_3 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182705.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_6 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_5 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140395.1_4 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182695.1_3 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182695.1_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182695.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182885.2_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182885.2_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_004368105.3_2 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182725.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_016097485.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_017140615.1_1 are exactly identical!
-WARNING: Sequences GCA_014182385.1_1 and GCA_014182375.1_1 are exactly identical!
-WARNING: Sequences GCA_017140255.1_7 and GCA_004368105.3_9 are exactly identical!
-WARNING: Sequences GCA_014182715.1_2 and GCA_014182715.1_1 are exactly identical!
-WARNING: Sequences GCA_016097595.1_9 and GCA_016097595.1_8 are exactly identical!
-WARNING: Sequences GCA_016097595.1_9 and GCA_016097595.1_7 are exactly identical!
-WARNING: Sequences GCA_016097595.1_9 and GCA_016097595.1_6 are exactly identical!
-WARNING: Sequences GCA_016097595.1_9 and GCA_016097595.1_5 are exactly identical!
-WARNING: Sequences GCA_016097595.1_9 and GCA_016097595.1_4 are exactly identical!
-WARNING: Sequences GCA_016097595.1_9 and GCA_016097595.1_3 are exactly identical!
-WARNING: Sequences GCA_016097595.1_9 and GCA_016097595.1_2 are exactly identical!
-WARNING: Sequences GCA_016097595.1_9 and GCA_016097595.1_1 are exactly identical!
-WARNING: Sequences GCA_017140475.1_2 and GCA_017140475.1_3 are exactly identical!
-WARNING: Sequences GCA_017140475.1_2 and GCA_017140475.1_6 are exactly identical!
-WARNING: Sequences GCA_017140475.1_2 and GCA_017140475.1_7 are exactly identical!
-WARNING: Sequences GCA_017140475.1_2 and GCA_017140475.1_4 are exactly identical!
-WARNING: Sequences GCA_017140475.1_2 and GCA_017140475.1_5 are exactly identical!
-WARNING: Sequences GCA_017140595.1_9 and GCA_017140595.1_8 are exactly identical!
-WARNING: Sequences GCA_017140595.1_9 and GCA_017140595.1_5 are exactly identical!
-WARNING: Sequences GCA_017140595.1_9 and GCA_017140595.1_4 are exactly identical!
-WARNING: Sequences GCA_017140595.1_9 and GCA_017140595.1_7 are exactly identical!
-WARNING: Sequences GCA_017140595.1_9 and GCA_017140595.1_6 are exactly identical!
-WARNING: Sequences GCA_017140595.1_9 and GCA_017140595.1_1 are exactly identical!
-WARNING: Sequences GCA_017140595.1_9 and GCA_017140595.1_3 are exactly identical!
-WARNING: Sequences GCA_017140595.1_9 and GCA_017140595.1_2 are exactly identical!
-WARNING: Duplicate sequences found: 110
+WARNING: Sequences E_paniculata_1 and E_shirleyi_0 are exactly identical!
+WARNING: Sequences E_paniculata_1 and E_dawsonii_1 are exactly identical!
+WARNING: Sequences E_paniculata_1 and E_dawsonii_0 are exactly identical!
+WARNING: Sequences E_paniculata_1 and E_lansdowneana_0 are exactly identical!
+WARNING: Sequences E_paniculata_1 and E_leucophloia_0 are exactly identical!
+WARNING: Sequences E_pauciflora_0 and E_regnans_0 are exactly identical!
+WARNING: Sequences E_tenuipes_1 and E_tenuipes_0 are exactly identical!
+WARNING: Sequences E_sideroxylon_1 and E_sid_E_mel_1 are exactly identical!
+WARNING: Duplicate sequences found: 8
 
 NOTE: Reduced alignment (with duplicates and gap-only sites/taxa removed) 
 NOTE: was saved to: /data/jeremias/eucs/roadies/output/genes/gene_123_filtered.fa.aln.raxml.reduced.phy
 
-Alignment comprises 1 partitions and 284 patterns
+Alignment comprises 1 partitions and 242 patterns
 
 Partition 0: noname
 Model: GTR+FC+G4m
-Alignment sites / patterns: 542 / 284
-Gaps: 6.44 %
-Invariant sites: 50.00 %
+Alignment sites / patterns: 557 / 242
+Gaps: 6.89 %
+Invariant sites: 66.43 %
 
 
 NOTE: Binary MSA file created: /data/jeremias/eucs/roadies/output/genes/gene_123_filtered.fa.aln.raxml.rba
 
 Parallelization scheme autoconfig: 4 worker(s) x 1 thread(s)
 
-[00:00:00] Generating 10 random starting tree(s) with 178 taxa
-[00:00:00] Generating 10 parsimony starting tree(s) with 178 taxa
+[00:00:00] Generating 10 random starting tree(s) with 75 taxa
+[00:00:00] Generating 10 parsimony starting tree(s) with 75 taxa
 Parallel parsimony with 4 threads
 Parallel reduction/worker buffer size: 1 KB  / 0 KB
 
-[00:00:00] Data distribution: max. partitions/sites/weight per thread: 1 / 284 / 4544
+[00:00:00] Data distribution: max. partitions/sites/weight per thread: 1 / 242 / 3872
 [00:00:00] Data distribution: max. searches per worker: 5
 
 Starting ML tree search with 20 distinct starting trees
 
-[00:00:00 -16192.327379] Initial branch length optimization
-[00:00:00 -8759.556478] Model parameter optimization (eps = 10.000000)
-[00:00:00 -7314.018068] AUTODETECT spr round 1 (radius: 5)
-[00:00:00 -5070.569340] AUTODETECT spr round 2 (radius: 10)
-[00:00:01 -3807.795604] AUTODETECT spr round 3 (radius: 15)
-[00:00:02 -3701.271497] AUTODETECT spr round 4 (radius: 20)
-[00:00:03 -3495.708836] AUTODETECT spr round 5 (radius: 25)
-[00:00:04 -3477.766970] SPR radius for FAST iterations: 25 (autodetect)
-[00:00:04 -3477.766970] Model parameter optimization (eps = 3.000000)
-[00:00:04 -3345.838128] FAST spr round 1 (radius: 25)
-[00:00:06 -3155.670967] FAST spr round 2 (radius: 25)
-[00:00:07 -3151.338824] Model parameter optimization (eps = 1.000000)
-[00:00:07 -3146.941177] SLOW spr round 1 (radius: 5)
-[00:00:08 -3146.478982] SLOW spr round 2 (radius: 10)
-[00:00:10 -3143.789477] SLOW spr round 3 (radius: 15)
-[00:00:12 -3143.789436] SLOW spr round 4 (radius: 20)
-[00:00:16 -3143.789334] SLOW spr round 5 (radius: 25)
-[00:00:19 -3143.789334] Model parameter optimization (eps = 0.100000)
+[00:00:00 -5531.717849] Initial branch length optimization
+[00:00:00 -3915.160343] Model parameter optimization (eps = 10.000000)
+[00:00:00 -3657.968064] AUTODETECT spr round 1 (radius: 5)
+[00:00:00 -3177.514564] AUTODETECT spr round 2 (radius: 10)
+[00:00:00 -2767.268547] AUTODETECT spr round 3 (radius: 15)
+[00:00:00 -2669.418570] AUTODETECT spr round 4 (radius: 20)
+[00:00:01 -2659.109263] AUTODETECT spr round 5 (radius: 25)
+[00:00:01 -2659.108396] SPR radius for FAST iterations: 20 (autodetect)
+[00:00:01 -2659.108396] Model parameter optimization (eps = 3.000000)
+[00:00:01 -2630.875044] FAST spr round 1 (radius: 20)
+[00:00:01 -2437.244648] FAST spr round 2 (radius: 20)
+[00:00:02 -2431.087155] Model parameter optimization (eps = 1.000000)
+[00:00:02 -2422.839372] SLOW spr round 1 (radius: 5)
+[00:00:02 -2422.473264] SLOW spr round 2 (radius: 10)
+[00:00:03 -2418.402579] SLOW spr round 3 (radius: 15)
+[00:00:03 -2418.402578] SLOW spr round 4 (radius: 20)
+[00:00:03] [worker #1] ML tree search #2, logLikelihood: -2445.882645
+[00:00:04] [worker #2] ML tree search #3, logLikelihood: -2411.316451
+[00:00:04] [worker #3] ML tree search #4, logLikelihood: -2407.579172
+[00:00:04 -2418.402578] SLOW spr round 5 (radius: 25)
+[00:00:04 -2418.402578] Model parameter optimization (eps = 0.100000)
 
-[00:00:19] [worker #0] ML tree search #1, logLikelihood: -3143.775042
+[00:00:04] [worker #0] ML tree search #1, logLikelihood: -2418.346990
 
-[00:00:19 -16502.132879] Initial branch length optimization
-[00:00:19 -8877.081759] Model parameter optimization (eps = 10.000000)
-[00:00:19 -7381.321733] AUTODETECT spr round 1 (radius: 5)
-[00:00:20] [worker #1] ML tree search #2, logLikelihood: -3142.859780
-[00:00:20] [worker #3] ML tree search #4, logLikelihood: -3141.696098
-[00:00:20 -5374.924185] AUTODETECT spr round 2 (radius: 10)
-[00:00:20] [worker #2] ML tree search #3, logLikelihood: -3141.646981
-[00:00:21 -4454.473396] AUTODETECT spr round 3 (radius: 15)
-[00:00:22 -3792.768355] AUTODETECT spr round 4 (radius: 20)
-[00:00:23 -3718.524114] AUTODETECT spr round 5 (radius: 25)
-[00:00:24 -3706.260671] SPR radius for FAST iterations: 25 (autodetect)
-[00:00:24 -3706.260671] Model parameter optimization (eps = 3.000000)
-[00:00:24 -3698.791193] FAST spr round 1 (radius: 25)
-[00:00:26 -3424.835074] FAST spr round 2 (radius: 25)
-[00:00:28 -3399.974805] FAST spr round 3 (radius: 25)
-[00:00:29 -3392.282726] Model parameter optimization (eps = 1.000000)
-[00:00:29 -3390.453804] SLOW spr round 1 (radius: 5)
-[00:00:31 -3390.443835] SLOW spr round 2 (radius: 10)
-[00:00:32 -3390.442536] SLOW spr round 3 (radius: 15)
-[00:00:34 -3390.442175] SLOW spr round 4 (radius: 20)
-[00:00:36 -3390.442073] SLOW spr round 5 (radius: 25)
-[00:00:38] [worker #1] ML tree search #6, logLikelihood: -3141.185001
-[00:00:39 -3390.098855] Model parameter optimization (eps = 0.100000)
-[00:00:39] [worker #2] ML tree search #7, logLikelihood: -3164.213543
+[00:00:04 -5547.537038] Initial branch length optimization
+[00:00:04 -3928.624785] Model parameter optimization (eps = 10.000000)
+[00:00:04 -3670.640492] AUTODETECT spr round 1 (radius: 5)
+[00:00:05 -3154.740642] AUTODETECT spr round 2 (radius: 10)
+[00:00:05 -2728.809394] AUTODETECT spr round 3 (radius: 15)
+[00:00:05 -2700.861808] AUTODETECT spr round 4 (radius: 20)
+[00:00:05 -2700.596828] AUTODETECT spr round 5 (radius: 25)
+[00:00:05 -2700.570764] SPR radius for FAST iterations: 20 (autodetect)
+[00:00:05 -2700.570764] Model parameter optimization (eps = 3.000000)
+[00:00:05 -2675.809523] FAST spr round 1 (radius: 20)
+[00:00:05 -2585.906484] FAST spr round 2 (radius: 20)
+[00:00:06 -2422.329050] FAST spr round 3 (radius: 20)
+[00:00:06 -2418.925516] Model parameter optimization (eps = 1.000000)
+[00:00:06 -2408.000906] SLOW spr round 1 (radius: 5)
+[00:00:07] [worker #3] ML tree search #8, logLikelihood: -2411.147545
+[00:00:07] [worker #1] ML tree search #6, logLikelihood: -2407.578972
+[00:00:07 -2407.585800] SLOW spr round 2 (radius: 10)
+[00:00:07] [worker #2] ML tree search #7, logLikelihood: -2407.579130
+[00:00:08 -2407.585750] SLOW spr round 3 (radius: 15)
+[00:00:08 -2407.585750] SLOW spr round 4 (radius: 20)
+[00:00:08 -2407.585750] SLOW spr round 5 (radius: 25)
+[00:00:09 -2407.585750] Model parameter optimization (eps = 0.100000)
 
-[00:00:40] [worker #0] ML tree search #5, logLikelihood: -3141.185047
+[00:00:09] [worker #0] ML tree search #5, logLikelihood: -2407.578968
 
-[00:00:40 -16528.913948] Initial branch length optimization
-[00:00:40 -8827.658165] Model parameter optimization (eps = 10.000000)
-[00:00:40 -7333.068296] AUTODETECT spr round 1 (radius: 5)
-[00:00:41 -5692.032187] AUTODETECT spr round 2 (radius: 10)
-[00:00:41 -4409.706287] AUTODETECT spr round 3 (radius: 15)
-[00:00:42 -3940.030195] AUTODETECT spr round 4 (radius: 20)
-[00:00:43 -3573.749371] AUTODETECT spr round 5 (radius: 25)
-[00:00:44 -3555.702419] SPR radius for FAST iterations: 25 (autodetect)
-[00:00:44 -3555.702419] Model parameter optimization (eps = 3.000000)
-[00:00:45 -3413.022117] FAST spr round 1 (radius: 25)
-[00:00:46] [worker #3] ML tree search #8, logLikelihood: -3141.185055
-[00:00:46 -3156.795098] FAST spr round 2 (radius: 25)
-[00:00:48 -3149.641851] Model parameter optimization (eps = 1.000000)
-[00:00:48 -3142.855733] SLOW spr round 1 (radius: 5)
-[00:00:48] [worker #2] ML tree search #11, logLikelihood: -3143.136476
-[00:00:49 -3142.855434] SLOW spr round 2 (radius: 10)
-[00:00:50 -3142.855434] SLOW spr round 3 (radius: 15)
-[00:00:52 -3142.855432] SLOW spr round 4 (radius: 20)
-[00:00:53] [worker #3] ML tree search #12, logLikelihood: -3145.302632
-[00:00:55 -3142.855432] SLOW spr round 5 (radius: 25)
-[00:00:56] [worker #2] ML tree search #15, logLikelihood: -3147.191032
-[00:00:58 -3142.855160] Model parameter optimization (eps = 0.100000)
+[00:00:09 -5557.833575] Initial branch length optimization
+[00:00:09 -3926.268082] Model parameter optimization (eps = 10.000000)
+[00:00:09 -3659.985126] AUTODETECT spr round 1 (radius: 5)
+[00:00:09 -3118.348762] AUTODETECT spr round 2 (radius: 10)
+[00:00:09 -2566.152891] AUTODETECT spr round 3 (radius: 15)
+[00:00:09] [worker #3] ML tree search #12, logLikelihood: -2407.577121
+[00:00:10 -2536.060489] AUTODETECT spr round 4 (radius: 20)
+[00:00:10 -2536.019247] SPR radius for FAST iterations: 15 (autodetect)
+[00:00:10 -2536.019247] Model parameter optimization (eps = 3.000000)
+[00:00:10 -2500.180171] FAST spr round 1 (radius: 15)
+[00:00:10 -2414.243087] FAST spr round 2 (radius: 15)
+[00:00:10] [worker #2] ML tree search #11, logLikelihood: -2407.578744
+[00:00:10 -2409.341696] Model parameter optimization (eps = 1.000000)
+[00:00:10 -2408.000512] SLOW spr round 1 (radius: 5)
+[00:00:11] [worker #1] ML tree search #10, logLikelihood: -2418.346778
+[00:00:11 -2407.585622] SLOW spr round 2 (radius: 10)
+[00:00:11 -2407.585616] SLOW spr round 3 (radius: 15)
+[00:00:12 -2407.585616] SLOW spr round 4 (radius: 20)
+[00:00:12 -2407.585616] SLOW spr round 5 (radius: 25)
+[00:00:12 -2407.585616] Model parameter optimization (eps = 0.100000)
 
-[00:00:58] [worker #0] ML tree search #9, logLikelihood: -3142.855098
+[00:00:12] [worker #0] ML tree search #9, logLikelihood: -2407.578977
 
-[00:00:58 -6199.525793] Initial branch length optimization
-[00:00:58 -3299.567803] Model parameter optimization (eps = 10.000000)
-[00:00:58] [worker #1] ML tree search #10, logLikelihood: -3149.789306
-[00:00:58 -3162.545955] AUTODETECT spr round 1 (radius: 5)
-[00:00:59 -3152.132801] AUTODETECT spr round 2 (radius: 10)
-[00:00:59 -3152.128347] SPR radius for FAST iterations: 5 (autodetect)
-[00:00:59 -3152.128347] Model parameter optimization (eps = 3.000000)
-[00:00:59 -3152.044027] FAST spr round 1 (radius: 5)
-[00:00:59 -3152.044013] Model parameter optimization (eps = 1.000000)
-[00:00:59 -3152.043967] SLOW spr round 1 (radius: 5)
-[00:01:00 -3152.043733] SLOW spr round 2 (radius: 10)
-[00:01:01 -3152.043733] SLOW spr round 3 (radius: 15)
-[00:01:02] [worker #3] ML tree search #16, logLikelihood: -3142.855915
-[00:01:03 -3152.043726] SLOW spr round 4 (radius: 20)
-[00:01:04] [worker #2] ML tree search #19, logLikelihood: -3143.656209
-[00:01:04 -3152.043726] SLOW spr round 5 (radius: 25)
-[00:01:05 -3152.043726] Model parameter optimization (eps = 0.100000)
+[00:00:12 -3919.810668] Initial branch length optimization
+[00:00:12 -2474.473590] Model parameter optimization (eps = 10.000000)
+[00:00:13 -2433.148163] AUTODETECT spr round 1 (radius: 5)
+[00:00:13 -2423.123420] AUTODETECT spr round 2 (radius: 10)
+[00:00:13 -2411.474147] AUTODETECT spr round 3 (radius: 15)
+[00:00:13 -2411.417493] SPR radius for FAST iterations: 10 (autodetect)
+[00:00:13 -2411.417493] Model parameter optimization (eps = 3.000000)
+[00:00:13 -2411.337807] FAST spr round 1 (radius: 10)
+[00:00:13] [worker #3] ML tree search #16, logLikelihood: -2407.576950
+[00:00:13] [worker #1] ML tree search #14, logLikelihood: -2419.845995
+[00:00:13 -2411.317879] Model parameter optimization (eps = 1.000000)
+[00:00:13 -2411.317761] SLOW spr round 1 (radius: 5)
+[00:00:13] [worker #2] ML tree search #15, logLikelihood: -2411.302568
+[00:00:14 -2411.316704] SLOW spr round 2 (radius: 10)
+[00:00:14 -2411.316542] SLOW spr round 3 (radius: 15)
+[00:00:14 -2411.316542] SLOW spr round 4 (radius: 20)
+[00:00:15 -2411.316540] SLOW spr round 5 (radius: 25)
+[00:00:15 -2411.316540] Model parameter optimization (eps = 0.100000)
 
-[00:01:05] [worker #0] ML tree search #13, logLikelihood: -3152.043726
+[00:00:15] [worker #0] ML tree search #13, logLikelihood: -2411.316539
 
-[00:01:05 -6183.324138] Initial branch length optimization
-[00:01:05 -3296.269607] Model parameter optimization (eps = 10.000000)
-[00:01:06 -3156.798911] AUTODETECT spr round 1 (radius: 5)
-[00:01:06 -3147.840124] AUTODETECT spr round 2 (radius: 10)
-[00:01:06] [worker #1] ML tree search #14, logLikelihood: -3152.380570
-[00:01:06 -3147.836951] SPR radius for FAST iterations: 5 (autodetect)
-[00:01:06 -3147.836951] Model parameter optimization (eps = 3.000000)
-[00:01:06 -3147.809251] FAST spr round 1 (radius: 5)
-[00:01:07 -3147.809229] Model parameter optimization (eps = 1.000000)
-[00:01:07 -3147.809167] SLOW spr round 1 (radius: 5)
-[00:01:08 -3147.206418] SLOW spr round 2 (radius: 10)
-[00:01:09 -3147.206418] SLOW spr round 3 (radius: 15)
-[00:01:10 -3147.206418] SLOW spr round 4 (radius: 20)
-[00:01:10] [worker #3] ML tree search #20, logLikelihood: -3145.302235
-[00:01:11 -3145.297234] SLOW spr round 5 (radius: 25)
-[00:01:12 -3145.297234] Model parameter optimization (eps = 0.100000)
+[00:00:15 -3920.467361] Initial branch length optimization
+[00:00:15 -2471.492235] Model parameter optimization (eps = 10.000000)
+[00:00:15 -2429.061214] AUTODETECT spr round 1 (radius: 5)
+[00:00:16 -2421.731994] AUTODETECT spr round 2 (radius: 10)
+[00:00:16] [worker #3] ML tree search #20, logLikelihood: -2407.578708
+[00:00:16 -2421.664470] SPR radius for FAST iterations: 5 (autodetect)
+[00:00:16 -2421.664470] Model parameter optimization (eps = 3.000000)
+[00:00:16 -2421.634354] FAST spr round 1 (radius: 5)
+[00:00:16 -2421.633609] Model parameter optimization (eps = 1.000000)
+[00:00:16 -2421.633606] SLOW spr round 1 (radius: 5)
+[00:00:16] [worker #2] ML tree search #19, logLikelihood: -2408.163998
+[00:00:16 -2421.633473] SLOW spr round 2 (radius: 10)
+[00:00:17 -2419.860818] SLOW spr round 3 (radius: 15)
+[00:00:17] [worker #1] ML tree search #18, logLikelihood: -2411.147642
+[00:00:17 -2419.860813] SLOW spr round 4 (radius: 20)
+[00:00:17 -2419.860813] SLOW spr round 5 (radius: 25)
+[00:00:18 -2419.860813] Model parameter optimization (eps = 0.100000)
 
-[00:01:12] [worker #0] ML tree search #17, logLikelihood: -3145.229045
+[00:00:18] [worker #0] ML tree search #17, logLikelihood: -2419.837567
 
-[00:01:14] [worker #1] ML tree search #18, logLikelihood: -3160.313872
 
 Optimized model parameters:
 
    Partition 0: noname
-   Rate heterogeneity: GAMMA (4 cats, mean),  alpha: 2.338174 (ML),  weights&rates: (0.250000,0.330557) (0.250000,0.686748) (0.250000,1.076534) (0.250000,1.906161) 
-   Base frequencies (empirical): 0.293330 0.162386 0.216962 0.327321 
-   Substitution rates (ML): 0.894512 4.705687 0.715142 1.249953 5.038629 1.000000 
+   Rate heterogeneity: GAMMA (4 cats, mean),  alpha: 1.470855 (ML),  weights&rates: (0.250000,0.220785) (0.250000,0.583632) (0.250000,1.048663) (0.250000,2.146920) 
+   Base frequencies (empirical): 0.327257 0.231001 0.190482 0.251260 
+   Substitution rates (ML): 0.768134 2.834794 0.700941 0.949052 2.299219 1.000000 
 
 
-Final LogLikelihood: -3141.185001
+Final LogLikelihood: -2407.576950
 
-AIC score: 7006.370002 / AICc score: 8474.593465 / BIC score: 8561.256294
-Free parameters (model + branch lengths): 362
+AIC score: 5127.153900 / AICc score: 5249.613900 / BIC score: 5801.474078
+Free parameters (model + branch lengths): 156
 
-WARNING: Best ML tree contains 139 near-zero branches!
+WARNING: Best ML tree contains 40 near-zero branches!
 
 Best ML tree with collapsed near-zero branches saved to: /data/jeremias/eucs/roadies/output/genes/gene_123_filtered.fa.aln.raxml.bestTreeCollapsed
 Best ML tree saved to: /data/jeremias/eucs/roadies/output/genes/gene_123_filtered.fa.aln.raxml.bestTree
@@ -306,7 +204,7 @@ Optimized model saved to: /data/jeremias/eucs/roadies/output/genes/gene_123_filt
 
 Execution log saved to: /data/jeremias/eucs/roadies/output/genes/gene_123_filtered.fa.aln.raxml.log
 
-Analysis started: 03-Jul-2024 20:40:59 / finished: 03-Jul-2024 20:42:13
+Analysis started: 29-Jul-2024 14:11:53 / finished: 29-Jul-2024 14:12:11
 
-Elapsed time: 74.742 seconds
+Elapsed time: 18.321 seconds
 
