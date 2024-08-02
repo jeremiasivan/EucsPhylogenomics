@@ -1,11 +1,11 @@
-# Extract Genes from Assemblies
+# Extract Genes from Genome Assemblies
 dir_output <- "/data/jeremias/eucs/genes/proteome/"
 thread <- 10
 
 fn_refseq <- "eucs_refseq.txt"
 fn_refseq_chr <- "eucs_refseq_chr.txt"
 
-prefix_dir_fasta <- "/data/jeremias/eucs/roadies/assemblies/"
+prefix_dir_fasta <- "/data/jeremias/eucs/genes/assemblies/"
 prefix_dir_gtf <- "/data/jeremias/eucs/genes/"
 
 exe_gffread <- "gffread"
