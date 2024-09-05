@@ -16,7 +16,7 @@ reftaxonomy <- "Eucalyptus"
 
 library(doSNOW)
 
-source(paste0(dir_codes, "/codes/functions.R"))
+source(paste0(dir_codes, "/functions.R"))
 
 ################################################
 

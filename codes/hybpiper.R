@@ -16,7 +16,7 @@ dir_shortreads <- "/data/jeremias/eucs/shortreads/"
 
 library(doSNOW)
 
-source(paste0(dir_codes, "/codes/functions.R"))
+source(paste0(dir_codes, "/functions.R"))
 
 ################################################
 
@@ -87,7 +87,7 @@ for (shortread in ls_shortreads) {
         # output file
         fn_fasta_concat <- paste0(dir_output_gene, "concat.fa")
         fn_fasta_concat_aligned <- paste0(dir_output_tree, gene, "/concat_aligned.fa")
-        
+
         # check if MSA exists
         if (file.exists(fn_fasta_concat_aligned)) {
             return(NULL)
