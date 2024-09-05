@@ -14,7 +14,6 @@ reftaxonomy <- "Eucalyptus"
 ################################################
 
 library(doSNOW)
-# install.packages("stringr")
 
 ################################################
 
@@ -107,11 +106,17 @@ dir_output_easy353 <- paste0(dir_output, "/easy353/")
 ls_shortreads <- list.dirs(dir_shortreads, recursive=F, full.names=F)
 for (shortread in ls_shortreads) {
     # extract FASTQ files
-    ls_fastq_refname <- c(paste0(shortread, "_1.fastq"), paste0(shortread, "_2.fastq"))
+    ls_fastq <- c(paste0(dir_shortreads, "/", shortread, "_1.fastq"),
+                  paste0(dir_shortreads, "/", shortread, "_2.fastq"))
 
-    ls_fastq <- list.files(paste0(dir_shortreads, "/", shortread))
-    ls_fastq <- ls_fastq[ls_fastq %in% ls_fastq_refname]
-    ls_fastq <- stringr::str_sort(ls_fastq, numeric=T)
+    if (!file.exists(ls_fastq[1])) {
+        next
+    }
+
+    # remove reverse FASTQ file if unavailable
+    if (!file.exists(ls_fastq[2])) {
+        ls_fastq <- ls_fastq[1]
+    }
 
     # create output directory
     dir_output_easy353_sp <- paste0(dir_output_easy353, shortread)
@@ -130,6 +135,7 @@ if (!dir.exists(dir_output_tree)) {
 }
 
 # create doSNOW cluster
+nthread <- thread
 nthread <- ifelse(thread > nthread, nthread, thread)
 
 nwcl <- makeCluster(nthread)
