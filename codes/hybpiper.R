@@ -75,14 +75,17 @@ for (shortread in ls_shortreads) {
     ls_gene_sp <- list.dirs(dir_output_hybpiper_sp, recursive=F, full.names=F)
 
     foreach (gene = ls_gene_sp) %dopar% {
+        # input file
+        fn_fasta <- paste0(dir_output_hybpiper_sp, gene, "/", shortread, "/sequences/FNA/", gene, ".FNA")
+        if (!file.exists(fn_fasta)) {
+            return(NULL)
+        }
+
         # output directory
         dir_output_gene <- paste0(dir_output_tree, gene, "/")
         if (!dir.exists(dir_output_gene)) {
             dir.create(dir_output_gene, recursive=T)
         }
-
-        # input file
-        fn_fasta <- paste0(dir_output_hybpiper_sp, gene, "/", shortread, "/sequences/FNA/", gene, ".FNA")
 
         # output file
         fn_fasta_concat <- paste0(dir_output_gene, "concat.fa")
