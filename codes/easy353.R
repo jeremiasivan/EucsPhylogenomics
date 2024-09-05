@@ -84,9 +84,15 @@ for (shortread in ls_shortreads) {
     }
 
     # create output directory
-    dir_output_easy353_sp <- paste0(dir_output_easy353, shortread)
+    dir_output_easy353_sp <- paste0(dir_output_easy353, shortread, "/")
     if (!dir.exists(dir_output_easy353_sp)) {
         dir.create(dir_output_easy353_sp, recursive=T)
+    }
+
+    # check if log file exists
+    fn_log <- paste0(dir_output_easy353_sp, "easy353.log")
+    if (file.exists(fn_log)) {
+        next
     }
 
     # run Easy353
@@ -116,6 +122,12 @@ foreach (ref = ls_refseq) %dopar% {
     # output files
     fn_fasta_concat <- paste0(dir_output_tree_sp, "concat.fa")
     fn_fasta_concat_aligned <- paste0(dir_output_tree_sp, "concat_aligned.fa")
+    fn_fasta_concat_aligned_treefile <- paste0(dir_output_tree_sp, "concat_aligned.fa.treefile")
+
+    # check if treefile exists
+    if (file.exists(fn_fasta_concat_aligned_treefile)) {
+        return(NULL)
+    }
 
     for (shortread in ls_shortreads) {
         # input file

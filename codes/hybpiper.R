@@ -43,6 +43,12 @@ if (!dir.exists(dir_output_hybpiper)) {
 # iterate over short-reads
 ls_shortreads <- list.dirs(dir_shortreads, recursive=F, full.names=F)
 for (shortread in ls_shortreads) {
+    # output file
+    fn_output <- paste0(dir_output_hybpiper, shortread, "/target_tallies.txt")
+    if (file.exists(fn_output)) {
+        next
+    }
+
     # extract FASTQ files
     ls_fastq <- paste0(dir_shortreads, "/", shortread, "/", shortread, ".*.fastq")
 
@@ -80,6 +86,12 @@ for (shortread in ls_shortreads) {
 
         # output file
         fn_fasta_concat <- paste0(dir_output_gene, "concat.fa")
+        fn_fasta_concat_aligned <- paste0(dir_output_tree, gene, "/concat_aligned.fa")
+        
+        # check if MSA exists
+        if (file.exists(fn_fasta_concat_aligned)) {
+            return(NULL)
+        }
 
         # add sequence into one file
         f_fasta2msa(fn_fasta, shortread, fn_fasta_concat)
@@ -94,6 +106,12 @@ ls_trees <- foreach (gene = ls_genes, .combine='c') %dopar% {
     # output files
     fn_fasta_concat <- paste0(dir_output_tree, gene, "/concat.fa")
     fn_fasta_concat_aligned <- paste0(dir_output_tree, gene, "/concat_aligned.fa")
+    fn_fasta_concat_aligned_treefile <- paste0(dir_output_tree, gene, "/concat_aligned.fa.treefile")
+
+    # check if treefile exists
+    if (file.exists(fn_fasta_concat_aligned_treefile)) {
+        return(fn_tree)
+    }
 
     # run MAFFT using FFT-NS-2
     f_mafft(fn_fasta_concat, fn_fasta_concat_aligned, "--retree 2", exe_mafft)
@@ -101,9 +119,8 @@ ls_trees <- foreach (gene = ls_genes, .combine='c') %dopar% {
     # run IQ-Tree 2
     f_iqtree2(fn_fasta_concat_aligned, exe_iqtree2)
 
-    # input file
-    fn_tree <- paste0(dir_output_tree, gene, "/concat_aligned.fa.treefile")
-    if (!file.exists(fn_tree)) {
+    # check if treefile exists
+    if (!file.exists(fn_fasta_concat_aligned_treefile)) {
         return(NULL)
     }
 
