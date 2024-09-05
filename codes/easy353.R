@@ -91,7 +91,9 @@ if (!dir.exists(dir_output_db)) {
 }
 
 # build database
-f_build_db(reftaxonomy, thread, dir_output_db, exe_build_db)
+if (!dir.exists(paste0(dir_output_db, "353gene/"))) {
+    f_build_db(reftaxonomy, thread, dir_output_db, exe_build_db)
+}
 
 # extract reference sequences
 ls_refseq <- list.files(dir_output_db, pattern="*.fasta$")
@@ -106,8 +108,8 @@ dir_output_easy353 <- paste0(dir_output, "/easy353/")
 ls_shortreads <- list.dirs(dir_shortreads, recursive=F, full.names=F)
 for (shortread in ls_shortreads) {
     # extract FASTQ files
-    ls_fastq <- c(paste0(dir_shortreads, "/", shortread, "_1.fastq"),
-                  paste0(dir_shortreads, "/", shortread, "_2.fastq"))
+    ls_fastq <- c(paste0(dir_shortreads, "/", shortread, "/", shortread, "_1.fastq"),
+                  paste0(dir_shortreads, "/", shortread, "/", shortread, "_2.fastq"))
 
     if (!file.exists(ls_fastq[1])) {
         next
@@ -135,8 +137,7 @@ if (!dir.exists(dir_output_tree)) {
 }
 
 # create doSNOW cluster
-nthread <- thread
-nthread <- ifelse(thread > nthread, nthread, thread)
+nthread <- ifelse(thread > length(ls_refseq), length(ls_refseq), thread)
 
 nwcl <- makeCluster(nthread)
 doSNOW::registerDoSNOW(nwcl)
