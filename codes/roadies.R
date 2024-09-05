@@ -21,7 +21,7 @@ f_roadies <- function(fn_config, thread, exe_roadies) {
 setwd(dir_roadies)
 
 # source the environment
-system("source roadies_env.sh")
+# system("source roadies_env.sh")
 
 # run ROADIES
 f_roadies(fn_config, thread, "run_roadies.py")
