@@ -113,7 +113,7 @@ ls_trees <- foreach (gene = ls_genes, .combine='c') %dopar% {
 
     # check if treefile exists
     if (file.exists(fn_fasta_concat_aligned_treefile)) {
-        return(fn_tree)
+        return(fn_fasta_concat_aligned_treefile)
     }
 
     # run MAFFT using FFT-NS-2
@@ -127,7 +127,7 @@ ls_trees <- foreach (gene = ls_genes, .combine='c') %dopar% {
         return(NULL)
     }
 
-    return(fn_tree)
+    return(fn_fasta_concat_aligned_treefile)
 }
 
 stopCluster(nwcl)

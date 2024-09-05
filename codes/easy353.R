@@ -131,11 +131,15 @@ foreach (ref = ls_refseq) %dopar% {
 
     for (shortread in ls_shortreads) {
         # input file
-        dir_assembly <- paste0(dir_output_easy353, "/", shortread, "/assemble_out/")
-        fn_fasta <- list.files(dir_assembly, pattern=paste0("*",ref,".a353.fasta"))
+        dir_assembly <- paste0(dir_output_easy353, shortread, "/assemble_out/")
+        fn_fasta <- list.files(dir_assembly, pattern=paste0("*",ref,".a353.fasta"), recursive=F, full.names=F)
+
+        if (!file.exists(fn_fasta)) {
+            next
+        }
 
         # add sequence into one file
-        f_fasta2msa(fn_fasta, shortread, fn_fasta_concat)
+        f_fasta2msa(paste0(dir_assembly, fn_fasta), shortread, fn_fasta_concat)
     }
 
     # run MAFFT using FFT-NS-2
