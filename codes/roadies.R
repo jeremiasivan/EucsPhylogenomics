@@ -1,7 +1,7 @@
 # Run ROADIES
 thread <- 10
 
-exe_roadies <- "run_roadies.py"
+dir_roadies <- "/home/jeremias/ROADIES/"
 
 fn_config <- "/data/jeremias/eucs/assemblies/"
 
@@ -17,10 +17,13 @@ f_roadies <- function(fn_config, thread, exe_roadies) {
 
 ################################################
 
+# move to ROADIES directory
+setwd(dir_roadies)
+
 # source the environment
 system("source roadies_env.sh")
 
 # run ROADIES
-f_roadies(fn_config, thread, exe_roadies)
+f_roadies(fn_config, thread, "run_roadies.py")
 
 ################################################
