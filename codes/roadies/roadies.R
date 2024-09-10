@@ -1,19 +1,17 @@
-# Run ROADIES
+################################################
+#############        ROADIES       #############
+################################################
+
+dir_codes <- "/home/jeremias/EucsPhylogenomics/codes/"
 thread <- 10
 
+# run ROADIES
 dir_roadies <- "/home/jeremias/ROADIES/"
-
 fn_config <- "/data/jeremias/eucs/assemblies/"
 
 ################################################
 
-# function: run ROADIES
-f_roadies <- function(fn_config, thread, exe_roadies) {
-    cmd_roadies <- paste("python", exe_roadies,
-                         "--config", fn_config,
-                         "--cores", thread, "--converge")
-    system(cmd_roadies)
-}
+source(paste0(dir_codes, "/functions.R"))
 
 ################################################
 

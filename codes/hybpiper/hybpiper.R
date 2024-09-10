@@ -1,15 +1,22 @@
-# Run Hybpiper
+################################################
+#############        HYBPIPER      #############
+################################################
+
 dir_codes <- "/home/jeremias/EucsPhylogenomics/codes/"
 dir_output <- "/data/jeremias/eucs/hybpiper/"
 thread <- 50
 
+# generate target gene file
+is_generate_target_gene <- FALSE
+dir_input_genes <- "/data/jeremias/eucs/busco/"
+
+# run Hybpiper
 exe_hybpiper <- "hybpiper"
 exe_mafft <- "mafft"
 exe_iqtree2 <- "iqtree2"
 exe_astral <- "astral"
 
 fn_target_gene <- "target_gene.fa"
-
 dir_shortreads <- "/data/jeremias/eucs/shortreads/"
 
 ################################################
@@ -18,18 +25,48 @@ library(doSNOW)
 
 source(paste0(dir_codes, "/functions.R"))
 
+# create output directory
+if (!dir.exists(dir_output)) {
+    dir.create(dir_output)
+}
+
 ################################################
 
-# function: run Hybpiper
-f_hybpiper <- function(fn_target_gene, fn_fastq, prefix, dir_output, thread, exe_hybpiper) {
-    hybpiper_cmd <- paste(exe_hybpiper, "assemble",
-                          "-t_dna", fn_target_gene, 
-                          "-r", fn_fastq,
-                          "--prefix", prefix,
-                          "-o", dir_output,
-                          "--bwa",
-                          "--cpu", thread)
-    system(hybpiper_cmd)
+if (is_generate_target_gene) {
+    # check if file exists
+    fn_target_gene <- paste0(dir_output, "/target_genes.fa")
+    if (file.exists(fn_target_gene)) {
+        stop("Target gene file already exists. Exited.")
+    }
+
+    # extract taxa
+    ls_reference <- list.dirs(dir_input_genes, recursive=F, full.names=F)
+    ls_shared_gene <- c()
+
+    # iterate over references
+    for (ref in ls_reference) {
+        # extract the list of genes
+        ls_gene_sp <- list.files(paste0(dir_input_genes, "/", ref), pattern = "*.fa$", full.names = F, recursive = F)
+        ls_gene_sp <- sapply(ls_gene_sp, function(x) { gsub(".fa", "", x) })
+        
+        # update the list of genes
+        if (length(ls_shared_gene) == 0) {
+            ls_shared_gene <- ls_gene_sp
+        } else {
+            ls_shared_gene <- intersect(ls_shared_gene, ls_gene_sp)
+        }
+    }
+
+    # iterate over genes
+    for (gene in ls_shared_gene) {
+        # iterate over references
+        for (ref in ls_reference) {
+            fn_fasta <- paste0(dir_input_genes, "/", ref, "/", gene, ".fa")
+
+            # add sequence into one file
+            f_fasta2msa(fn_fasta, paste0(ref, "-", gene), fn_target_gene)
+        }
+    }
 }
 
 ################################################

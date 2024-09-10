@@ -1,49 +1,25 @@
-# Run Easy353
+################################################
+#############        EASY353       #############
+################################################
+
 dir_codes <- "/home/jeremias/EucsPhylogenomics/codes/"
 dir_output <- "/data/jeremias/eucs/easy353/"
 thread <- 10
 
+# run Easy353
 exe_build_db <- "build_database.py"
 exe_easy353 <- "easy353.py"
 exe_mafft <- "mafft"
 exe_iqtree2 <- "iqtree2"
 
-dir_shortreads <- "/data/jeremias/eucs/shortreads/"
-
 reftaxonomy <- "Eucalyptus"
+dir_shortreads <- "/data/jeremias/eucs/shortreads/"
 
 ################################################
 
 library(doSNOW)
 
 source(paste0(dir_codes, "/functions.R"))
-
-################################################
-
-# function: run Easy353 to build database
-f_build_db <- function(reftaxonomy, thread, dir_output, exe_build_db) {
-    cmd_build_db <- paste(exe_build_db,
-                          "-o", dir_output,
-                          "-c", reftaxonomy,
-                          "-t", thread,
-                          "-generate")
-    system(cmd_build_db)
-}
-
-# function: run Easy353
-f_easy353 <- function(ls_fastq, dir_refdb, dir_output, exe_easy353) {
-    cmd_easy353 <- paste(exe_easy353, "-1", ls_fastq[1])
-
-    # add the second FASTQ file (if any)
-    if (length(ls_fastq)>1) {
-        cmd_easy353 <- paste(cmd_easy353, "-2", ls_fastq[2])
-    }
-
-    cmd_easy353 <- paste(cmd_easy353,
-                         "-r", dir_refdb,
-                         "-o", dir_output)
-    system(cmd_easy353)
-}
 
 ################################################
 
@@ -55,7 +31,7 @@ if (!dir.exists(dir_output_db)) {
 
 # build database
 if (!dir.exists(paste0(dir_output_db, "353gene/"))) {
-    f_build_db(reftaxonomy, thread, dir_output_db, exe_build_db)
+    f_easy353_build_db(reftaxonomy, thread, dir_output_db, exe_build_db)
 }
 
 # extract reference sequences
@@ -64,6 +40,8 @@ ls_refseq <- sapply(ls_refseq, function(x) {
     ls_element <- strsplit(x, split="\\.")
     ls_element[[1]][length(ls_element[[1]])-2]
 })
+
+################################################
 
 # iterate over short-reads
 dir_output_easy353 <- paste0(dir_output, "/easy353/")
