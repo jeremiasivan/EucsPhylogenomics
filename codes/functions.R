@@ -59,6 +59,15 @@ f_hybpiper <- function(fn_target_gene, fn_fastq, prefix, dir_output, thread, exe
     system(hybpiper_cmd)
 }
 
+# function: run Orthofinder
+f_orthofinder <- function(dir_fasta, dir_output, thread, exe_orthofinder) {
+    cmd_orthofinder <- paste(exe_orthofinder,
+                         "-f", dir_fasta,
+                         "-o", dir_output,
+                         "-t", thread)
+    system(cmd_orthofinder)
+}
+
 # function: run ROADIES
 f_roadies <- function(fn_config, thread, exe_roadies) {
     cmd_roadies <- paste("python", exe_roadies,

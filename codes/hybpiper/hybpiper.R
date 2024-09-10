@@ -169,7 +169,7 @@ ls_trees <- foreach (gene = ls_genes, .combine='c') %dopar% {
 
 stopCluster(nwcl)
 
-# combine all BUSCO trees
+# combine all gene trees
 ls_trees <- paste(ls_trees, collapse=" ")
 fn_alltrees <- paste0(dir_output_tree, "alltrees.tre")
 system(paste("cat", ls_trees, ">", fn_alltrees))
