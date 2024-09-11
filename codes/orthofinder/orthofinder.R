@@ -8,16 +8,16 @@ thread <- 10
 # extract genes using GTF/GFF from assemblies
 is_extract_gene <- FALSE
 dir_fasta <- "/data/jeremias/eucs/genes/assemblies/"
-dir_gtf <- "/data/jeremias/eucs/genes/"
+dir_gtf <- "/data/jeremias/eucs/genes/gtf/"
 
 exe_gffread <- "gffread"
 fn_refseq_chr <- "eucs_refseq_chr.txt" # optional
 
 # run Orthofinder
-exe_orthofinder <- ""
-exe_astral <- ""
+exe_orthofinder <- "Orthofinder"
+exe_astral <- "astral"
 
-dir_genes <- ""
+dir_genes <- "/data/jeremias/eucs/genes/proteome/"
 
 ################################################
 

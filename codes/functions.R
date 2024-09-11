@@ -1,27 +1,3 @@
-# function: add FASTA sequence into one file
-f_fasta2msa <- function(fn_input, header, fn_out) {
-    # initiate variable
-    first_sequence <- TRUE
-
-    # open the FASTA file
-    con <- file(fn_input, "r")
-
-    # iterate over lines
-    while (length(line <- readLines(con, n = 1)) > 0) {
-        if (grepl("^>+", line)) {
-            if (first_sequence) {
-                write.table(paste0(">", header), file=fn_out, quote=F, row.names=F, col.names=F, append=T)
-                first_sequence <- FALSE
-            }
-        } else {
-            write.table(line, file=fn_out, quote=F, row.names=F, col.names=F, append=T)
-        }
-    }
-    
-    # close the file connection
-    close(con)
-}
-
 # function: run Easy353 to build database
 f_easy353_build_db <- function(reftaxonomy, thread, dir_output, exe_build_db) {
     cmd_build_db <- paste(exe_build_db,
@@ -99,4 +75,50 @@ f_astral <- function(fn_input, fn_output, fn_log, exe_astral) {
                     "-o", fn_output,
                     "-t 2 2>", fn_log)
     system(cmd_astral)
+}
+
+# function: add FASTA sequence into one file
+f_fasta2msa <- function(fn_input, header, fn_out) {
+    # initiate variable
+    first_sequence <- TRUE
+
+    # open the FASTA file
+    con <- file(fn_input, "r")
+
+    # iterate over lines
+    while (length(line <- readLines(con, n = 1)) > 0) {
+        if (grepl("^>+", line)) {
+            if (first_sequence) {
+                write.table(paste0(">", header), file=fn_out, quote=F, row.names=F, col.names=F, append=T)
+                first_sequence <- FALSE
+            }
+        } else {
+            write.table(line, file=fn_out, quote=F, row.names=F, col.names=F, append=T)
+        }
+    }
+    
+    # close the file connection
+    close(con)
+}
+
+# function: quality control for short reads
+f_qc_short_reads <- function(fastq_one, fastq_two, fn_adapters, prefix, min_quality, thread, exe_adapterremoval) {
+    cmd_qc <- paste(exe_adapterremoval, "--file1", fastq_one)
+    
+    # check the reverse fastq file
+    if (!is.null(fastq_two)) {
+        cmd_qc <- paste(cmd_qc, "--file2", fastq_two)
+    }
+
+    # update the adapters
+    if (fn_adapters != "" && file.exists(fn_adapters)) {
+        cmd_qc <- paste(cmd_qc, "--adapter-list", fn_adapters)
+    }
+
+    # set the minimum quality score and merge overlapping reads
+    cmd_qc <- paste(cmd_qc, "--basename", prefix,
+                    "--trimqualities --trimns --minquality", min_quality)
+    
+    # run AdapterRemoval to get prefix.collapsed.truncated
+    system(cmd_qc)
 }
