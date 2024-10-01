@@ -101,8 +101,8 @@ f_fasta2msa <- function(fn_input, header, fn_out) {
     close(con)
 }
 
-# function: quality control for short reads
-f_qc_short_reads <- function(fastq_one, fastq_two, fn_adapters, prefix, min_quality, thread, exe_adapterremoval) {
+# function: quality control using AdapterRemoval
+f_qc_adapterremoval <- function(fastq_one, fastq_two, fn_adapters, prefix, min_quality, thread, exe_adapterremoval) {
     cmd_qc <- paste(exe_adapterremoval, "--file1", fastq_one)
     
     # check the reverse fastq file
@@ -120,5 +120,17 @@ f_qc_short_reads <- function(fastq_one, fastq_two, fn_adapters, prefix, min_qual
                     "--trimqualities --trimns --minquality", min_quality)
     
     # run AdapterRemoval to get prefix.collapsed.truncated
+    system(cmd_qc)
+}
+
+# function: quality control using BBTools
+f_qc_bbtools <- function(fastq, dir_output, dir_rqcfilterdata, exe_rqcfilter2) {
+    cmd_qc <- paste0(exe_rqcfilter2,
+                     " jni=t",
+                     " in=",fastq,
+                     " path=",dir_output,
+                     " Xmx=101077m barcodefilter=f clumpify=t dedupe=t kapa=f khist=t maxns=1 minlen=49 mlf=0.33 phix=f pigz=t pjet=f qtrim=r removecat=f removedog=f removehuman=f removemicrobes=f removemouse=f rna=f",
+                     " rqcfilterdata=",dir_rqcfilterdata, 
+                     " sketch skipfilter=t trimfragadapter=t trimpolyg=5 trimq=6 unpigz=t usejni=f")
     system(cmd_qc)
 }
