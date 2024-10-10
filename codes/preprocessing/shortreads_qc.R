@@ -28,6 +28,10 @@ source(paste0(dir_codes, "/functions.R"))
 
 ################################################
 
+# set-up log file
+fn_log <- paste0(dir_output, "/log.txt")
+f_write_log(fn_log, "------------------- START")
+
 # open metadata
 df_metadata <- data.table::fread(file_metadata)
 
@@ -53,7 +57,11 @@ for (fdname in ls_shortread_fdname) {
 
     df_reads <- file.info(list.files(dir_reads, full.names=T))
     fn_fastq_one <- rownames(df_reads)[which.max(df_reads$mtime)]
+    fn_fastq_one_name <- gsub("*.fastq.gz", "", fn_fastq_one)
     
+    # add log file (tbc)
+    f_write_log(fn_log, paste0("- ", read, ": ", fn_fastq_one))
+
     # check the forward FASTQ file
     if (length(fn_fastq_one) != 1) {
         next
@@ -67,8 +75,12 @@ for (fdname in ls_shortread_fdname) {
         # run BBTools
         f_qc_bbtools(fn_fastq_one, dir_output_qc, dir_rqcfilterdata, exe_rqcfilter2)
 
-        # rename file (tbc)
+        # rename file
+        fn_output <- paste0(dir_output_qc, fn_fastq_one_name, ".anqdpht.fastq.gz")
+        system(paste0("cp ", fn_output, " ", read, ".fastq.gz"))
     }
 }
+
+f_write_log(fn_log, c("--------------------- END", ""))
 
 ################################################

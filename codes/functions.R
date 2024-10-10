@@ -1,3 +1,8 @@
+# function: add entry to logfile
+f_write_log <- function(fn_log, msg) {
+    write.table(msg, file=fn_log, quote=F, row.names=F, col.names=F, append=T)
+}
+
 # function: run Easy353 to build database
 f_easy353_build_db <- function(reftaxonomy, thread, dir_output, exe_build_db) {
     cmd_build_db <- paste(exe_build_db,
@@ -129,7 +134,7 @@ f_qc_bbtools <- function(fastq, dir_output, dir_rqcfilterdata, exe_rqcfilter2) {
                      " jni=t",
                      " in=",fastq,
                      " path=",dir_output,
-                     " Xmx=101077m barcodefilter=f clumpify=t dedupe=t kapa=f khist=t maxns=1 minlen=49 mlf=0.33 phix=f pigz=t pjet=f qtrim=r removecat=f removedog=f removehuman=f removemicrobes=f removemouse=f rna=f",
+                     " barcodefilter=f clumpify=t dedupe=t kapa=f khist=t maxns=1 minlen=49 mlf=0.33 phix=f pigz=t pjet=f qtrim=r removecat=f removedog=f removehuman=f removemicrobes=f removemouse=f rna=f",
                      " rqcfilterdata=",dir_rqcfilterdata, 
                      " sketch skipfilter=t trimfragadapter=t trimpolyg=5 trimq=6 unpigz=t usejni=f")
     system(cmd_qc)
