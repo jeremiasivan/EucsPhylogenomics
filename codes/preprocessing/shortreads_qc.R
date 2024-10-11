@@ -5,6 +5,7 @@
 dir_codes <- "/home/jeremias/EucsPhylogenomics/codes/"
 dir_output <- "/data/jeremias/eucs/shortreads/"
 thread <- 10
+n_parallel_run <- 1
 
 file_metadata <- paste0(dir_codes, "/../files/eucs_metadata.txt") 
 
@@ -15,7 +16,7 @@ qc_method <- "adapterremoval"
 fn_adapters <- "eucs_adapters.txt"
 
 exe_adapterremoval <- "AdapterRemoval"
-thread_adapterremoval <- thread
+thread_adapterremoval <- thread / n_parallel_run
 min_read_quality <- 25
 
 # run BBTools
@@ -38,12 +39,16 @@ df_metadata <- data.table::fread(file_metadata)
 # extract short reads
 ls_shortread_fdname <- list.dirs(dir_shortreads, recursive=F, full.names=F)
 
+# create doSNOW cluster
+nwcl <- makeCluster(n_parallel_run)
+doSNOW::registerDoSNOW(nwcl)
+
 # iterate over short reads
-for (fdname in ls_shortread_fdname) {
+foreach (fdname = ls_shortread_fdname) %dopar% {
     # extract the name of the species
     read <- df_metadata$tip_label[df_metadata$folder_name==fdname]
     if (length(read) != 1) {
-        next
+        return(NULL)
     }
 
     # check if directory exists
@@ -64,7 +69,7 @@ for (fdname in ls_shortread_fdname) {
 
     # check the forward FASTQ file
     if (length(fn_fastq_one) != 1) {
-        next
+        return(NULL)
     }
     
     if (tolower(qc_method) == "adapterremoval") {
@@ -76,11 +81,12 @@ for (fdname in ls_shortread_fdname) {
         f_qc_bbtools(fn_fastq_one, dir_output_qc, dir_rqcfilterdata, exe_rqcfilter2)
 
         # rename file
-        fn_output <- paste0(dir_output_qc, fn_fastq_one_name, ".anqdpht.fastq.gz")
+        fn_output <- paste0(dir_output_qc, fn_fastq_one_name, ".anqdt.fastq.gz")
         system(paste0("cp ", fn_output, " ", read, ".fastq.gz"))
     }
 }
 
+stopCluster(nwcl)
 f_write_log(fn_log, c("--------------------- END", ""))
 
 ################################################
