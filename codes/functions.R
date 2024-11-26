@@ -3,6 +3,21 @@ f_write_log <- function(fn_log, msg) {
     write.table(msg, file=fn_log, quote=F, row.names=F, col.names=F, append=T)
 }
 
+# function: create Mash sketch for all reference alignments
+f_mash_sketch <- function(exe_mash, str_refseq, thread, prefix) {
+    cmd <- paste(exe_mash, "sketch",
+                "-o", prefix,
+                "-p", thread,
+                str_refseq)
+    system(cmd)
+}
+
+# function: run Mash screen on short reads
+f_mash_screen <- function(exe_mash, file_msh, file_input, file_output) {
+    cmd_mash <- paste(exe_mash, "screen -w", file_msh, file_input, ">", file_output)
+    system(cmd_mash)
+}
+
 # function: run Easy353 to build database
 f_easy353_build_db <- function(reftaxonomy, thread, dir_output, exe_build_db) {
     cmd_build_db <- paste(exe_build_db,
