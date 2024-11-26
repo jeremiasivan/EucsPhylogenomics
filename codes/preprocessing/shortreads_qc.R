@@ -62,7 +62,8 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
 
     df_reads <- file.info(list.files(dir_reads, full.names=T))
     fn_fastq_one <- rownames(df_reads)[which.max(df_reads$mtime)]
-    fn_fastq_one_name <- gsub("*.fastq.gz", "", fn_fastq_one)
+    fn_fastq_one_name <- unlist(strsplit(fn_fastq_one[1], split="/"))
+    fn_fastq_one_name <- gsub("*.fastq.gz", "", fn_fastq_one_name[length(fn_fastq_one_name)])
     
     # add log file (tbc)
     f_write_log(fn_log, paste0("- ", read, ": ", fn_fastq_one))
@@ -82,7 +83,7 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
 
         # rename file
         fn_output <- paste0(dir_output_qc, fn_fastq_one_name, ".anqdt.fastq.gz")
-        system(paste0("cp ", fn_output, " ", read, ".fastq.gz"))
+        system(paste0("mv ", fn_output, " ", read, ".fastq.gz"))
     }
 }
 
