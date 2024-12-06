@@ -200,7 +200,7 @@ f_iqtree2_au <- function(fn_input, fn_topology, prefix, exe_iqtree2) {
                          "-s", fn_input,
                          "-z", fn_topology,
                          "--prefix", prefix,
-                         "-n 0 -zb 1000 -au",
+                         "-n 0 -zb 10000 -au",
                          "-T 1 --quiet -redo")
     system(cmd_iqtree2)
 }

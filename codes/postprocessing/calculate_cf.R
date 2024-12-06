@@ -78,8 +78,12 @@ foreach (locus = ls_locus) %dopar% {
     incongruence_branches <- f_compare_parts(locus_tree_branches, astral_tree_sub_branches)
 
     # iterate over incongruence branches
-    for (i in 1:length(incongruence_branches)) {
-        tree_tips <- strsplit(incongruence_branches[i], split="-")[[1]]
+    i <- 1
+    for (br in incongruence_branches) {
+        tree_tips <- strsplit(br, split="-")[[1]]
+        if (length(tree_tips) < 4) {
+            next
+        }
 
         ref_topology <- ape::keep.tip(astral_tree, tip=tree_tips)
         ref_topology$node.label <- NULL
@@ -94,6 +98,9 @@ foreach (locus = ls_locus) %dopar% {
         # run IQ-TREE2 with constrained topology
         prefix <- paste0(dir_output, "/", locus, "/constr", i)
         f_iqtree2_constrained(fn_fasta, fn_output, prefix, exe_iqtree2)
+
+        # update i
+        i <- i+1
     }
 
     # combine all trees
