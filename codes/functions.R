@@ -80,9 +80,10 @@ f_mafft <- function(fn_input, fn_output, params_mafft, exe_mafft) {
 }
 
 # function: run IQ-Tree 2
-f_iqtree2 <- function(fn_input, exe_iqtree2) {
+f_iqtree2 <- function(fn_input, prefix, exe_iqtree2) {
     cmd_iqtree2 <- paste(exe_iqtree2,
                          "-s", fn_input,
+                         "--prefix", prefix,
                          "-bb 1000",
                          "-T 1 --quiet -redo")
     system(cmd_iqtree2)
@@ -153,4 +154,53 @@ f_qc_bbtools <- function(fastq, dir_output, dir_rqcfilterdata, exe_rqcfilter2) {
                      " rqcfilterdata=",dir_rqcfilterdata, 
                      " sketch skipfilter=t trimfragadapter=t trimpolyg=5 trimq=6 unpigz=t usejni=f")
     system(cmd_qc)
+}
+
+# function: convert the partitions from number to species
+f_part_num2chr <- function(input) {
+    # extract labels
+    ls_label <- attr(input, "labels")
+
+    # iterate over the partitions
+    ls_partition <- lapply(input, function(x) {
+        # convert the numbers to characters
+        ls_species <- sapply(x, function(y) {
+            ls_label[y]
+        })
+    })
+
+    # add frequency
+    attr(ls_partition, "number") <- attr(input, "number")
+
+    return(ls_partition)
+}
+
+# function: compare two partitions
+f_compare_parts <- function(input, ref_input) {
+    # extract partitions
+    input_names <- unlist(lapply(input, function(x) { paste0(sort(x), collapse="-") }))
+    ref_names <- unlist(lapply(ref_input, function(x) { paste0(sort(x), collapse="-") }))
+
+    return(ref_names[!ref_names%in%input_names])
+}
+
+# function: run IQ-TREE2 with contrained topology
+f_iqtree2_constrained <- function(fn_input, fn_topology, prefix, exe_iqtree2) {
+    cmd_iqtree2 <- paste(exe_iqtree2,
+                         "-s", fn_input,
+                         "-g", fn_topology,
+                         "--prefix", prefix,
+                         "-T 1 --quiet -redo")
+    system(cmd_iqtree2)
+}
+
+# function: run AU test
+f_iqtree2_au <- function(fn_input, fn_topology, prefix, exe_iqtree2) {
+    cmd_iqtree2 <- paste(exe_iqtree2,
+                         "-s", fn_input,
+                         "-z", fn_topology,
+                         "--prefix", prefix,
+                         "-n 0 -zb 1000 -au",
+                         "-T 1 --quiet -redo")
+    system(cmd_iqtree2)
 }
