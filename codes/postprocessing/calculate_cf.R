@@ -2,6 +2,7 @@
 #############     CALCULATE CF     #############
 ################################################
 
+dir_codes <- "/home/jeremias/EucsPhylogenomics/codes/"
 dir_output <- ""
 thread <- 1
 
@@ -11,6 +12,8 @@ exe_iqtree2 <- ""
 exe_astral <- ""
 
 ################################################
+
+source(paste0(dir_codes, "/functions.R"))
 
 library("ape")
 library("doSNOW")
@@ -31,7 +34,14 @@ doSNOW::registerDoSNOW(nwcl)
 foreach (locus = ls_locus) %dopar% {
     # set prefix
     fn_fasta <- paste0(dir_fasta, "/", locus, ".fa")
-    prefix <- paste0(dir_output, "/", locus, "/", locus)
+
+    # create output directory
+    dir_output_locus <- paste0(dir_output, "/", locus, "/")
+    if (!dir.exists(dir_output_locus)) {
+        dir.create(dir_output_locus, recursive=T)
+    }
+
+    prefix <- paste0(dir_output_locus, locus)
 
     # run IQ-TREE2
     f_iqtree2(fn_fasta, prefix, exe_iqtree2)
