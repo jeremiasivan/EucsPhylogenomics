@@ -78,12 +78,21 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
         prefix <- paste0(dir_output_qc, read)
         f_qc_adapterremoval(fn_fastq_one, NULL, fn_adapters, prefix, min_read_quality, thread_adapterremoval, exe_adapterremoval)
     } else if (tolower(qc_method) == "bbtools") {
+        # output file
+        ls_output <- strsplit(fn_fastq_one_name, split="/")
+        
+        fn_output <- paste0(dir_output_qc, ls_output[length(ls_output)], ".anqdt.fastq.gz")
+        fn_output_rename <- paste0(dir_output_qc, read, ".fastq.gz")
+        
         # run BBTools
-        f_qc_bbtools(fn_fastq_one, dir_output_qc, dir_rqcfilterdata, exe_rqcfilter2)
+        if (!all(file.exists(fn_output, fn_output_rename))){
+            f_qc_bbtools(fn_fastq_one, dir_output_qc, dir_rqcfilterdata, exe_rqcfilter2)
+        }
 
         # rename file
-        fn_output <- paste0(dir_output_qc, fn_fastq_one_name, ".anqdt.fastq.gz")
-        system(paste0("mv ", fn_output, " ", read, ".fastq.gz"))
+        if (file.exists(fn_output) && !file.exists(fn_output_rename)) {
+            system(paste("mv", fn_output, fn_output_rename))
+        }   
     }
 }
 
