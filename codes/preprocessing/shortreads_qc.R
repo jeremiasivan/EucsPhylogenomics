@@ -27,6 +27,8 @@ dir_rqcfilterdata <- ""
 
 source(paste0(dir_codes, "/functions.R"))
 
+library(doSNOW)
+
 ################################################
 
 # set-up log file
@@ -85,7 +87,7 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
         fn_output_rename <- paste0(dir_output_qc, read, ".fastq.gz")
         
         # run BBTools
-        if (!all(file.exists(fn_output, fn_output_rename))){
+        if (!file.exists(fn_output)) {
             f_qc_bbtools(fn_fastq_one, dir_output_qc, dir_rqcfilterdata, exe_rqcfilter2)
         }
 
