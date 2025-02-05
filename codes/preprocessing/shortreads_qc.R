@@ -21,6 +21,7 @@ min_read_quality <- 25
 
 # run BBTools
 exe_rqcfilter2 <- ""
+exe_reformat <- ""
 dir_rqcfilterdata <- ""
 
 ################################################
@@ -66,14 +67,14 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
     fn_fastq_one <- rownames(df_reads)[which.max(df_reads$mtime)]
     fn_fastq_one_name <- unlist(strsplit(fn_fastq_one[1], split="/"))
     fn_fastq_one_name <- gsub("*.fastq.gz", "", fn_fastq_one_name[length(fn_fastq_one_name)])
-    
-    # add log file (tbc)
-    f_write_log(fn_log, paste0("- ", read, ": ", fn_fastq_one))
 
     # check the forward FASTQ file
     if (length(fn_fastq_one) != 1) {
         return(NULL)
     }
+
+    # add log file (tbc)
+    f_write_log(fn_log, paste0("- ", read, ": ", fn_fastq_one))
     
     if (tolower(qc_method) == "adapterremoval") {
         # run AdapterRemoval
@@ -82,18 +83,26 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
     } else if (tolower(qc_method) == "bbtools") {
         # output file
         ls_output <- strsplit(fn_fastq_one_name, split="/")
-        
-        fn_output <- paste0(dir_output_qc, ls_output[length(ls_output)], ".anqdt.fastq.gz")
-        fn_output_rename <- paste0(dir_output_qc, read, ".fastq.gz")
-        
+
+        # check if previous run exists
+        fn_output_log <- paste0(dir_output_qc, "status.log")
+        is_complete <- suppressWarnings(system(paste("grep 'RQCFilter complete'", fn_output_log), intern=T))
+        if (length(is_complete) == 0) {
+            system(paste("rm -r", dir_output_qc))
+            dir.create(dir_output_qc, recursive=T)
+        }
+
         # run BBTools
+        fn_output <- paste0(dir_output_qc, ls_output[length(ls_output)], ".anqdt.fastq.gz")
         if (!file.exists(fn_output)) {
             f_qc_bbtools(fn_fastq_one, dir_output_qc, dir_rqcfilterdata, exe_rqcfilter2)
         }
 
         # rename file
-        if (file.exists(fn_output) && !file.exists(fn_output_rename)) {
-            system(paste("mv", fn_output, fn_output_rename))
+        fn_output_one <- paste0(dir_output_qc, read, "_R1.fastq.gz")
+        fn_output_two <- paste0(dir_output_qc, read, "_R2.fastq.gz")
+        if (!all(file.exists(fn_output_one, fn_output_two))) {
+            system(paste0(exe_reformat, " in=", fn_output, " out1=", fn_output_one, " out2=", fn_output_one))
         }   
     }
 }
