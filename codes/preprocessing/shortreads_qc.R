@@ -70,6 +70,7 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
 
     # check the forward FASTQ file
     if (length(fn_fastq_one) != 1) {
+        system(paste("rm -r", dir_output_qc))
         return(NULL)
     }
 
