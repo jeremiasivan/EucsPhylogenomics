@@ -147,7 +147,7 @@ f_qc_adapterremoval <- function(fastq_one, fastq_two, fn_adapters, prefix, min_q
 # function: quality control using BBTools
 f_qc_bbtools <- function(fastq, dir_output, dir_rqcfilterdata, exe_rqcfilter2) {
     cmd_qc <- paste0(exe_rqcfilter2,
-                     " jni=t",
+                     " -Xmx=101077m jni=t",
                      " in=",fastq,
                      " path=",dir_output,
                      " barcodefilter=f clumpify=t dedupe=t kapa=f khist=t maxns=1 minlen=49 mlf=0.33 phix=f pigz=t pjet=f qtrim=r removecat=f removedog=f removehuman=f removemicrobes=f removemouse=f rna=f",

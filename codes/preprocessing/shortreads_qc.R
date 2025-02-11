@@ -102,7 +102,7 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
         fn_output_one <- paste0(dir_output_qc, read, "_R1.fastq.gz")
         fn_output_two <- paste0(dir_output_qc, read, "_R2.fastq.gz")
         if (!all(file.exists(fn_output_one, fn_output_two))) {
-            system(paste0(exe_reformat, " in=", fn_output, " out1=", fn_output_one, " out2=", fn_output_one))
+            system(paste0(exe_reformat, " in=", fn_output, " out1=", fn_output_one, " out2=", fn_output_two))
         }   
     }
 }
