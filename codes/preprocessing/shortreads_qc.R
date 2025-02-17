@@ -93,6 +93,9 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
         }
 
         if (!file.exists(fn_output)) {
+            system(paste("rm -r", dir_output_qc))
+            dir.create(dir_output_qc, recursive=T)
+            
             f_qc_bbtools(fn_fastq_one, dir_output_qc, dir_rqcfilterdata, exe_rqcfilter2)
         }
 
