@@ -85,16 +85,13 @@ foreach (fdname = ls_shortread_fdname) %dopar% {
         # output file
         ls_output <- strsplit(fn_fastq_one_name, split="/")
 
-        # check if previous run exists
-        fn_output_log <- paste0(dir_output_qc, "status.log")
-        is_complete <- suppressWarnings(system(paste("grep 'RQCFilter complete'", fn_output_log), intern=T))
-        if (length(is_complete) == 0) {
+        # run BBTools
+        fn_output <- paste0(dir_output_qc, ls_output[length(ls_output)], ".anqdt.fastq.gz")
+        if (file.exists(fn_output) && file.size(fn_output) < 1000000000) {
             system(paste("rm -r", dir_output_qc))
             dir.create(dir_output_qc, recursive=T)
         }
 
-        # run BBTools
-        fn_output <- paste0(dir_output_qc, ls_output[length(ls_output)], ".anqdt.fastq.gz")
         if (!file.exists(fn_output)) {
             f_qc_bbtools(fn_fastq_one, dir_output_qc, dir_rqcfilterdata, exe_rqcfilter2)
         }
