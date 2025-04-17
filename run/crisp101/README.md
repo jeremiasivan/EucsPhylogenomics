@@ -15,8 +15,11 @@ This README file lists out the steps to run HybPiper on Crisp101 data.
         -entry assemble
         -profile standard_singularity
         --illumina_reads_directory ~/dir_shortreads/
-        --targetfile_dna ~/crisp101_target_loci.fa
+        --targetfile_dna ~/EucsPhylogenomics/run/crisp101/crisp101_target_loci.fa
         --bwa
         --outdir ~/outdir
         --namelist ~/namelist.txt
     ```
+
+---
+<i>Last updated: 17 April 2025 by Jeremias Ivan</i>
