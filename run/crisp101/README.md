@@ -1,6 +1,6 @@
 This README file lists out the steps to run HybPiper on Crisp101 data.
 
-- crisp101_target_loci.fa
+- Generating target file (output: `crisp101_target_loci.fa`)
     1. Download the concatenated alignment (<i>.phy</i>) and partition file (<i>.nex</i>) from <a href="https://datadryad.org/dataset/doi:10.5061/dryad.gb5mkkwww">Dryad</a>
     2. Partition the alignment into individual locus alignments
     3. For each locus, remove all gaps from each species
@@ -22,4 +22,4 @@ This README file lists out the steps to run HybPiper on Crisp101 data.
     ```
 
 ---
-<i>Last updated: 17 April 2025 by Jeremias Ivan</i>
+<i>Last updated: 22 April 2025 by Jeremias Ivan</i>
