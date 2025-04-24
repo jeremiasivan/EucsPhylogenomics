@@ -1,0 +1,72 @@
+##gff-version 2
+##source-version exonerate:protein2genome:local 2.4.0
+##date 2025-04-18
+##type DNA
+#
+#
+# seqname source feature start end score strand frame attributes
+#
+E_grandis	exonerate:protein2genome:local	gene	590	6628	3209	+	.	gene_id 1 ; sequence E_grandis ; gene_orientation + ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	cds	590	773	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	590	773	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	774	775	.	+	.	intron_id 1 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	774	1472	.	+	.	intron_id 1
+E_grandis	exonerate:protein2genome:local	splice3	1471	1472	.	+	.	intron_id 0 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	1473	1841	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	1473	1841	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	1842	1843	.	+	.	intron_id 2 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	1842	2480	.	+	.	intron_id 2
+E_grandis	exonerate:protein2genome:local	splice3	2479	2480	.	+	.	intron_id 1 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	2481	2749	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	2481	2749	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	2750	2751	.	+	.	intron_id 3 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	2750	2826	.	+	.	intron_id 3
+E_grandis	exonerate:protein2genome:local	splice3	2825	2826	.	+	.	intron_id 2 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	2827	2914	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	2827	2914	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	2915	2916	.	+	.	intron_id 4 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	2915	3115	.	+	.	intron_id 4
+E_grandis	exonerate:protein2genome:local	splice3	3114	3115	.	+	.	intron_id 3 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	3116	3291	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	3116	3291	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	3292	3293	.	+	.	intron_id 5 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	3292	3761	.	+	.	intron_id 5
+E_grandis	exonerate:protein2genome:local	splice3	3760	3761	.	+	.	intron_id 4 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	3762	3852	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	3762	3852	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	3853	3854	.	+	.	intron_id 6 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	3853	4156	.	+	.	intron_id 6
+E_grandis	exonerate:protein2genome:local	splice3	4155	4156	.	+	.	intron_id 5 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	4157	4276	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	4157	4276	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	4277	4278	.	+	.	intron_id 7 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	4277	4372	.	+	.	intron_id 7
+E_grandis	exonerate:protein2genome:local	splice3	4371	4372	.	+	.	intron_id 6 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	4373	4420	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	4373	4420	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	4421	4422	.	+	.	intron_id 8 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	4421	4511	.	+	.	intron_id 8
+E_grandis	exonerate:protein2genome:local	splice3	4510	4511	.	+	.	intron_id 7 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	4512	4588	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	4512	4588	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	4589	4590	.	+	.	intron_id 9 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	4589	4881	.	+	.	intron_id 9
+E_grandis	exonerate:protein2genome:local	splice3	4880	4881	.	+	.	intron_id 8 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	4882	4970	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	4882	4970	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	4971	4972	.	+	.	intron_id 10 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	4971	5340	.	+	.	intron_id 10
+E_grandis	exonerate:protein2genome:local	splice3	5339	5340	.	+	.	intron_id 9 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	5341	5452	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	5341	5452	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	5453	5454	.	+	.	intron_id 11 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	5453	5808	.	+	.	intron_id 11
+E_grandis	exonerate:protein2genome:local	splice3	5807	5808	.	+	.	intron_id 10 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	5809	5911	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	5809	5911	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	splice5	5912	5913	.	+	.	intron_id 12 ; splice_site "GT"
+E_grandis	exonerate:protein2genome:local	intron	5912	6398	.	+	.	intron_id 12
+E_grandis	exonerate:protein2genome:local	splice3	6397	6398	.	+	.	intron_id 11 ; splice_site "AG"
+E_grandis	exonerate:protein2genome:local	cds	6399	6628	.	+	.	
+E_grandis	exonerate:protein2genome:local	exon	6399	6628	.	+	.	insertions 0 ; deletions 0 ; identity 100.00 ; similarity 100.00
+E_grandis	exonerate:protein2genome:local	similarity	590	6628	3209	+	.	alignment_id 1 ; Query E_grandis ; Align 590 1 183 ; Align 1475 63 366 ; Align 2483 186 267 ; Align 2827 275 87 ; Align 3118 305 174 ; Align 3762 363 90 ; Align 4159 394 117 ; Align 4375 434 45 ; Align 4514 450 75 ; Align 4882 475 87 ; Align 5342 505 111 ; Align 5809 542 102 ; Align 6401 577 228
