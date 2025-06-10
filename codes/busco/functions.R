@@ -25,7 +25,7 @@ f_fasta2msa <- function(fn_input, header, fn_out) {
 }
 
 # function: extract BUSCO
-f_extract_busco <- function(ls_species, dir_busco, lineage, dir_output) {
+f_extract_busco <- function(ls_species, dir_busco, lineage, dir_output, is_redo) {
     # create output directory
     dir_output_all <- paste0(dir_output, "/all/")
     if (!dir.exists(dir_output_all)) {
@@ -46,8 +46,11 @@ f_extract_busco <- function(ls_species, dir_busco, lineage, dir_output) {
             fn_input_fasta <- paste0(dir_busco_fna, busco, ".fna")
             fn_output_fasta <- paste0(dir_output_all, busco, ".fna")
             
-            # combine BUSCO into one file
-            f_fasta2msa(fn_input_fasta, sp, fn_output_fasta)
+            if (!file.exists(fn_output_fasta) || is_redo) {
+                # combine BUSCO into one file
+                unlink(fn_output_fasta)
+                f_fasta2msa(fn_input_fasta, sp, fn_output_fasta)
+            }
         }
     }
 }

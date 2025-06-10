@@ -64,10 +64,10 @@ ls_eucalyptus <- ls_refseq[grepl("^E_",ls_refseq)]
 ls_non_eucalyptus <- ls_refseq[!ls_refseq%in%ls_eucalyptus]
 
 # extract BUSCO
-f_extract_busco(ls_refseq, params$dir_busco_refseq, params$busco_lineage, getwd())
+f_extract_busco(ls_refseq, params$dir_busco_refseq, params$busco_lineage, getwd(), params$redo)
 f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
               non_eucs_min_sp=1,
-              std_error=0.05,
+              std_error=0.1,
               dir_output=getwd(),
               thread=params$thread)
 
