@@ -11,7 +11,7 @@ output:
 
 params:
   # general
-  codedir: "~/SimNOW/codes"
+  codedir: "~/EucsPhylogenomics/codes/busco"
   outdir: "~/simulation"
   thread: 10
   redo: FALSE
@@ -23,9 +23,10 @@ params:
 
 ## Load required libraries and functions
 ```{r}
-source(paste0(params$codedir, "/busco596/functions.R"))
+source(paste0(params$codedir, "/functions.R"))
 
 library(data.table)
+library(doSNOW)
 library(tidyverse)
 ```
 
@@ -62,13 +63,12 @@ ls_refseq <- list.dirs(params$dir_busco_refseq, recursive=F, full.names=F)
 ls_eucalyptus <- ls_refseq[grepl("^E_",ls_refseq)]
 ls_non_eucalyptus <- ls_refseq[!ls_refseq%in%ls_eucalyptus]
 
-# extract BUSCO for non-Eucalyptus
-dir_output_non_eucalyptus <- paste0(getwd(), "/non_eucalyptus/")
-ls_busco_non_eucalyptus <- f_extract_busco(ls_non_eucalyptus, params$dir_busco_refseq, params$busco_lineage, dir_output_non_eucalyptus)
-f_check_busco(1, 0.05, dir_output_non_eucalyptus, params$thread)
+# extract BUSCO
+f_extract_busco(ls_refseq, params$dir_busco_refseq, params$busco_lineage, getwd())
+f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
+              non_eucs_min_sp=1,
+              std_error=0.05,
+              dir_output=getwd(),
+              thread=params$thread)
 
-# extract BUSCO for Eucalyptus
-dir_output_eucalyptus <- paste0(getwd(), "/eucalyptus/")
-ls_busco_eucalyptus <- f_extract_busco(ls_eucalyptus, params$dir_busco_refseq, params$busco_lineage, dir_output_eucalyptus)
-f_check_busco(length(ls_eucalyptus)/2, 0.05, dir_output_eucalyptus, params$thread)
 ```

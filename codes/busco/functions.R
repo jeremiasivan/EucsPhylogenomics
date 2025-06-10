@@ -26,9 +26,6 @@ f_fasta2msa <- function(fn_input, header, fn_out) {
 
 # function: extract BUSCO
 f_extract_busco <- function(ls_species, dir_busco, lineage, dir_output) {
-    # output list
-    output <- list()
-
     # create output directory
     dir_output_all <- paste0(dir_output, "/all/")
     if (!dir.exists(dir_output_all)) {
@@ -52,15 +49,11 @@ f_extract_busco <- function(ls_species, dir_busco, lineage, dir_output) {
             # combine BUSCO into one file
             f_fasta2msa(fn_input_fasta, sp, fn_output_fasta)
         }
-
-        output <- c(output, list(ls_busco))
     }
-
-    return(output)
 }
 
 # function: check BUSCO sequences
-f_check_busco <- function(min_sp, std_error, dir_output, thread) {
+f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, thread) {
     # create output directory
     dir_output_filtered <- paste0(dir_output, "/filtered/")
     if (!dir.exists(dir_output_filtered)) {
@@ -70,6 +63,7 @@ f_check_busco <- function(min_sp, std_error, dir_output, thread) {
     # list BUSCO
     dir_output_all <- paste0(dir_output, "/all/")
     ls_busco <- list.files(dir_output_all, pattern="*.fna$", recursive=F, full.names=F)
+    ls_busco <- gsub(".fna", "", ls_busco)
 
     # create doSNOW cluster
     nwcl <- makeCluster(thread)
@@ -96,9 +90,15 @@ f_check_busco <- function(min_sp, std_error, dir_output, thread) {
             }
         }
 
+        # extract sequences
+        filtered_seq <- seq[ls_idx_filtered]
+
+        ls_filtered_sp <- names(filtered_seq)
+        ls_filtered_eucs <- ls_filtered_sp[grepl("^E_",ls_filtered_sp)]
+        ls_filtered_non_eucs <- ls_filtered_sp[!ls_filtered_sp%in%ls_filtered_eucs]
+
         # check if the number of species suffices
-        if (length(ls_idx_filtered) >= min_sp) {
-            seq <- seq[ls_idx_filtered]
+        if (length(ls_filtered_eucs) >= eucs_min_sp && length(ls_filtered_non_eucs) >= non_eucs_min_sp) {
             seqinr::write.fasta(seq, names=names(seq), file.out=fn_output)
         }
     }
