@@ -1,0 +1,74 @@
+---
+title: "Extract BUSCO from Reference Sequences"
+author: "Jeremias Ivan"
+date: "`r format(Sys.time(), '%d %B %Y, %H:%M%p')`"
+
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_float: true
+
+params:
+  # general
+  codedir: "~/SimNOW/codes"
+  outdir: "~/simulation"
+  thread: 10
+  redo: FALSE
+
+  # input directory
+  dir_busco_refseq: ""
+  busco_lineage: ""
+---
+
+## Load required libraries and functions
+```{r}
+source(paste0(params$codedir, "/busco596/functions.R"))
+
+library(data.table)
+library(tidyverse)
+```
+
+```{r, include=FALSE}
+# install.packages("log4r")
+# install.packages("seqinr")
+
+# store initial system time
+sys_tic <- Sys.time()
+
+# create outdir
+currentdir <- paste0(params$outdir, "/")
+if (!dir.exists(currentdir)) {
+  dir.create(currentdir, recursive = T)
+}
+
+# create log file
+fn_log <- paste0(params$outdir, "/extract_ref_busco.log")
+log_appender <- log4r::file_appender(fn_log, append = TRUE, layout = log4r::default_log_layout())
+fn_logger <- log4r::logger(threshold = "INFO", appenders = log_appender)
+if (params$redo) {
+  unlink(fn_log)
+  write.table(c("SimNOW (Simulation Non-Overlapping Windows)",
+                "Developed by Jeremias Ivan"),
+              file=fn_log, quote=F, row.names=F, col.names=F)
+}
+
+knitr::opts_knit$set(root.dir = currentdir)
+```
+
+```{r}
+# extract list of references
+ls_refseq <- list.dirs(params$dir_busco_refseq, recursive=F, full.names=F)
+ls_eucalyptus <- ls_refseq[grepl("^E_",ls_refseq)]
+ls_non_eucalyptus <- ls_refseq[!ls_refseq%in%ls_eucalyptus]
+
+# extract BUSCO for non-Eucalyptus
+dir_output_non_eucalyptus <- paste0(getwd(), "/non_eucalyptus/")
+ls_busco_non_eucalyptus <- f_extract_busco(ls_non_eucalyptus, params$dir_busco_refseq, params$busco_lineage, dir_output_non_eucalyptus)
+f_check_busco(1, 0.05, dir_output_non_eucalyptus, params$thread)
+
+# extract BUSCO for Eucalyptus
+dir_output_eucalyptus <- paste0(getwd(), "/eucalyptus/")
+ls_busco_eucalyptus <- f_extract_busco(ls_eucalyptus, params$dir_busco_refseq, params$busco_lineage, dir_output_eucalyptus)
+f_check_busco(length(ls_eucalyptus)/2, 0.05, dir_output_eucalyptus, params$thread)
+```
