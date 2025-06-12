@@ -69,6 +69,7 @@ f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
               non_eucs_min_sp=1,
               std_error=0.1,
               dir_output=getwd(),
-              thread=params$thread)
+              thread=params$thread,
+              is_redo=params$redo)
 
 ```

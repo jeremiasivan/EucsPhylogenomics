@@ -56,7 +56,7 @@ f_extract_busco <- function(ls_species, dir_busco, lineage, dir_output, is_redo)
 }
 
 # function: check BUSCO sequences
-f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, thread) {
+f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, thread, is_redo) {
     # create output directory
     dir_output_filtered <- paste0(dir_output, "/filtered/")
     if (!dir.exists(dir_output_filtered)) {
@@ -76,6 +76,12 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
     foreach (busco = ls_busco) %dopar% {
         fn_input <- paste0(dir_output_all, busco, ".fna")
         fn_output <- paste0(dir_output_filtered, busco, ".fna")
+        if (file.exists(fn_output) && !is_redo) {
+            return(NULL)
+        }
+
+        # delete the output file
+        unlink(fn_output)
 
         # open the sequence
         seq <- seqinr::read.fasta(fn_input)
@@ -88,7 +94,7 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
         # filter out sequences that are too short or long
         ls_idx_filtered <- c()
         for (i in 1:length(seq)) {
-            if (length(seq[i]) >= min_len && length(seq[i]) <= max_len) {
+            if (length(seq[[i]]) >= min_len && length(seq[[i]]) <= max_len) {
                 ls_idx_filtered <- c(ls_idx_filtered, i)
             }
         }
