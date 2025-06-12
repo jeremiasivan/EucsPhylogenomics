@@ -19,6 +19,9 @@ params:
   # input directory
   dir_busco_refseq: ""
   busco_lineage: ""
+
+  # executable
+  exe_mafft: ""
 ---
 
 ## Load required libraries and functions
@@ -70,6 +73,6 @@ f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
               std_error=0.1,
               dir_output=getwd(),
               thread=params$thread,
-              is_redo=params$redo)
-
+              is_redo=params$redo,
+              exe_mafft=params$exe_mafft)
 ```

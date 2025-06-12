@@ -56,7 +56,7 @@ f_extract_busco <- function(ls_species, dir_busco, lineage, dir_output, is_redo)
 }
 
 # function: check BUSCO sequences
-f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, thread, is_redo) {
+f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, thread, is_redo, exe_mafft) {
     # create output directory
     dir_output_filtered <- paste0(dir_output, "/filtered/")
     if (!dir.exists(dir_output_filtered)) {
@@ -76,12 +76,14 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
     foreach (busco = ls_busco) %dopar% {
         fn_input <- paste0(dir_output_all, busco, ".fna")
         fn_output <- paste0(dir_output_filtered, busco, ".fna")
-        if (file.exists(fn_output) && !is_redo) {
+        fn_output_aligned <- paste0(dir_output_filtered, busco, "_aligned.fna")
+        if (all(file.exists(fn_output, fn_output_aligned)) && !is_redo) {
             return(NULL)
         }
 
         # delete the output file
         unlink(fn_output)
+        unlink(fn_output_aligned)
 
         # open the sequence
         seq <- seqinr::read.fasta(fn_input)
@@ -109,6 +111,9 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
         # check if the number of species suffices
         if (length(ls_filtered_eucs) >= eucs_min_sp && length(ls_filtered_non_eucs) >= non_eucs_min_sp) {
             seqinr::write.fasta(seq, names=names(seq), file.out=fn_output)
+
+            # run MAFFT
+            system(paste(exe_mafft, "--retree 2", fn_output, ">", fn_output_aligned))
         }
     }
 
