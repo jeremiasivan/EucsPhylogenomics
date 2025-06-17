@@ -110,7 +110,7 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
 
         # check if the number of species suffices
         if (length(ls_filtered_eucs) >= eucs_min_sp && length(ls_filtered_non_eucs) >= non_eucs_min_sp) {
-            seqinr::write.fasta(seq, names=names(seq), file.out=fn_output)
+            seqinr::write.fasta(filtered_seq, names=names(filtered_seq), file.out=fn_output)
 
             # run MAFFT
             system(paste(exe_mafft, "--retree 2", fn_output, ">", fn_output_aligned))
