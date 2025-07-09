@@ -45,12 +45,9 @@ f_extract_busco <- function(ls_species, dir_busco, lineage, dir_output, is_redo)
         for (busco in ls_busco) {
             fn_input_fasta <- paste0(dir_busco_fna, busco, ".fna")
             fn_output_fasta <- paste0(dir_output_all, busco, ".fna")
-            
-            if (!file.exists(fn_output_fasta) || is_redo) {
-                # combine BUSCO into one file
-                unlink(fn_output_fasta)
-                f_fasta2msa(fn_input_fasta, sp, fn_output_fasta)
-            }
+        
+            # combine BUSCO into one file
+            f_fasta2msa(fn_input_fasta, sp, fn_output_fasta)
         }
     }
 }
@@ -153,7 +150,7 @@ f_remove_seq <- function(fn_fasta, fn_output, threshold) {
         seq_chr <- as.character(seq[i])
         
         # count the proportion of gaps
-        if (str_count(seq_chr,"-") >= threshold*str_count(seq_chr)) {
+        if (stringr::str_count(seq_chr,"-") >= threshold*stringr::str_count(seq_chr)) {
             pl <- c(pl, i)
         }
     };

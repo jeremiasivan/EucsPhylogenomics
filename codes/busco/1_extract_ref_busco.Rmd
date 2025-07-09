@@ -201,6 +201,8 @@ fn_summary <- paste0(currentdir, "/summary.tsv")
 
 # iterate over BUSCO
 df_busco_summary <- foreach (gene = ls_genes, .combine='rbind') %dopar% {
+  require(stringr)
+
   # initial sequences
   seq0 <- Biostrings::readDNAStringSet(paste0(currentdir, "/all/", gene, ".fna"))
   seq0_sp <- length(seq0)
