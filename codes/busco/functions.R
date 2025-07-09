@@ -75,8 +75,8 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
     # iterate over BUSCO
     foreach (busco = ls_busco) %dopar% {
         fn_input <- paste0(dir_output_all, busco, ".fna")
-        fn_output <- paste0(dir_output_filtered, busco, ".fna")
-        fn_output_aligned <- paste0(dir_output_filtered, busco, "_aligned.fna")
+        fn_output <- paste0(dir_output_filtered, "step1_", busco, ".fna")
+        fn_output_aligned <- paste0(dir_output_filtered, "step1_", busco, "_aligned.fna")
         if (all(file.exists(fn_output, fn_output_aligned)) && !is_redo) {
             return(NULL)
         }
@@ -118,4 +118,94 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
     }
 
     stopCluster(nwcl)
+
+    return(ls_busco)
+}
+
+# function: run TAPER
+f_taper_dna <- function(fn_fasta, fn_output, exe_taper) {
+    cmd_taper <- paste(exe_taper, "-m -", fn_fasta, ">", fn_output)
+    system(cmd_taper)
+}
+
+# function: convert "N" to gaps
+f_n2gap <- function(fn_fasta, fn_output) {
+    # read the DNA alignment
+    seq <- Biostrings::readDNAStringSet(fn_fasta, format="fasta")
+
+    # convert "N" to gaps
+    for (i in 1:length(seq)) {
+        seq[i] <- gsub("N", "-", seq[i])
+    }
+
+    # save the new DNA alignment
+    Biostrings::writeXStringSet(seq, filepath=fn_output)
+}
+
+# function: delete sequence with >=threshold gaps
+f_remove_seq <- function(fn_fasta, fn_output, threshold) {
+    # read the DNA alignment
+    seq <- Biostrings::readDNAStringSet(fn_fasta, format="fasta")
+
+    # iterate over sequences
+    pl <- c()
+    for (i in 1:length(seq)) {
+        seq_chr <- as.character(seq[i])
+        
+        # count the proportion of gaps
+        if (str_count(seq_chr,"-") >= threshold*str_count(seq_chr)) {
+            pl <- c(pl, i)
+        }
+    };
+   
+    # remove sequences with >=50% gaps
+    if (length(pl)>0) {
+      seq <- seq[-pl]
+    }
+
+    # save the new DNA alignment
+    Biostrings::writeXStringSet(seq, filepath=fn_output)
+}
+
+# function: delete columns with >=threshold gaps
+f_remove_col <- function(fn_fasta, fn_output, threshold) {
+    # read the multiple sequence alignment
+    seq <- Biostrings::readDNAStringSet(fn_fasta, format="fasta")
+    seq <- as.character(seq)
+
+    # convert sequence into matrix
+    seq_matrix <- do.call(rbind, strsplit(seq, ""))
+
+    # count the number of sequences
+    n_seqs <- nrow(seq_matrix)
+
+    # function to check gap proportion per column
+    is_valid_site <- function(column, threshold) {
+        gap_count <- sum(column == "-")
+        return((gap_count / n_seqs) <= 0.5)
+    }
+
+    # extract columns with <50% gaps
+    valid_sites <- apply(seq_matrix, 2, is_valid_site, threshold=threshold)
+    seq_matrix_filtered <- seq_matrix[, valid_sites]
+    seq_matrix_filtered <- Biostrings::DNAStringSet(apply(seq_matrix_filtered, 1, paste0, collapse=""))
+
+    # save the new DNA alignment
+    Biostrings::writeXStringSet(seq_matrix_filtered, filepath=fn_output)
+}
+
+# function: run FastTree
+f_fasttree <- function(fn_fasta, fn_output, exe_fasttree) {
+    cmd_fasttree <- paste(exe_fasttree, fn_fasta, ">", fn_output)
+    system(cmd_fasttree)
+}
+
+# function: run TreeShrink
+f_treeshrink <- function(fn_input, prefix, dir_output, fn_log, exe_treeshrink) {
+    cmd_treeshrink <- paste("python", exe_treeshrink,
+                            "-t", fn_input,
+                            "-O", prefix,
+                            "-o", dir_output,
+                            ">", fn_log)
+    system(cmd_treeshrink)
 }

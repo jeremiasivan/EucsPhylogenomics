@@ -20,8 +20,14 @@ params:
   dir_busco_refseq: ""
   busco_lineage: ""
 
+  # input files
+  fn_refseq: ""
+
   # executable
   exe_mafft: ""
+  exe_taper: ""
+  exe_fasttree: ""
+  exe_treeshrink: ""
 ---
 
 ## Load required libraries and functions
@@ -34,6 +40,8 @@ library(tidyverse)
 ```
 
 ```{r, include=FALSE}
+# install.packages("ape")
+# install.packages("Biostrings")
 # install.packages("log4r")
 # install.packages("seqinr")
 
@@ -67,12 +75,183 @@ ls_eucalyptus <- ls_refseq[grepl("^E_",ls_refseq)]
 ls_non_eucalyptus <- ls_refseq[!ls_refseq%in%ls_eucalyptus]
 
 # extract BUSCO
-f_extract_busco(ls_refseq, params$dir_busco_refseq, params$busco_lineage, getwd(), params$redo)
-f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
-              non_eucs_min_sp=1,
-              std_error=0.1,
-              dir_output=getwd(),
-              thread=params$thread,
-              is_redo=params$redo,
-              exe_mafft=params$exe_mafft)
+f_extract_busco(ls_refseq, params$dir_busco_refseq, params$busco_lineage, currentdir, params$redo)
+ls_busco <- f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
+                          non_eucs_min_sp=1,
+                          std_error=0.1,
+                          dir_output=currentdir,
+                          thread=params$thread,
+                          is_redo=params$redo,
+                          exe_mafft=params$exe_mafft)
+```
+
+```{r filter-seq}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# output directory
+dir_output_filtered <- paste0(dir_output, "/filtered/")
+
+# run TAPER
+foreach (busco = ls_busco) %dopar% {
+  fn_input <- paste0(dir_output_filtered, "step1_", busco, "_aligned.fna")
+  fn_output <- paste0(dir_output_filtered, "step2_", busco, ".fna")
+  f_taper_dna(fn_input, fn_output, params$exe_taper)
+}
+
+# remove sequences and columns with >=50% gaps
+foreach (busco = ls_busco) %dopar% {
+  fn_input <- paste0(dir_output_filtered, "step2_", busco, ".fna")
+  fn_output_step3 <- paste0(dir_output_filtered, "step3_", busco, ".fna")
+  fn_output_step4 <- paste0(dir_output_filtered, "step4_", busco, ".fna")
+
+  f_remove_seq(fn_input, fn_output_step3, 0.5)
+  f_remove_col(fn_output_step3, fn_output_step4, 0.5)
+}
+
+stopCluster(nwcl)
+```
+
+```{r filter-tree}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# output directory
+dir_output_tree <- paste0(dir_output, "/tree/")
+if (!dir.exists(dir_output_tree)) {
+  dir.create(dir_output_tree, recursive=T)
+}
+
+# run FastTree
+foreach (busco = ls_busco) %dopar% {
+  fn_input <- paste0(dir_output_filtered, "step4_", busco, ".fna")
+  fn_output <- paste0(dir_output_tree, "step4_", busco, ".treefile")
+  f_fasttree(fn_input, fn_output, params$exe_fasttree)
+}
+
+# run TreeShrink
+foreach (busco = ls_busco) %dopar% {
+  fn_input <- paste0(dir_output_tree, "step4_", busco, ".treefile")
+  fn_log <- paste0(dir_output_tree, "step4_", busco, "_treeshrink.log")
+  prefix <- paste0("step4_", busco, "_treeshrink")
+
+  f_treeshrink(fn_input, prefix, dir_output_tree, fn_log, params$exe_treeshrink)
+}
+
+stopCluster(nwcl)
+```
+
+```{r extract-final}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# output directory
+dir_output_final <- paste0(dir_output, "/final/")
+if (!dir.exists(dir_output_final)) {
+  dir.create(dir_output_final, recursive=T)
+}
+
+# read reference taxonomy
+df_refseq <- data.table::fread(params$fn_refseq)
+
+# extract the final sequences
+ls_genes <- foreach (busco = ls_busco) %dopar% {
+  fn_input <- paste0(dir_output_filtered, "step4_", busco, ".fna")
+  fn_treefile <- paste0(dir_output_tree, "step4_", busco, "_treeshrink.treefile")
+  fn_output <- paste0(dir_output_final, busco, ".fna")
+    
+  # read DNA alignment
+  seq <- Biostrings::readDNAStringSet(fn_input)
+
+  # read treefile
+  tre <- ape::read.tree(fn_treefile)
+
+  # check if the number of sequences suffices
+  ls_filtered_eucs <- tre$tip.label[grepl("^E_",tre$tip.label)]
+  ls_filtered_non_eucs <- tre$tip.label[!tre$tip.label%in%ls_filtered_eucs]
+
+  # check if the number of species suffices
+  if (length(ls_filtered_eucs) >= length(ls_eucalyptus)/2 && length(ls_filtered_non_eucs) >= 1) {
+    seq_filtered <- seq[names(seq)%in%tre$tip.label]
+
+    # convert the tip.labels
+    for (i in 1:nrow(df_refseq)) {
+      names(seq_filtered) <- gsub(df_refseq$species[i], paste0(df_refseq$species[i], "_", df_refseq$section[i], "_", df_refseq$subgenus[i]), names(seq_filtered))
+    }
+    
+    # save the new DNA alignment
+    Biostrings::writeXStringSet(seq_filtered, filepath=fn_output)
+    return(busco)
+  }
+}
+
+stopCluster(nwcl)
+```
+
+```{r summary}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# output file
+fn_summary <- paste0(currentdir, "/summary.tsv")
+
+# iterate over BUSCO
+df_busco_summary <- foreach (gene = ls_genes, .combine='rbind') %dopar% {
+  # initial sequences
+  seq0 <- Biostrings::readDNAStringSet(paste0(currentdir, "/all/", gene, ".fna"))
+  seq0_sp <- length(seq0)
+  seq0_min_len <- min(stringr::str_count(as.character(seq0)))
+  seq0_max_len <- max(stringr::str_count(as.character(seq0)))
+
+  # step 1: filter sequences with >=10% length difference to the median length
+  seq1 <- Biostrings::readDNAStringSet(paste0(currentdir, "/filtered/", gene, ".fna"))
+  seq1_sp <- length(seq1)
+  seq1_min_len <- min(stringr::str_count(as.character(seq1)))
+  seq1_max_len <- max(stringr::str_count(as.character(seq1)))
+
+  seq1_aligned <- Biostrings::readDNAStringSet(paste0(currentdir, "/filtered/", gene, "_aligned.fna"))
+  seq1_aligned_len <- str_count(as.character(seq1_aligned[1]))
+  seq1_aligned_gappercent <- round(sum(str_count(as.character(seq1_aligned), "-")) / sum(str_count(as.character(seq1_aligned))) * 100, 3)
+  
+  # step 2: run TAPER
+  seq2 <- Biostrings::readDNAStringSet(paste0(dir_output_filtered, "step2_", busco, ".fna"))
+  seq2_gappercent <- round(sum(str_count(as.character(seq2), "-")) / sum(str_count(as.character(seq2))) * 100, 3)
+
+  # step 3: remove sequences with >=50% gaps
+  seq3 <- Biostrings::readDNAStringSet(paste0(dir_output_filtered, "step3_", busco, ".fna"))
+  seq3_sp <- length(seq3)
+  seq3_gappercent <- round(sum(str_count(as.character(seq3), "-")) / sum(str_count(as.character(seq3))) * 100, 3)
+
+  # step 4: remove columns with >=50% gaps
+  seq4 <- Biostrings::readDNAStringSet(paste0(dir_output_filtered, "step4_", busco, ".fna"))
+  seq4_len <- str_count(as.character(seq4[1]))
+  seq4_gappercent <- round(sum(str_count(as.character(seq4), "-")) / sum(str_count(as.character(seq4))) * 100, 3)
+
+  # step 5: run TreeShrink and exclude busco with insufficient number of species
+  seq_final <- Biostrings::readDNAStringSet(paste0(dir_output_final, busco, ".fna"))
+  seq_final_sp <- length(seq_final)
+  seq_final_len <- str_count(as.character(seq_final[1]))
+  seq_final_gappercent <- round(sum(str_count(as.character(seq_final), "-")) / sum(str_count(as.character(seq_final))) * 100, 3)
+
+  return(data.table::data.table(busco=gene,
+                                init_sp=seq0_sp, init_min_len=seq0_min_len, init_max_len=seq0_max_len,
+                                step1_10length_sp=seq1_sp, step1_10length_min_len=seq1_min_len, step1_10length_max_len=seq1_max_len,
+                                step1_aligned_len=seq1_aligned_len, step1_aligned_gap=seq1_aligned_gappercent,
+                                step2_taper_gap=seq2_gappercent,
+                                step3_50gaps_sp=seq3_sp, step3_50gaps_gap=seq3_gappercent,
+                                step4_50colgaps_len=seq4_len, step4_50colgaps_gap=seq4_gappercent,
+                                final_sp=seq_final_sp, final_len=seq_final_len, final_gap=seq_final_gappercent,
+                                sp_percent=round(seq_final_sp/seq0_sp*100,3),
+                                len_percent=round(seq_final_len/seq1_aligned_len*100,3)
+                                ))
+}
+
+# save data.table
+data.table::fwrite(df_busco_summary, file=fn_summary, quote=F, sep="\t")
+
+stopCluster(nwcl)
 ```
