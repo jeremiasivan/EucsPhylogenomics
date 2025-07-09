@@ -124,7 +124,7 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
 
 # function: run TAPER
 f_taper_dna <- function(fn_fasta, fn_output, exe_taper) {
-    cmd_taper <- paste(exe_taper, "-m -", fn_fasta, ">", fn_output)
+    cmd_taper <- paste("julia", exe_taper, "-m -", fn_fasta, ">", fn_output)
     system(cmd_taper)
 }
 

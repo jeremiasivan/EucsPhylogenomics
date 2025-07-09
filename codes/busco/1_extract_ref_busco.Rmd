@@ -91,7 +91,7 @@ nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
 
 # output directory
-dir_output_filtered <- paste0(dir_output, "/filtered/")
+dir_output_filtered <- paste0(currentdir, "/filtered/")
 
 # run TAPER
 foreach (busco = ls_busco) %dopar% {
@@ -119,7 +119,7 @@ nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
 
 # output directory
-dir_output_tree <- paste0(dir_output, "/tree/")
+dir_output_tree <- paste0(currentdir, "/tree/")
 if (!dir.exists(dir_output_tree)) {
   dir.create(dir_output_tree, recursive=T)
 }
@@ -149,7 +149,7 @@ nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
 
 # output directory
-dir_output_final <- paste0(dir_output, "/final/")
+dir_output_final <- paste0(currentdir, "/final/")
 if (!dir.exists(dir_output_final)) {
   dir.create(dir_output_final, recursive=T)
 }
