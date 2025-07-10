@@ -115,8 +115,6 @@ f_check_busco <- function(eucs_min_sp, non_eucs_min_sp, std_error, dir_output, t
     }
 
     stopCluster(nwcl)
-
-    return(ls_busco)
 }
 
 # function: run TAPER

@@ -76,7 +76,7 @@ ls_non_eucalyptus <- ls_refseq[!ls_refseq%in%ls_eucalyptus]
 
 # extract BUSCO
 f_extract_busco(ls_refseq, params$dir_busco_refseq, params$busco_lineage, currentdir, params$redo)
-ls_busco <- f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
+f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
                           non_eucs_min_sp=1,
                           std_error=0.1,
                           dir_output=currentdir,
@@ -92,6 +92,11 @@ registerDoSNOW(nwcl)
 
 # output directory
 dir_output_filtered <- paste0(currentdir, "/filtered/")
+
+# extract list of BUSCO
+ls_busco <- list.files(dir_output_filtered, pattern="*_aligned.fna", recursive=F, full.names=F)
+ls_busco <- gsub("_aligned.fna", "", ls_busco)
+ls_busco <- gsub("step1_", "", ls_busco)
 
 # run TAPER
 foreach (busco = ls_busco) %dopar% {
