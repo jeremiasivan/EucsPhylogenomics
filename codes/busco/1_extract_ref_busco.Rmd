@@ -162,7 +162,7 @@ if (!dir.exists(dir_output_final)) {
 df_refseq <- data.table::fread(params$fn_refseq)
 
 # extract the final sequences
-ls_genes <- foreach (busco = ls_busco) %dopar% {
+foreach (busco = ls_busco) %dopar% {
   fn_input <- paste0(dir_output_filtered, "step4_", busco, ".fna")
   fn_treefile <- paste0(dir_output_tree, "step4_", busco, "_treeshrink.treefile")
   fn_output <- paste0(dir_output_final, busco, ".fna")
@@ -188,7 +188,6 @@ ls_genes <- foreach (busco = ls_busco) %dopar% {
     
     # save the new DNA alignment
     Biostrings::writeXStringSet(seq_filtered, filepath=fn_output)
-    return(busco)
   }
 }
 
@@ -203,8 +202,12 @@ registerDoSNOW(nwcl)
 # output file
 fn_summary <- paste0(currentdir, "/summary.tsv")
 
+# extract list of genes
+ls_busco <- list.files(dir_output_final, pattern="*.fna$", recursive=F, full.names=F)
+ls_busco <- gsub(".fna", "", ls_busco)
+
 # iterate over BUSCO
-df_busco_summary <- foreach (gene = ls_genes, .combine='rbind') %dopar% {
+df_busco_summary <- foreach (gene = ls_busco, .combine='rbind') %dopar% {
   require(stringr)
 
   # initial sequences
@@ -214,12 +217,12 @@ df_busco_summary <- foreach (gene = ls_genes, .combine='rbind') %dopar% {
   seq0_max_len <- max(stringr::str_count(as.character(seq0)))
 
   # step 1: filter sequences with >=10% length difference to the median length
-  seq1 <- Biostrings::readDNAStringSet(paste0(currentdir, "/filtered/", gene, ".fna"))
+  seq1 <- Biostrings::readDNAStringSet(paste0(currentdir, "/filtered/step1_", gene, ".fna"))
   seq1_sp <- length(seq1)
   seq1_min_len <- min(stringr::str_count(as.character(seq1)))
   seq1_max_len <- max(stringr::str_count(as.character(seq1)))
 
-  seq1_aligned <- Biostrings::readDNAStringSet(paste0(currentdir, "/filtered/", gene, "_aligned.fna"))
+  seq1_aligned <- Biostrings::readDNAStringSet(paste0(currentdir, "/filtered/step1_", gene, "_aligned.fna"))
   seq1_aligned_len <- str_count(as.character(seq1_aligned[1]))
   seq1_aligned_gappercent <- round(sum(str_count(as.character(seq1_aligned), "-")) / sum(str_count(as.character(seq1_aligned))) * 100, 3)
   
