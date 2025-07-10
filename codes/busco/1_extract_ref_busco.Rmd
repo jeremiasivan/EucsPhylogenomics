@@ -101,7 +101,7 @@ foreach (busco = ls_busco) %dopar% {
 }
 
 # remove sequences and columns with >=50% gaps
-foreach (busco = ls_busco) %dopar% {
+for (busco in ls_busco) {
   fn_input <- paste0(dir_output_filtered, "step2_", busco, ".fna")
   fn_output_step3 <- paste0(dir_output_filtered, "step3_", busco, ".fna")
   fn_output_step4 <- paste0(dir_output_filtered, "step4_", busco, ".fna")

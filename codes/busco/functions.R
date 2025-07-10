@@ -177,13 +177,13 @@ f_remove_col <- function(fn_fasta, fn_output, threshold) {
     n_seqs <- nrow(seq_matrix)
 
     # function to check gap proportion per column
-    is_valid_site <- function(column, threshold) {
+    is_valid_site <- function(column) {
         gap_count <- sum(column == "-")
-        return((gap_count / n_seqs) <= 0.5)
+        return((gap_count / n_seqs) <= threshold)
     }
 
     # extract columns with <50% gaps
-    valid_sites <- apply(seq_matrix, 2, is_valid_site, threshold=threshold)
+    valid_sites <- apply(seq_matrix, 2, is_valid_site)
     seq_matrix_filtered <- seq_matrix[, valid_sites]
     seq_matrix_filtered <- Biostrings::DNAStringSet(apply(seq_matrix_filtered, 1, paste0, collapse=""))
 
