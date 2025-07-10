@@ -106,7 +106,7 @@ foreach (busco = ls_busco) %dopar% {
 }
 
 # remove sequences and columns with >=50% gaps
-for (busco in ls_busco) {
+foreach (busco = ls_busco) %dopar% {
   fn_input <- paste0(dir_output_filtered, "step2_", busco, ".fna")
   fn_output_step3 <- paste0(dir_output_filtered, "step3_", busco, ".fna")
   fn_output_step4 <- paste0(dir_output_filtered, "step4_", busco, ".fna")
@@ -139,10 +139,9 @@ foreach (busco = ls_busco) %dopar% {
 # run TreeShrink
 foreach (busco = ls_busco) %dopar% {
   fn_input <- paste0(dir_output_tree, "step4_", busco, ".treefile")
-  fn_log <- paste0(dir_output_tree, "step4_", busco, "_treeshrink.log")
   prefix <- paste0("step4_", busco, "_treeshrink")
 
-  f_treeshrink(fn_input, prefix, dir_output_tree, fn_log, params$exe_treeshrink)
+  f_treeshrink(fn_input, prefix, dir_output_tree, params$exe_treeshrink)
 }
 
 stopCluster(nwcl)

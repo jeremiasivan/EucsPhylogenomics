@@ -196,11 +196,10 @@ f_fasttree <- function(fn_fasta, fn_output, exe_fasttree) {
 }
 
 # function: run TreeShrink
-f_treeshrink <- function(fn_input, prefix, dir_output, fn_log, exe_treeshrink) {
+f_treeshrink <- function(fn_input, prefix, dir_output, exe_treeshrink) {
     cmd_treeshrink <- paste("python", exe_treeshrink,
                             "-t", fn_input,
                             "-O", prefix,
-                            "-o", dir_output,
-                            ">", fn_log)
+                            "-o", dir_output)
     system(cmd_treeshrink)
 }
