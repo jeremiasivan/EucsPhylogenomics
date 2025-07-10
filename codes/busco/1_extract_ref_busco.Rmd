@@ -78,7 +78,7 @@ ls_non_eucalyptus <- ls_refseq[!ls_refseq%in%ls_eucalyptus]
 f_extract_busco(ls_refseq, params$dir_busco_refseq, params$busco_lineage, currentdir, params$redo)
 f_check_busco(eucs_min_sp=length(ls_eucalyptus)/2,
                           non_eucs_min_sp=1,
-                          std_error=0.1,
+                          std_error=0.05,
                           dir_output=currentdir,
                           thread=params$thread,
                           is_redo=params$redo,
@@ -207,22 +207,22 @@ ls_busco <- list.files(dir_output_final, pattern="*.fna$", recursive=F, full.nam
 ls_busco <- gsub(".fna", "", ls_busco)
 
 # iterate over BUSCO
-df_busco_summary <- foreach (gene = ls_busco, .combine='rbind') %dopar% {
+df_busco_summary <- foreach (busco = ls_busco, .combine='rbind') %dopar% {
   require(stringr)
 
   # initial sequences
-  seq0 <- Biostrings::readDNAStringSet(paste0(currentdir, "/all/", gene, ".fna"))
+  seq0 <- Biostrings::readDNAStringSet(paste0(currentdir, "/all/", busco, ".fna"))
   seq0_sp <- length(seq0)
   seq0_min_len <- min(stringr::str_count(as.character(seq0)))
   seq0_max_len <- max(stringr::str_count(as.character(seq0)))
 
   # step 1: filter sequences with >=10% length difference to the median length
-  seq1 <- Biostrings::readDNAStringSet(paste0(currentdir, "/filtered/step1_", gene, ".fna"))
+  seq1 <- Biostrings::readDNAStringSet(paste0(dir_output_filtered, "step1_", busco, ".fna"))
   seq1_sp <- length(seq1)
   seq1_min_len <- min(stringr::str_count(as.character(seq1)))
   seq1_max_len <- max(stringr::str_count(as.character(seq1)))
 
-  seq1_aligned <- Biostrings::readDNAStringSet(paste0(currentdir, "/filtered/step1_", gene, "_aligned.fna"))
+  seq1_aligned <- Biostrings::readDNAStringSet(paste0(dir_output_filtered, "step1_", busco, "_aligned.fna"))
   seq1_aligned_len <- str_count(as.character(seq1_aligned[1]))
   seq1_aligned_gappercent <- round(sum(str_count(as.character(seq1_aligned), "-")) / sum(str_count(as.character(seq1_aligned))) * 100, 3)
   
@@ -246,7 +246,7 @@ df_busco_summary <- foreach (gene = ls_busco, .combine='rbind') %dopar% {
   seq_final_len <- str_count(as.character(seq_final[1]))
   seq_final_gappercent <- round(sum(str_count(as.character(seq_final), "-")) / sum(str_count(as.character(seq_final))) * 100, 3)
 
-  return(data.table::data.table(busco=gene,
+  return(data.table::data.table(busco=busco,
                                 init_sp=seq0_sp, init_min_len=seq0_min_len, init_max_len=seq0_max_len,
                                 step1_10length_sp=seq1_sp, step1_10length_min_len=seq1_min_len, step1_10length_max_len=seq1_max_len,
                                 step1_aligned_len=seq1_aligned_len, step1_aligned_gap=seq1_aligned_gappercent,
