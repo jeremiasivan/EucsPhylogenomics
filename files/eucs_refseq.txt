@@ -34,3 +34,4 @@ GCA_017140475.1	E_fibrosa	Symphyomyrtus	Adnataria
 GCA_017140595.1	E_curtisii	Acerosae	N/A
 GCA_017140615.1	E_cladocalyx	Symphyomyrtus	Sejunctae
 GCF_016545825.1	E_grandis	Symphyomyrtus	Latoangulatae
+GCA_XXXXXXXXXXX E_pauciflora    Eucalyptus  Eucalyptus

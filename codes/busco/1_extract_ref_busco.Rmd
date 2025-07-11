@@ -248,7 +248,7 @@ df_busco_summary <- foreach (busco = ls_busco, .combine='rbind') %dopar% {
 
   return(data.table::data.table(busco=busco,
                                 init_sp=seq0_sp, init_min_len=seq0_min_len, init_max_len=seq0_max_len,
-                                step1_10length_sp=seq1_sp, step1_10length_min_len=seq1_min_len, step1_10length_max_len=seq1_max_len,
+                                step1_length_sp=seq1_sp, step1_length_min_len=seq1_min_len, step1_length_max_len=seq1_max_len,
                                 step1_aligned_len=seq1_aligned_len, step1_aligned_gap=seq1_aligned_gappercent,
                                 step2_taper_gap=seq2_gappercent,
                                 step3_50gaps_sp=seq3_sp, step3_50gaps_gap=seq3_gappercent,
@@ -260,6 +260,7 @@ df_busco_summary <- foreach (busco = ls_busco, .combine='rbind') %dopar% {
 }
 
 # save data.table
+df_busco_summary <- df_busco_summary[stringr::str_order(busco, numeric=T),]
 data.table::fwrite(df_busco_summary, file=fn_summary, quote=F, sep="\t")
 
 stopCluster(nwcl)
