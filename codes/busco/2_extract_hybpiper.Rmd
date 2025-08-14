@@ -111,18 +111,19 @@ registerDoSNOW(nwcl)
 for (sp in ls_species) {
     # HybPiper output directory
     outdir_sp <- paste0(params$dir_hybpiper_output, "/", sp, "/")
-    fn_paralogs <- paste0(outdir_sp, sp, "_genes_with_long_paralog_warnings.txt")
-    if (!file.exists(fn_paralogs)) {
-        log4r::warn(fn_logger, paste0("Error: paralogs information unavailable for ", sp))
-    }
 
     # extract list of BUSCO
     ls_busco <- list.dirs(outdir_sp, recursive=F, full.names=F)
 
     # read file containing paralogs
-    ls_paralogs <- readLines(fn_paralogs)
-    ls_paralogs <- sapply(ls_paralogs, function(x) { unlist(strsplit(x, "-"))[2] })
-    ls_busco <- ls_busco[!ls_busco%in%ls_paralogs]
+    fn_paralogs <- paste0(outdir_sp, sp, "_genes_with_long_paralog_warnings.txt")
+    if (!file.exists(fn_paralogs)) {
+        log4r::warn(fn_logger, paste0("Error: paralogs information unavailable for ", sp))
+    } else {
+        ls_paralogs <- readLines(fn_paralogs)
+        ls_paralogs <- sapply(ls_paralogs, function(x) { unlist(strsplit(x, "-"))[2] })
+        ls_busco <- ls_busco[!ls_busco%in%ls_paralogs]
+    }
 
     # iterate over BUSCO
     foreach (busco = ls_busco) %dopar% {
