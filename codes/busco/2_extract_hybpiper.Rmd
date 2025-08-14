@@ -68,6 +68,8 @@ seq <- Biostrings::readDNAStringSet(params$fn_target_dna)
 
 ls_target_busco <- names(seq)
 ls_target_busco <- unique(sapply(ls_target_busco, function(x) { unlist(strsplit(x, "-"))[2] }))
+ls_target_busco <- gsub(" ", "", ls_target_busco)
+
 log4r::info(fn_logger, paste0("Number of BUSCO: ", length(ls_target_busco)))
 
 # create doSNOW clusters
@@ -110,6 +112,9 @@ for (sp in ls_species) {
     # HybPiper output directory
     outdir_sp <- paste0(params$dir_hybpiper_output, "/", sp, "/")
     fn_paralogs <- paste0(outdir_sp, sp, "_genes_with_long_paralog_warnings.txt")
+    if (!file.exists(fn_paralogs)) {
+        log4r::warn(fn_logger, paste0("Error: paralogs information unavailable for ", sp))
+    }
 
     # extract list of BUSCO
     ls_busco <- list.dirs(outdir_sp, recursive=F, full.names=F)
@@ -129,11 +134,6 @@ for (sp in ls_species) {
         }
 
         fn_out_fa <- paste0(params$outdir, "/", busco, "/", busco, ".fa")
-        if (!file.exists(fn_out_fa)) {
-            log4r::error(fn_logger, paste0("Error: reference sequences unavailable for ", busco))
-            return(NULL)
-        }
-
         f_fasta2msa(fn_in_fa, sp, fn_out_fa)
     }
 }
