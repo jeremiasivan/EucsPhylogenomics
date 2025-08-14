@@ -120,9 +120,13 @@ for (sp in ls_species) {
     ls_busco <- ls_busco[!ls_busco%in%ls_paralogs]
 
     # iterate over BUSCO
-    foreach(busco = ls_busco) %dopar% {
+    foreach (busco = ls_busco) %dopar% {
         # output file
         fn_in_fa <- paste0(outdir_sp, busco, "/", sp, "/sequences/FNA/", busco, ".FNA")
+        if (!file.exists(fn_in_fa)) {
+            log4r::error(fn_logger, paste0("Error: ", busco, " for ", sp))
+        }
+        
         fn_out_fa <- paste0(params$outdir, "/", busco, "/", busco, ".fa")
         f_fasta2msa(fn_in_fa, sp, fn_out_fa)
     }
