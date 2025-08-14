@@ -53,7 +53,7 @@ if (!dir.exists(currentdir)) {
 fn_log <- paste0(params$outdir, "/extract_hybpiper.log")
 log_appender <- log4r::file_appender(fn_log, append = TRUE, layout = log4r::default_log_layout())
 fn_logger <- log4r::logger(threshold = "INFO", appenders = log_appender)
-if (params$redo) {
+if (params$redo || !file.exists(fn_log)) {
   unlink(fn_log)
   write.table(c("EucsPhylogenomics",
                 "Developed by Jeremias Ivan"),
@@ -126,7 +126,7 @@ for (sp in ls_species) {
         if (!file.exists(fn_in_fa)) {
             log4r::error(fn_logger, paste0("Error: ", busco, " for ", sp))
         }
-        
+
         fn_out_fa <- paste0(params$outdir, "/", busco, "/", busco, ".fa")
         f_fasta2msa(fn_in_fa, sp, fn_out_fa)
     }
