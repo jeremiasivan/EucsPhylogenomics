@@ -38,7 +38,6 @@ library(tidyverse)
 # install.packages("ape")
 # install.packages("Biostrings")
 # install.packages("log4r")
-# install.packages("seqinr")
 
 # store initial system time
 sys_tic <- Sys.time()
@@ -68,7 +67,7 @@ knitr::opts_knit$set(root.dir = currentdir)
 seq <- Biostrings::readDNAStringSet(params$fn_target_dna)
 
 ls_target_busco <- names(seq)
-ls_target_busco <- sapply(ls_target_busco, function(x) { unlist(strsplit(x, "-"))[2] })
+ls_target_busco <- unique(sapply(ls_target_busco, function(x) { unlist(strsplit(x, "-"))[2] }))
 
 # create doSNOW clusters
 nwcl <- makeCluster(params$thread)
