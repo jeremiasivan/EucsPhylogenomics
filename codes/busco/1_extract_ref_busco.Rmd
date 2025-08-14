@@ -60,7 +60,7 @@ log_appender <- log4r::file_appender(fn_log, append = TRUE, layout = log4r::defa
 fn_logger <- log4r::logger(threshold = "INFO", appenders = log_appender)
 if (params$redo) {
   unlink(fn_log)
-  write.table(c("SimNOW (Simulation Non-Overlapping Windows)",
+  write.table(c("EucsPhylogenomics",
                 "Developed by Jeremias Ivan"),
               file=fn_log, quote=F, row.names=F, col.names=F)
 }

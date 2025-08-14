@@ -1,0 +1,132 @@
+---
+title: "Extract BUSCO from HybPiper"
+author: "Jeremias Ivan"
+date: "`r format(Sys.time(), '%d %B %Y, %H:%M%p')`"
+
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_float: true
+
+params:
+  # general
+  codedir: "~/EucsPhylogenomics/codes/busco"
+  outdir: "~/simulation"
+  thread: 10
+  redo: FALSE
+
+  # input directory
+  fn_target_dna: ""
+  dir_hybpiper_output: ""
+
+  # executable
+  exe_mafft: ""
+  exe_iqtree2: ""
+---
+
+## Load required libraries and functions
+```{r}
+source(paste0(params$codedir, "/functions.R"))
+
+library(data.table)
+library(doSNOW)
+library(tidyverse)
+```
+
+```{r, include=FALSE}
+# install.packages("ape")
+# install.packages("Biostrings")
+# install.packages("log4r")
+# install.packages("seqinr")
+
+# store initial system time
+sys_tic <- Sys.time()
+
+# create outdir
+currentdir <- paste0(params$outdir, "/")
+if (!dir.exists(currentdir)) {
+  dir.create(currentdir, recursive = T)
+}
+
+# create log file
+fn_log <- paste0(params$outdir, "/extract_hybpiper.log")
+log_appender <- log4r::file_appender(fn_log, append = TRUE, layout = log4r::default_log_layout())
+fn_logger <- log4r::logger(threshold = "INFO", appenders = log_appender)
+if (params$redo) {
+  unlink(fn_log)
+  write.table(c("EucsPhylogenomics",
+                "Developed by Jeremias Ivan"),
+              file=fn_log, quote=F, row.names=F, col.names=F)
+}
+
+knitr::opts_knit$set(root.dir = currentdir)
+```
+
+```{r}
+# open target DNA
+seq <- Biostrings::readDNAStringSet(params$fn_target_dna)
+
+ls_target_busco <- names(seq)
+ls_target_busco <- sapply(ls_target_busco, function(x) { unlist(strsplit(x, "-"))[2] })
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over BUSCO
+foreach(busco = ls_target_busco) %dopar% {
+    # output directory
+    output_busco <- paste0(params$outdir, "/", busco, "/")
+    if (!dir.exists(output_busco)) {
+        dir.create(output_busco, recursive=T)
+    }
+
+    # extract BUSCO headers
+    idx <- grepl(paste0(busco, "$"), names(seq))
+    busco_seq <- seq[idx]
+
+    # update BUSCO headers
+    names(busco_seq) <- gsub(busco, "ref", names(busco_seq))
+
+    # output file
+    fn_out_fa <- paste0(output_busco, busco, ".fa")
+    Biostrings::writeXStringSet(busco_seq, filepath=fn_out_fa)
+}
+
+stopCluster(nwcl)
+```
+
+```{r}
+# extract list of species
+ls_species <- list.dirs(params$dir_hybpiper_output, recursive=F, full.names=F)
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over species
+for (sp in ls_species) {
+    # HybPiper output directory
+    outdir_sp <- paste0(params$dir_hybpiper_output, "/", sp, "/")
+    fn_paralogs <- paste0(outdir_sp, sp, "_genes_with_long_paralog_warnings.txt")
+
+    # extract list of BUSCO
+    ls_busco <- list.dirs(outdir_sp, recursive=F, full.names=F)
+
+    # read file containing paralogs
+    ls_paralogs <- readLines(fn_paralogs)
+    ls_paralogs <- sapply(ls_paralogs, function(x) { unlist(strsplit(x, "-"))[2] })
+    ls_busco <- ls_busco[!ls_busco%in%ls_paralogs]
+
+    # iterate over BUSCO
+    foreach(busco = ls_busco) %dopar% {
+        # output file
+        fn_in_fa <- paste0(outdir_sp, busco, "/", sp, "/sequences/FNA/", busco, ".FNA")
+        fn_out_fa <- paste0(params$outdir, "/", busco, "/", busco, ".fa")
+        f_fasta2msa <- function(fn_in_fa, sp, fn_out_fa)
+    }
+}
+
+stopCluster(nwcl)
+```
