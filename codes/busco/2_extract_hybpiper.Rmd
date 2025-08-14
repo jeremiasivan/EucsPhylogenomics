@@ -68,6 +68,7 @@ seq <- Biostrings::readDNAStringSet(params$fn_target_dna)
 
 ls_target_busco <- names(seq)
 ls_target_busco <- unique(sapply(ls_target_busco, function(x) { unlist(strsplit(x, "-"))[2] }))
+log4r::info(fn_logger, paste0("Number of BUSCO: ", length(ls_target_busco)))
 
 # create doSNOW clusters
 nwcl <- makeCluster(params$thread)
@@ -124,9 +125,15 @@ for (sp in ls_species) {
         fn_in_fa <- paste0(outdir_sp, busco, "/", sp, "/sequences/FNA/", busco, ".FNA")
         if (!file.exists(fn_in_fa)) {
             log4r::error(fn_logger, paste0("Error: ", busco, " for ", sp))
+            return(NULL)
         }
 
         fn_out_fa <- paste0(params$outdir, "/", busco, "/", busco, ".fa")
+        if (!file.exists(fn_out_fa)) {
+            log4r::error(fn_logger, paste0("Error: reference sequences unavailable for ", busco))
+            return(NULL)
+        }
+
         f_fasta2msa(fn_in_fa, sp, fn_out_fa)
     }
 }
