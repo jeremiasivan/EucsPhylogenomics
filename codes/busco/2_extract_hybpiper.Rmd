@@ -63,7 +63,7 @@ if (params$redo) {
 knitr::opts_knit$set(root.dir = currentdir)
 ```
 
-```{r}
+```{r references}
 # open target DNA
 seq <- Biostrings::readDNAStringSet(params$fn_target_dna)
 
@@ -97,7 +97,7 @@ foreach(busco = ls_target_busco) %dopar% {
 stopCluster(nwcl)
 ```
 
-```{r}
+```{r alignments}
 # extract list of species
 ls_species <- list.dirs(params$dir_hybpiper_output, recursive=F, full.names=F)
 
@@ -124,8 +124,30 @@ for (sp in ls_species) {
         # output file
         fn_in_fa <- paste0(outdir_sp, busco, "/", sp, "/sequences/FNA/", busco, ".FNA")
         fn_out_fa <- paste0(params$outdir, "/", busco, "/", busco, ".fa")
-        f_fasta2msa <- function(fn_in_fa, sp, fn_out_fa)
+        f_fasta2msa(fn_in_fa, sp, fn_out_fa)
     }
+}
+
+stopCluster(nwcl)
+```
+
+```{r trees}
+# extract list of BUSCO
+ls_busco <- list.dirs(params$outdir, recursive=F, full.names=F)
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over BUSCO
+foreach(busco = ls_busco) %dopar% {
+    # input and output files
+    fn_in_fa <- paste0(params$outdir, "/", busco, "/", busco, ".fa")
+    fn_out_fa <- paste0(params$outdir, "/", busco, "/", busco, "_aligned.fa")
+    
+    # run MAFFT
+    f_mafft(fn_in_fa, fn_out_fa, "--retree 2", params$exe_mafft)
+    f_iqtree2(fn_out_fa, params$exe_iqtree2)
 }
 
 stopCluster(nwcl)
