@@ -219,3 +219,12 @@ f_iqtree2 <- function(fn_input, exe_iqtree2) {
                          "-T 1 --quiet -redo")
     system(cmd_iqtree2)
 }
+
+# function: run ASTRAL-III 
+f_astral <- function(fn_input, fn_output, fn_log, exe_astral) {
+    cmd_astral <- paste("java -jar", exe_astral,
+                    "-i", fn_input,
+                    "-o", fn_output,
+                    "-t 2 2>", fn_log)
+    system(cmd_astral)
+}

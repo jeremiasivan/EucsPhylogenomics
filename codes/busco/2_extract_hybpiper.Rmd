@@ -26,6 +26,7 @@ params:
   # executable
   exe_mafft: ""
   exe_iqtree2: ""
+  exe_astral: ""
 ---
 
 ## Load required libraries and functions
@@ -165,6 +166,18 @@ foreach(busco = ls_busco) %dopar% {
 }
 
 stopCluster(nwcl)
+
+# output files
+fn_all_treefile <- paste0(params$outdir, "/all.treefile")
+fn_astral <- paste0(params$outdir, "/astral.treefile")
+fn_astral_log <- paste0(params$outdir, "/astral.log")
+
+# combine all treefiles
+cmd <- paste0("cat ", params$outdir, "/*/*_aligned.treefile > ", fn_all_treefile)
+system(cmd)
+
+# run ASTRAL
+f_astral(fn_all_treefile, fn_astral, fn_astral_log, params$exe_astral)
 ```
 
 ```{r phylodistance}
