@@ -20,6 +20,9 @@ params:
   fn_target_dna: ""
   dir_hybpiper_output: ""
 
+  focal_species: ""
+  fn_target_species: "~/EucsPhylogenomics/files/target_species.txt"
+
   # executable
   exe_mafft: ""
   exe_iqtree2: ""
@@ -162,4 +165,50 @@ foreach(busco = ls_busco) %dopar% {
 }
 
 stopCluster(nwcl)
+```
+
+```{r phylodistance}
+# read input file
+ls_target_species <- readLines(params$fn_target_species)
+
+# extract list of BUSCO
+ls_busco <- list.dirs(params$outdir, recursive=F, full.names=F)
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over BUSCO
+df_output <- foreach(busco = ls_busco, .combine='rbind') %dopar% {
+    # input files
+    fn_treefile <- paste0(params$outdir, "/", busco, "/", busco, "_aligned.fa.treefile")
+
+    # open treefile
+    tre <- ape::read.tree(fn_treefile)
+    dist <- ape::cophenetic.phylo(tre)
+    
+    # output data.table
+    df_output_temp <- data.table::data.table(busco=character(), species_one=character(), species_two=character(), distance=numeric())
+
+    # iterate over target species
+    for (sp in ls_target_speces) {
+        # extract distance
+        dist <- NA
+        if (params$focal_species%in%rownames(dist) && sp%in%colnames(dist)) {
+            dist <- dist[rownames(dist)==params$focal_species, colnames(dist)==sp]
+        }
+
+        df_output_temp <- rbind(df_output_temp, data.table::data.table(busco=busco,
+                                                                       species_one=params$focal_species,
+                                                                       species_two=sp,
+                                                                       distance=dist))
+    }
+
+    return(df_output_temp)
+}
+
+stopCluster(nwcl)
+
+# save the data.table
+data.table::fwrite(df_output, file=paste0(params$outdir, "/dist_summary.tsv", quote=F, sep="\t"))
 ```
