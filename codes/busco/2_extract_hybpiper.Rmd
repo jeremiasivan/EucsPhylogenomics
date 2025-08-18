@@ -89,11 +89,14 @@ foreach(busco = ls_target_busco) %dopar% {
     }
 
     # extract BUSCO headers
-    idx <- grepl(paste0(busco, "$"), names(seq))
+    idx <- grepl(paste0("-", busco, "$"), names(seq))
     busco_seq <- seq[idx]
 
     # update BUSCO headers
-    names(busco_seq) <- gsub(busco, "ref", names(busco_seq))
+    names(busco_seq) <- sapply(names(busco_seq), function(x) {
+        header <- unlist(strsplit(x, split="_"))
+        paste0(header[1], "_", header[2], "_REF")
+    })
 
     # output file
     fn_out_fa <- paste0(output_busco, busco, ".fa")
@@ -173,7 +176,7 @@ fn_astral <- paste0(params$outdir, "/astral.treefile")
 fn_astral_log <- paste0(params$outdir, "/astral.log")
 
 # combine all treefiles
-cmd <- paste0("cat ", params$outdir, "/*/*_aligned.treefile > ", fn_all_treefile)
+cmd <- paste0("cat ", params$outdir, "/*/*_aligned.fa.treefile > ", fn_all_treefile)
 system(cmd)
 
 # run ASTRAL
@@ -204,7 +207,7 @@ df_output <- foreach(busco = ls_busco, .combine='rbind') %dopar% {
     df_output_temp <- data.table::data.table(busco=character(), species_one=character(), species_two=character(), distance=numeric())
 
     # iterate over target species
-    for (sp in ls_target_speces) {
+    for (sp in ls_target_species) {
         # extract distance
         dist <- NA
         if (params$focal_species%in%rownames(dist) && sp%in%colnames(dist)) {
