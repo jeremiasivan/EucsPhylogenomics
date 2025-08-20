@@ -227,4 +227,34 @@ stopCluster(nwcl)
 
 # save the data.table
 data.table::fwrite(df_output, file=paste0(params$outdir, "/dist_summary.tsv", quote=F, sep="\t"))
+
+# output data.table
+df_count <- data.table::data.table(species_one=character(), species_two=character(), n=numeric())
+
+# open all treefiles
+alltre <- ape::read.tree(fn_all_treefile)
+
+# iterate over target species
+for (sp in ls_target_species) {
+    sister_count <- sum(sapply(alltre, function(tre) {
+        # get the MRCA
+        mrca_node <- getMRCA(tre, c(params$focal_species, sp))
+
+        # check if the two species are sister species
+        if (!is.null(mrca_node)) {
+            descendants <- extract.clade(tre, mrca_node)$tip.label
+            setequal(descendants, c(params$focal_species, sp))
+        } else {
+            return(FALSE)
+        }
+    }))
+
+    # update data.frame
+    df_count <- rbind(df_count, data.table::data.table(species_one=params$focal_species,
+                                                       species_two=sp,
+                                                       n=sister_count))
+}
+
+# save the data.table
+data.table::fwrite(df_count, file=paste0(params$outdir, "/count_summary.tsv", quote=F, sep="\t"))
 ```
