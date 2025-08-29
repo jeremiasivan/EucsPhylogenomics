@@ -228,3 +228,38 @@ f_astral <- function(fn_input, fn_output, fn_log, exe_astral) {
                     "-t 2 2>", fn_log)
     system(cmd_astral)
 }
+
+# function: retrieve sister taxa (source: ChatGPT)
+# required: ape
+f_get_sister_taxa <- function(tre, focal_sp) {
+    # root
+    outgroup <- tre$tip.label[grepl("^[AC]", tre$tip.label)]
+    tre <- ape::root(tre, outgroup=outgroup[1])
+
+    # extract node
+    tip <- which(tre$tip.label == focal_sp)
+    if (length(tip) == 0) {
+        return(NA)
+    }
+    
+    # extract parent node
+    parent <- tre$edge[tre$edge[,2] == tip, 1]
+
+    # extract child nodes
+    children <- tre$edge[tre$edge[,1] == parent, 2]    
+    sisters <- setdiff(children, tip)
+    if (length(sisters) > 1) {
+        return(NA)
+    }
+    
+    # extract sister taxa
+    out <- NA
+    if (sisters <= length(tre$tip.label)) {
+        out <- tre$tip.label[sisters]
+    } # else {
+        # out <- ape::extract.clade(tre, sisters)$tip.label
+        # sort(out)
+    # }
+
+    return(out)
+}
