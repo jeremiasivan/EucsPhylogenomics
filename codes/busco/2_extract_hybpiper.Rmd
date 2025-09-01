@@ -20,7 +20,7 @@ params:
   fn_target_dna: ""
   dir_hybpiper_output: ""
 
-  focal_species: ""
+  focal_species: "E_globulus_Maidenaria_Symphyomyrtus-REF"
   fn_target_species: "~/EucsPhylogenomics/files/target_species.txt"
 
   # executable
@@ -69,10 +69,10 @@ knitr::opts_knit$set(root.dir = currentdir)
 ```{r references}
 # open target DNA
 seq <- Biostrings::readDNAStringSet(params$fn_target_dna)
+names(seq) <- gsub(" ", "", names(seq))
 
 ls_target_busco <- names(seq)
 ls_target_busco <- unique(sapply(ls_target_busco, function(x) { unlist(strsplit(x, "-"))[2] }))
-ls_target_busco <- gsub(" ", "", ls_target_busco)
 
 log4r::info(fn_logger, paste0("Number of BUSCO: ", length(ls_target_busco)))
 
@@ -218,9 +218,9 @@ if (!is.null(ls_target_species)) {
             }
 
             df_output_temp <- rbind(df_output_temp, data.table::data.table(busco=busco,
-                                                                        species_one=params$focal_species,
-                                                                        species_two=sp,
-                                                                        distance=dist))
+                                                                           species_one=params$focal_species,
+                                                                           species_two=sp,
+                                                                           distance=dist))
         }
 
         return(df_output_temp)
@@ -263,22 +263,48 @@ if (!is.null(ls_target_species)) {
     }
 
 } else {
+    # update naming convention
+    alltre_updated <- lapply(alltre, function(tr) {
+        tr$tip.label <- sapply(tr$tip.label, function(header) {
+            new <- unlist(strsplit(header, split="-"))
+            if (length(new)>1) {
+                new <- paste0(new[1], "-REF")
+            }
+
+            return(new)
+        })
+
+        return(ape::as.phylo(tr))
+    })
+
     # extract sister taxa
-    sister_list <- lapply(alltre, f_get_sister_taxa, focal_sp=params$focal_species)
+    sister_list <- lapply(alltre_updated, f_get_sister_taxa, focal_sp=params$focal_species)
     sister_list <- sister_list[!sapply(sister_list, is.na)]
 
     # extract frequency
-    sister_ids <- sapply(sister_list, function(x) {
+    sister_list <- sapply(sister_list, function(x) {
         if (!all(is.na(x))) {
             paste(sort(x), collapse = "_")
         }
     })
 
-    # count the frequency
-    df_count <- as.data.frame(table(sister_ids))
-    colnames(df_count) <- c("species_two", "n")
+    # extract closest taxa
+    closest_list <- lapply(alltre_updated, f_get_closest_taxa, focal_sp=params$focal_species)
+    closest_list <- unlist(closest_list[!is.na(closest_list)])
 
-    df_count <- df_count %>% mutate(species_one=params$focal_species, .before=species_two) %>% arrange(desc(n))
+    # count the frequency
+    df_count_sister <- as.data.frame(table(sister_list))
+    df_count_closest <- as.data.frame(table(closest_list))
+
+    colnames(df_count_sister) <- c("species_two", "n")
+    colnames(df_count_closest) <- c("species_two", "n")
+    df_count <- merge(df_count_sister, df_count_closest, by="species_two", all=TRUE)
+    colnames(df_count) <- c("species_two", "sister_taxon", "closest_taxon")
+
+    df_count <- df_count %>% mutate(species_one=params$focal_species, .before=species_two) %>%
+                    mutate(sister_taxon = if_else(is.na(sister_taxon), 0, sister_taxon),
+                           closest_taxon = if_else(is.na(closest_taxon), 0, closest_taxon)) %>%
+                    arrange(desc(sister_taxon))
 }
 
 # save the data.table

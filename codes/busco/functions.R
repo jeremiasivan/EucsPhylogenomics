@@ -263,3 +263,24 @@ f_get_sister_taxa <- function(tre, focal_sp) {
 
     return(out)
 }
+
+# retrieve closest taxa (source: ChatGPT)
+# required: ape
+f_get_closest_taxa <- function(tre, focal_sp) {
+    # root
+    outgroup <- tre$tip.label[grepl("^[AC]", tre$tip.label)]
+    tre <- ape::root(tre, outgroup=outgroup[1])
+    if (!focal_sp%in%tre$tip.label) {
+        return(NA)
+    }
+
+    # calculate phylogenetic distance
+    dist <- ape::cophenetic.phylo(tre)
+    dist <- dist[rownames(dist)==focal_sp,]
+    dist <- dist[names(dist)!=focal_sp]
+
+    # extract the closest taxa
+    closest_taxa <- dist[dist==min(dist)]
+
+    return(names(closest_taxa))
+}
