@@ -231,18 +231,23 @@ f_astral <- function(fn_input, fn_output, fn_log, exe_astral) {
 
 # function: retrieve sister taxa (source: ChatGPT)
 # required: ape
-f_get_sister_taxa <- function(tre, focal_sp) {
-    # root
-    outgroup <- tre$tip.label[grepl("^[AC]", tre$tip.label)]
-    tre <- ape::root(tre, outgroup=outgroup[1])
-
-    # extract node
-    tip <- which(tre$tip.label == focal_sp)
-    if (length(tip) == 0) {
+f_get_sister_taxa <- function(tre, focal_sp, min_bootstrap) {
+    # return if focal species is not found
+    if (!focal_sp%in%tre$tip.label) {
         return(NA)
     }
+
+    # root the tree
+    outgroup <- tre$tip.label[grepl("^A_", tre$tip.label)]
+    tre <- ape::root(tre, outgroup=outgroup[1])
     
+    # calculate phylogenetic distance
+    dist <- ape::cophenetic.phylo(tre)
+    dist <- dist[rownames(dist)==focal_sp,]
+    min_dist <- 0
+
     # extract parent node
+    tip <- which(tre$tip.label == focal_sp)
     parent <- tre$edge[tre$edge[,2] == tip, 1]
 
     # extract child nodes
@@ -256,20 +261,35 @@ f_get_sister_taxa <- function(tre, focal_sp) {
     out <- NA
     if (sisters <= length(tre$tip.label)) {
         out <- tre$tip.label[sisters]
-    } # else {
-        # out <- ape::extract.clade(tre, sisters)$tip.label
-        # sort(out)
-    # }
+    } else {
+        out <- ape::extract.clade(tre, sisters)$tip.label
+
+        # extract the closest taxon
+        dist_subset <- dist[names(dist)%in%out]
+        out <- names(dist_subset[dist_subset==min(dist_subset)])
+
+        # update the distance
+        min_dist <- min(dist_subset)
+    }
+
+    # retrieve bootstrap value for that MRCA
+    bs <- tre$node.label[parent - length(tre$tip.label)]
+    if (bs == "" && min_dist==0) {
+        return(out)
+    }
+
+    # check bootstrap value
+    if (as.numeric(bs) < min_bootstrap) {
+        return(NA)
+    }
 
     return(out)
 }
 
 # retrieve closest taxa (source: ChatGPT)
 # required: ape
-f_get_closest_taxa <- function(tre, focal_sp) {
-    # root
-    outgroup <- tre$tip.label[grepl("^[AC]", tre$tip.label)]
-    tre <- ape::root(tre, outgroup=outgroup[1])
+f_get_closest_taxa <- function(tre, focal_sp, min_bootstrap) {
+    # return if focal species is not found
     if (!focal_sp%in%tre$tip.label) {
         return(NA)
     }
@@ -281,6 +301,23 @@ f_get_closest_taxa <- function(tre, focal_sp) {
 
     # extract the closest taxa
     closest_taxa <- dist[dist==min(dist)]
+    if (length(closest_taxa) == 0) {
+        return(NA)
+    }
+
+    # extract MRCA
+    node <- ape::getMRCA(tre, c(focal_sp, names(closest_taxa)))
+
+    # retrieve bootstrap value for that MRCA
+    bs <- tre$node.label[node - length(tre$tip.label)]
+    if (bs == "" && min(dist)==0) {
+        return(names(closest_taxa))
+    }
+
+    # check bootstrap value
+    if (as.numeric(bs) < min_bootstrap) {
+        return(NA)
+    }
 
     return(names(closest_taxa))
 }

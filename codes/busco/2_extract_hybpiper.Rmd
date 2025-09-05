@@ -278,33 +278,42 @@ if (!is.null(ls_target_species)) {
     })
 
     # extract sister taxa
-    sister_list <- lapply(alltre_updated, f_get_sister_taxa, focal_sp=params$focal_species)
-    sister_list <- sister_list[!sapply(sister_list, is.na)]
+    sister_list <- lapply(alltre_updated, f_get_sister_taxa, focal_sp=focal_species, min_bootstrap=0)
+    sister_list <- unlist(sister_list[!is.na(sister_list)])
 
-    # extract frequency
-    sister_list <- sapply(sister_list, function(x) {
-        if (!all(is.na(x))) {
-            paste(sort(x), collapse = "_")
-        }
-    })
+    sister_list_highbs <- lapply(alltre_updated, f_get_sister_taxa, focal_sp=params$focal_species, min_bootstrap=95)
+    sister_list_highbs <- unlist(sister_list_highbs[!is.na(sister_list_highbs)])
 
     # extract closest taxa
-    closest_list <- lapply(alltre_updated, f_get_closest_taxa, focal_sp=params$focal_species)
+    closest_list <- lapply(alltre_updated, f_get_closest_taxa, focal_sp=params$focal_species, min_bootstrap=0)
     closest_list <- unlist(closest_list[!is.na(closest_list)])
+
+    closest_list_highbs <- lapply(alltre_updated, f_get_closest_taxa, focal_sp=params$focal_species, min_bootstrap=95)
+    closest_list_highbs <- unlist(closest_list_highbs[!is.na(closest_list_highbs)])
 
     # count the frequency
     df_count_sister <- as.data.frame(table(sister_list))
+    df_count_sister_highbs <- as.data.frame(table(sister_list_highbs))
     df_count_closest <- as.data.frame(table(closest_list))
+    df_count_closest_highbs <- as.data.frame(table(closest_list_highbs))
 
+    # update column names
     colnames(df_count_sister) <- c("species_two", "n")
+    colnames(df_count_sister_highbs) <- c("species_two", "n")
     colnames(df_count_closest) <- c("species_two", "n")
-    df_count <- merge(df_count_sister, df_count_closest, by="species_two", all=TRUE)
-    colnames(df_count) <- c("species_two", "sister_taxon", "closest_taxon")
+    colnames(df_count_closest_highbs) <- c("species_two", "n")
+
+    df_count_sister_combined <- merge(df_count_sister, df_count_sister_highbs, by="species_two", all=TRUE)
+    df_count_closest_combined <- merge(df_count_closest, df_count_closest_highbs, by="species_two", all=TRUE)
+    df_count <- merge(df_count_sister_combined, df_count_closest_combined, by="species_two", all=TRUE)
+    colnames(df_count) <- c("species_two", "sister_taxon", "sister_taxon_highbs", "closest_taxon", "closest_taxon_highbs")
 
     df_count <- df_count %>% mutate(species_one=params$focal_species, .before=species_two) %>%
                     mutate(sister_taxon = if_else(is.na(sister_taxon), 0, sister_taxon),
-                           closest_taxon = if_else(is.na(closest_taxon), 0, closest_taxon)) %>%
-                    arrange(desc(sister_taxon))
+                           sister_taxon_highbs = if_else(is.na(sister_taxon_highbs), 0, sister_taxon_highbs),
+                           closest_taxon = if_else(is.na(closest_taxon), 0, closest_taxon),
+                           closest_taxon_highbs = if_else(is.na(closest_taxon_highbs), 0, closest_taxon_highbs)) %>%
+                    arrange(desc(closest_taxon))
 }
 
 # save the data.table
