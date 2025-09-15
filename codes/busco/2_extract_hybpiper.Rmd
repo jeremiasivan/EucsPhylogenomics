@@ -20,7 +20,7 @@ params:
   fn_target_dna: ""
   dir_hybpiper_output: ""
 
-  focal_species: "E_globulus_Maidenaria_Symphyomyrtus-REF"
+  focal_species: "E_globulus_Maidenaria_Symphyomyrtus"
   fn_target_species: "~/EucsPhylogenomics/files/target_species.txt"
 
   # executable
@@ -189,7 +189,9 @@ ls_busco <- list.dirs(params$outdir, recursive=F, full.names=F)
 # read input file
 ls_target_species <- NULL
 if (!is.null(params$fn_target_species) && file.exists(params$fn_target_species)) {
-    ls_target_species <- readLines(params$fn_target_species)
+    ls_target_species <- data.table::fread(params$fn_target_species)
+    ls_target_species <- ls_target_species$target_sp
+    ls_target_species <- ls_target_species[!grepl("^\\#", ls_target_species)]
 }
 
 # create doSNOW clusters
