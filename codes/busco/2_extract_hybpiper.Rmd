@@ -20,13 +20,14 @@ params:
   fn_target_dna: ""
   dir_hybpiper_output: ""
 
-  focal_species: "E_globulus_Maidenaria_Symphyomyrtus"
-  fn_target_species: "~/EucsPhylogenomics/files/target_species.txt"
+  fn_quibl_metadata: "~/EucsPhylogenomics/files/target_species.tsv"
 
   # executable
+  exe_cialign: ""
   exe_mafft: ""
   exe_iqtree2: ""
   exe_astral: ""
+  exe_quibl: ""
 ---
 
 ## Load required libraries and functions
@@ -95,6 +96,7 @@ foreach(busco = ls_target_busco) %dopar% {
     # update BUSCO headers
     names(busco_seq) <- sapply(names(busco_seq), function(x) {
         header <- gsub("_N/A", "", x)
+        header <- gsub(paste0("-", busco, "$"), "", x)
     })
 
     # output file
@@ -146,11 +148,6 @@ for (sp in ls_species) {
 }
 
 stopCluster(nwcl)
-```
-
-```{r trees}
-# extract list of BUSCO
-ls_busco <- list.dirs(params$outdir, recursive=F, full.names=F)
 
 # create doSNOW clusters
 nwcl <- makeCluster(params$thread)
@@ -158,13 +155,47 @@ registerDoSNOW(nwcl)
 
 # iterate over BUSCO
 foreach(busco = ls_busco) %dopar% {
+    # output directory
+    dir_output_filtered <- paste0(params$outdir, "/", busco, "/post_mafft/")
+    if (!dir.exists(dir_output_filtered)) {
+        dir.create(dir_output_filtered, recursive=T)
+    }
+
     # input and output files
     fn_in_fa <- paste0(params$outdir, "/", busco, "/", busco, ".fa")
-    fn_out_fa <- paste0(params$outdir, "/", busco, "/", busco, "_aligned.fa")
+    fn_x2gap_fa <- paste0(params$outdir, "/", busco, "/", busco, "_X2gap.fa")
+    fn_rmSeq_fa <- paste0(params$outdir, "/", busco, "/", busco, "_rmSeq.fa")
+    fn_mafft <- paste0(params$outdir, "/", busco, "/", busco, "_aligned.fa")
+
+    prefix_cialign <- paste0(dir_output_filtered, busco, "_cialign")
+    fn_cialign <- paste0(dir_output_filtered, busco, "_cialign_cleaned.fasta")
+    fn_out_fa <- paste0(dir_output_filtered, busco, "_final.fa")
     
-    # run MAFFT
-    f_mafft(fn_in_fa, fn_out_fa, "--retree 2", params$exe_mafft)
-    f_iqtree2(fn_out_fa, params$exe_iqtree2)
+    # filter the alignments
+    f_x2gap(fn_in_fa, fn_n2gap_fa)
+    f_remove_seq(fn_n2gap_fa, fn_rmSeq_fa, 0.5)
+    f_mafft(fn_rmSeq_fa, fn_mafft, "--retree 2", params$exe_mafft)
+    f_cialign(fn_mafft, prefix_cialign, params$exe_cialign)
+    f_remove_seq(fn_cialign, fn_out_fa, 0.5)
+}
+
+stopCluster(nwcl)
+```
+
+```{r trees}
+# extract list of BUSCO
+ls_busco <- list.dirs(params$outdir, recursive=F, full.names=F)
+ls_busco <- ls_busco[ls_busco!="quibl"]
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over BUSCO
+foreach(busco = ls_busco) %dopar% {
+    # generate tree
+    fn_in_fa <- paste0(params$outdir, "/", busco, "/post_mafft/", busco, "_final.fa")
+    f_iqtree2(fn_in_fa, params$exe_iqtree2)
 }
 
 stopCluster(nwcl)
@@ -182,142 +213,126 @@ system(cmd)
 f_astral(fn_all_treefile, fn_astral, fn_astral_log, params$exe_astral)
 ```
 
-```{r phylodistance}
-# extract list of BUSCO
-ls_busco <- list.dirs(params$outdir, recursive=F, full.names=F)
+```{r quibl}
+# read alltree
+alltrees <- ape::read.tree(fn_all_treefile)
 
-# read input file
-ls_target_species <- NULL
-if (!is.null(params$fn_target_species) && file.exists(params$fn_target_species)) {
-    ls_target_species <- data.table::fread(params$fn_target_species)
-    ls_target_species <- ls_target_species$target_sp
-    ls_target_species <- ls_target_species[!grepl("^\\#", ls_target_species)]
-}
+# output directory
+dir_output_quibl <- paste0(params$outdir, "/quibl/")
+
+# read QuIBL metadata
+df_quibl_metadata <- data.table::fread(params$fn_quibl_metadata)
 
 # create doSNOW clusters
 nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
 
-if (!is.null(ls_target_species)) {
-    # iterate over BUSCO
-    df_output <- foreach(busco = ls_busco, .combine='rbind') %dopar% {
-        # input files
-        fn_treefile <- paste0(params$outdir, "/", busco, "/", busco, "_aligned.fa.treefile")
+# iterate over quartet
+df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %dopar% {
+    require(ggplot2)
 
-        # open treefile
-        tre <- ape::read.tree(fn_treefile)
-        dist <- ape::cophenetic.phylo(tre)
-        
-        # output data.table
-        df_output_temp <- data.table::data.table(busco=character(), species_one=character(), species_two=character(), distance=numeric())
-
-        # iterate over target species
-        for (sp in ls_target_species) {
-            # extract distance
-            dist <- NA
-            if (params$focal_species%in%rownames(dist) && sp%in%colnames(dist)) {
-                dist <- dist[rownames(dist)==params$focal_species, colnames(dist)==sp]
-            }
-
-            df_output_temp <- rbind(df_output_temp, data.table::data.table(busco=busco,
-                                                                           species_one=params$focal_species,
-                                                                           species_two=sp,
-                                                                           distance=dist))
-        }
-
-        return(df_output_temp)
+    # output directory
+    temp_outdir_quibl <- paste0(dir_output_quibl, df_quibl_metadata$species_two[i], "/")
+    if (!dir.exists(temp_outdir_quibl)) {
+        dir.create(temp_outdir_quibl, recursive=T)
     }
 
-    # save the data.table
-    data.table::fwrite(df_output, file=paste0(params$outdir, "/dist_summary.tsv", quote=F, sep="\t"))
+    # extract taxa
+    ls_quartet <- unlist(df_quibl_metadata[i,])
+    ls_subset_tre <- lapply(alltrees, function(x) {
+        if (all(ls_quartet %in% x$tip.label)) {
+            tr <- ape::keep.tip(x, tip=target_sp)
+            tr <- ape::root(tr, outgroup=df_quibl_metadata$outgroup[i])
+            return(tr)
+        } else {
+            return(NULL)
+        }
+    })
+
+    # remove NULL
+    ls_subset_tre <- ls_subset_tre[lengths(ls_subset_tre) != 0]
+
+    # convert branch lengths
+    ls_subset_tre_transformed <- lapply(ls_subset_tre, function(x) {
+        tre_transformed <- ape::chronos(x)
+        return(tre_transformed)
+    })
+
+    # save trees
+    ape::write.tree(ls_subset_tre, file=paste0(temp_outdir_quibl, "all.tre"))
+    ape::write.tree(ls_subset_tre_transformed, file=paste0(temp_outdir_quibl, "all_transformed.tre"))
+
+    # extract distances
+    ls_dist <- lapply(ls_subset_tre, function(x) {
+        dist <- ape::cophenetic.phylo(x)
+        dist <- dist[rownames(dist)==df_quibl_metadata$species_one[i], colnames(dist)==df_quibl_metadata$species_two[i]]
+        return(dist)
+    })
+    ls_dist <- unlist(ls_dist)
+    writeLines(ls_dist, con=paste0(temp_outdir_quibl, "all_dist.txt"))
+
+    ls_dist_transformed <- lapply(ls_subset_tre_transformed, function(x) {
+        dist <- ape::cophenetic.phylo(x)
+        dist <- dist[rownames(dist)==df_quibl_metadata$species_one[i], colnames(dist)==df_quibl_metadata$species_two[i]]
+        return(dist)
+    })
+    ls_dist_transformed <- unlist(ls_dist_transformed)
+    writeLines(ls_dist_transformed, con=paste0(temp_outdir_quibl, "all_transformed_dist.txt"))
+
+    # visualisation
+    plot <- gpplot() +
+        geom_density(x=ls_dist, colour="blue") +
+        geom_density(x=ls_dist_transformed, colour="blue")
+
+    tiff(filename=paste0(temp_outdir_quibl, "dist.tiff"))
+    print(plot)
+    dev.off()
+
+    # run QuIBL
+    write.table(c("[Input]",
+                  paste0("treefile: ", temp_outdir_quibl, "all.tre"),
+                  "numdistributions: 2",
+                  "likelihoodthresh: 0.01",
+                  "numsteps: 10",
+                  "gradascentscalar: 0.5",
+                  paste0("totaloutgroup: ", df_quibl_metadata$outgroup[i]),
+                  "multiproc: True",
+                  "maxcores:1000",
+                  "",
+                  "[Output]",
+                  paste0("OutputPath: ", temp_outdir_quibl, "quibl.csv")),
+                file=paste0(temp_outdir_quibl, "quibl.txt"))
+    f_quibl(paste0(temp_outdir_quibl, "quibl.txt"), params$exe_quibl)
+
+    write.table(c("[Input]",
+                  paste0("treefile: ", temp_outdir_quibl, "all_transformed.tre"),
+                  "numdistributions: 2",
+                  "likelihoodthresh: 0.01",
+                  "numsteps: 10",
+                  "gradascentscalar: 0.5",
+                  paste0("totaloutgroup: ", df_quibl_metadata$outgroup[i]),
+                  "multiproc: True",
+                  "maxcores:1000",
+                  "",
+                  "[Output]",
+                  paste0("OutputPath: ", temp_outdir_quibl, "quibl_transformed.csv")),
+                file=paste0(temp_outdir_quibl, "quibl_transformed.txt"))
+    f_quibl(paste0(temp_outdir_quibl, "quibl_transformed.txt"), params$exe_quibl)
+
+    # extract QuIBL results
+    df_quibl <- data.table::fread(paste0(temp_outdir_quibl, "quibl.csv"))
+    df_quibl_transformed <- data.table::fread(paste0(temp_outdir_quibl, "quibl_transformed.csv"))
+    return(data.table::data.table(species_one=df_quibl_metadata$species_one[i],
+                                  species_two=df_quibl_metadata$species_two[i],
+                                  quibl_mixprop2=df_quibl$mixprop2[df_quibl$outroup==df_quibl_metadata$species_three[i]],
+                                  quibl_count=df_quibl$count[df_quibl$outroup==df_quibl_metadata$species_three[i]],
+                                  quibl_transformed_mixprop2=df_quibl_transformed$mixprop2[df_quibl_transformed$outroup==df_quibl_metadata$species_three[i]],
+                                  quibl_transformed_count=df_quibl_transformed$count[df_quibl_transformed$outroup==df_quibl_metadata$species_three[i]]
+    ))
 }
 
 stopCluster(nwcl)
-```
 
-``````{r phylomrca}
-# output data.table
-df_count <- data.table::data.table(species_one=character(), species_two=character(), n=numeric())
-
-# open all treefiles
-alltre <- ape::read.tree(fn_all_treefile)
-
-if (!is.null(ls_target_species)) {
-    # iterate over target species
-    for (sp in ls_target_species) {
-        sister_count <- sum(sapply(alltre, function(tre) {
-            # get the MRCA
-            mrca_node <- getMRCA(tre, c(params$focal_species, sp))
-
-            # check if the two species are sister species
-            if (!is.null(mrca_node)) {
-                descendants <- extract.clade(tre, mrca_node)$tip.label
-                setequal(descendants, c(params$focal_species, sp))
-            } else {
-                return(FALSE)
-            }
-        }))
-
-        # update data.frame
-        df_count <- rbind(df_count, data.table::data.table(species_one=params$focal_species,
-                                                           species_two=sp,
-                                                           n=sister_count))
-    }
-
-} else {
-    # update naming convention
-    alltre_updated <- lapply(alltre, function(tr) {
-        tr$tip.label <- sapply(tr$tip.label, function(header) {
-            new <- unlist(strsplit(header, split="-"))
-            if (length(new)>1) {
-                new <- paste0(new[1], "-REF")
-            }
-
-            return(new)
-        })
-
-        return(ape::as.phylo(tr))
-    })
-
-    # extract sister taxa
-    sister_list <- lapply(alltre_updated, f_get_sister_taxa, focal_sp=focal_species, min_bootstrap=0)
-    sister_list <- unlist(sister_list[!is.na(sister_list)])
-
-    sister_list_highbs <- lapply(alltre_updated, f_get_sister_taxa, focal_sp=params$focal_species, min_bootstrap=95)
-    sister_list_highbs <- unlist(sister_list_highbs[!is.na(sister_list_highbs)])
-
-    # extract closest taxa
-    closest_list <- lapply(alltre_updated, f_get_closest_taxa, focal_sp=params$focal_species, min_bootstrap=0)
-    closest_list <- unlist(closest_list[!is.na(closest_list)])
-
-    closest_list_highbs <- lapply(alltre_updated, f_get_closest_taxa, focal_sp=params$focal_species, min_bootstrap=95)
-    closest_list_highbs <- unlist(closest_list_highbs[!is.na(closest_list_highbs)])
-
-    # count the frequency
-    df_count_sister <- as.data.frame(table(sister_list))
-    df_count_sister_highbs <- as.data.frame(table(sister_list_highbs))
-    df_count_closest <- as.data.frame(table(closest_list))
-    df_count_closest_highbs <- as.data.frame(table(closest_list_highbs))
-
-    # update column names
-    colnames(df_count_sister) <- c("species_two", "n")
-    colnames(df_count_sister_highbs) <- c("species_two", "n")
-    colnames(df_count_closest) <- c("species_two", "n")
-    colnames(df_count_closest_highbs) <- c("species_two", "n")
-
-    df_count_sister_combined <- merge(df_count_sister, df_count_sister_highbs, by="species_two", all=TRUE)
-    df_count_closest_combined <- merge(df_count_closest, df_count_closest_highbs, by="species_two", all=TRUE)
-    df_count <- merge(df_count_sister_combined, df_count_closest_combined, by="species_two", all=TRUE)
-    colnames(df_count) <- c("species_two", "sister_taxon", "sister_taxon_highbs", "closest_taxon", "closest_taxon_highbs")
-
-    df_count <- df_count %>% mutate(species_one=params$focal_species, .before=species_two) %>%
-                    mutate(sister_taxon = if_else(is.na(sister_taxon), 0, sister_taxon),
-                           sister_taxon_highbs = if_else(is.na(sister_taxon_highbs), 0, sister_taxon_highbs),
-                           closest_taxon = if_else(is.na(closest_taxon), 0, closest_taxon),
-                           closest_taxon_highbs = if_else(is.na(closest_taxon_highbs), 0, closest_taxon_highbs)) %>%
-                    arrange(desc(closest_taxon))
-}
-
-# save the data.table
-data.table::fwrite(df_count, file=paste0(params$outdir, "/count_summary.tsv", quote=F, sep="\t"))
+# save data.table
+data.table::fwrite(df_output_quibl, file=paste0(dir_output_quibl, "quibl.tsv"), sep="\t", quote=F)
 ```

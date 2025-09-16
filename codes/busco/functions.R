@@ -137,6 +137,21 @@ f_n2gap <- function(fn_fasta, fn_output) {
     Biostrings::writeXStringSet(seq, filepath=fn_output)
 }
 
+# function: convert "N" and "X" to gaps
+f_x2gap <- function(fn_fasta, fn_output) {
+    # read the DNA alignment
+    seq <- Biostrings::readDNAStringSet(fn_fasta, format="fasta")
+
+    # convert "N" to gaps
+    for (i in 1:length(seq)) {
+        seq[i] <- gsub("N", "-", seq[i])
+        seq[i] <- gsub("X", "-", seq[i])
+    }
+
+    # save the new DNA alignment
+    Biostrings::writeXStringSet(seq, filepath=fn_output)
+}
+
 # function: delete sequence with >=threshold gaps
 f_remove_seq <- function(fn_fasta, fn_output, threshold) {
     # read the DNA alignment
@@ -211,6 +226,15 @@ f_mafft <- function(fn_input, fn_output, params_mafft, exe_mafft) {
     system(cmd_mafft)
 }
 
+# function: run CIAlign
+f_cialign <- function(fn_input, prefix, exe_cialign) {
+    cmd_cialign <- paste(exe_cialign,
+                         "--infile", fn_input,
+                         "--outfile_stem", prefix,
+                         "--clean --silent")
+    system(cmd_cialign)
+}
+
 # function: run IQ-Tree 2
 f_iqtree2 <- function(fn_input, exe_iqtree2) {
     cmd_iqtree2 <- paste(exe_iqtree2,
@@ -227,6 +251,12 @@ f_astral <- function(fn_input, fn_output, fn_log, exe_astral) {
                     "-o", fn_output,
                     "-t 2 2>", fn_log)
     system(cmd_astral)
+}
+
+# function: run QuIBL
+f_quibl <- function(fn_input, exe_quibl) {
+    cmd_quibl <- paste("python", exe_quibl, fn_input)
+    system(cmd_quibl)
 }
 
 # function: retrieve sister taxa (source: ChatGPT)
