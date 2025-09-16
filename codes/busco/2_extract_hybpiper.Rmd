@@ -238,10 +238,10 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
     }
 
     # extract taxa
-    ls_quartet <- unlist(df_quibl_metadata[i,])
+    ls_quartet <- unlist(df_quibl_metadata[i,1:4])
     ls_subset_tre <- lapply(alltrees, function(x) {
         if (all(ls_quartet %in% x$tip.label)) {
-            tr <- ape::keep.tip(x, tip=target_sp)
+            tr <- ape::keep.tip(x, tip=ls_quartet)
             tr <- ape::root(tr, outgroup=df_quibl_metadata$outgroup[i])
             return(tr)
         } else {
@@ -269,7 +269,7 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
         return(dist)
     })
     ls_dist <- unlist(ls_dist)
-    writeLines(ls_dist, con=paste0(temp_outdir_quibl, "all_dist.txt"))
+    write.table(ls_dist, file=paste0(temp_outdir_quibl, "all_dist.txt"), quote=F, row.names=F, col.names=F)
 
     ls_dist_transformed <- lapply(ls_subset_tre_transformed, function(x) {
         dist <- ape::cophenetic.phylo(x)
@@ -277,12 +277,12 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
         return(dist)
     })
     ls_dist_transformed <- unlist(ls_dist_transformed)
-    writeLines(ls_dist_transformed, con=paste0(temp_outdir_quibl, "all_transformed_dist.txt"))
+    write.table(ls_dist_transformed, file=paste0(temp_outdir_quibl, "all_transformed_dist.txt"), quote=F, row.names=F, col.names=F)
 
     # visualisation
-    plot <- gpplot() +
-        geom_density(x=ls_dist, colour="blue") +
-        geom_density(x=ls_dist_transformed, colour="blue")
+    plot <- ggplot() +
+        geom_density(aes(x=ls_dist), colour="blue") +
+        geom_density(aes(x=ls_dist_transformed), colour="red")
 
     tiff(filename=paste0(temp_outdir_quibl, "dist.tiff"))
     print(plot)
@@ -301,7 +301,7 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
                   "",
                   "[Output]",
                   paste0("OutputPath: ", temp_outdir_quibl, "quibl.csv")),
-                file=paste0(temp_outdir_quibl, "quibl.txt"))
+                file=paste0(temp_outdir_quibl, "quibl.txt"), quote=F, row.names=F, col.names=F)
     f_quibl(paste0(temp_outdir_quibl, "quibl.txt"), params$exe_quibl)
 
     write.table(c("[Input]",
@@ -316,7 +316,7 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
                   "",
                   "[Output]",
                   paste0("OutputPath: ", temp_outdir_quibl, "quibl_transformed.csv")),
-                file=paste0(temp_outdir_quibl, "quibl_transformed.txt"))
+                file=paste0(temp_outdir_quibl, "quibl_transformed.txt"), quote=F, row.names=F, col.names=F)
     f_quibl(paste0(temp_outdir_quibl, "quibl_transformed.txt"), params$exe_quibl)
 
     # extract QuIBL results
@@ -324,10 +324,11 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
     df_quibl_transformed <- data.table::fread(paste0(temp_outdir_quibl, "quibl_transformed.csv"))
     return(data.table::data.table(species_one=df_quibl_metadata$species_one[i],
                                   species_two=df_quibl_metadata$species_two[i],
-                                  quibl_mixprop2=df_quibl$mixprop2[df_quibl$outroup==df_quibl_metadata$species_three[i]],
-                                  quibl_count=df_quibl$count[df_quibl$outroup==df_quibl_metadata$species_three[i]],
-                                  quibl_transformed_mixprop2=df_quibl_transformed$mixprop2[df_quibl_transformed$outroup==df_quibl_metadata$species_three[i]],
-                                  quibl_transformed_count=df_quibl_transformed$count[df_quibl_transformed$outroup==df_quibl_metadata$species_three[i]]
+                                  quibl_mixprop2=df_quibl$mixprop2[df_quibl$outgroup==df_quibl_metadata$species_three[i]],
+                                  quibl_count=df_quibl$count[df_quibl$outgroup==df_quibl_metadata$species_three[i]],
+                                  quibl_transformed_mixprop2=df_quibl_transformed$mixprop2[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]],
+                                  quibl_transformed_count=df_quibl_transformed$count[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]],
+                                  f1_hybrid=df_quibl_metadata$percentage_hybrid[i]
     ))
 }
 
