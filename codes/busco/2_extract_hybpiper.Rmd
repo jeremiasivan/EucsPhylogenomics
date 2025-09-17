@@ -216,6 +216,9 @@ f_astral(fn_all_treefile, fn_astral, fn_astral_log, params$exe_astral)
 ```{r quibl}
 # read alltree
 alltrees <- ape::read.tree(fn_all_treefile)
+sptree <- ape::read.tree(fn_astral)
+sptree$edge.length <- rep(1, nrow(sptree$edge))
+sptree_distance <- ape::cophenetic.phylo(sptree)
 
 # output directory
 dir_output_quibl <- paste0(params$outdir, "/quibl/")
@@ -302,7 +305,7 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
                   "[Output]",
                   paste0("OutputPath: ", temp_outdir_quibl, "quibl.csv")),
                 file=paste0(temp_outdir_quibl, "quibl.txt"), quote=F, row.names=F, col.names=F)
-    f_quibl(paste0(temp_outdir_quibl, "quibl.txt"), params$exe_quibl)
+    f_quibl(paste0(temp_outdir_quibl, "quibl.txt"), exe_quibl)
 
     write.table(c("[Input]",
                   paste0("treefile: ", temp_outdir_quibl, "all_transformed.tre"),
@@ -317,7 +320,7 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
                   "[Output]",
                   paste0("OutputPath: ", temp_outdir_quibl, "quibl_transformed.csv")),
                 file=paste0(temp_outdir_quibl, "quibl_transformed.txt"), quote=F, row.names=F, col.names=F)
-    f_quibl(paste0(temp_outdir_quibl, "quibl_transformed.txt"), params$exe_quibl)
+    f_quibl(paste0(temp_outdir_quibl, "quibl_transformed.txt"), exe_quibl)
 
     # extract QuIBL results
     df_quibl <- data.table::fread(paste0(temp_outdir_quibl, "quibl.csv"))
@@ -328,7 +331,9 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
                                   quibl_count=df_quibl$count[df_quibl$outgroup==df_quibl_metadata$species_three[i]],
                                   quibl_transformed_mixprop2=df_quibl_transformed$mixprop2[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]],
                                   quibl_transformed_count=df_quibl_transformed$count[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]],
-                                  f1_hybrid=df_quibl_metadata$percentage_hybrid[i]
+                                  f1_hybrid=df_quibl_metadata$percentage_hybrid[i],
+                                  astral_pairwise_dist=sptree_distance[rownames(sptree_distance)==df_quibl_metadata$species_one[i],
+                                                                       colnames(sptree_distance)==df_quibl_metadata$species_two[i]]
     ))
 }
 
