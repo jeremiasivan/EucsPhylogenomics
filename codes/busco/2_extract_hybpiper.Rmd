@@ -71,18 +71,15 @@ knitr::opts_knit$set(root.dir = currentdir)
 # open target DNA
 seq <- Biostrings::readDNAStringSet(params$fn_target_dna)
 names(seq) <- gsub(" ", "", names(seq))
+names(seq) <- gsub("_N/A", "", names(seq))
 
 ls_target_busco <- names(seq)
 ls_target_busco <- unique(sapply(ls_target_busco, function(x) { unlist(strsplit(x, "-"))[2] }))
 
 log4r::info(fn_logger, paste0("Number of BUSCO: ", length(ls_target_busco)))
 
-# create doSNOW clusters
-nwcl <- makeCluster(params$thread)
-registerDoSNOW(nwcl)
-
 # iterate over BUSCO
-foreach(busco = ls_target_busco) %dopar% {
+for (busco in ls_target_busco) {
     # output directory
     output_busco <- paste0(params$outdir, "/", busco, "/")
     if (!dir.exists(output_busco)) {
@@ -95,7 +92,6 @@ foreach(busco = ls_target_busco) %dopar% {
 
     # update BUSCO headers
     names(busco_seq) <- sapply(names(busco_seq), function(x) {
-        header <- gsub("_N/A", "", x)
         header <- gsub(paste0("-", busco, "$"), "", x)
     })
 
@@ -103,8 +99,6 @@ foreach(busco = ls_target_busco) %dopar% {
     fn_out_fa <- paste0(output_busco, busco, ".fa")
     Biostrings::writeXStringSet(busco_seq, filepath=fn_out_fa)
 }
-
-stopCluster(nwcl)
 ```
 
 ```{r alignments}
@@ -130,6 +124,16 @@ for (sp in ls_species) {
     } else {
         ls_paralogs <- readLines(fn_paralogs)
         ls_paralogs <- sapply(ls_paralogs, function(x) { unlist(strsplit(x, "-"))[2] })
+        ls_busco <- ls_busco[!ls_busco%in%ls_paralogs]
+    }
+
+    fn_paralogs_depth <- paste0(outdir_sp, sp, "_genes_with_paralog_warnings_by_contig_depth.csv")
+    if (!file.exists(fn_paralogs_depth) || file.size(fn_paralogs_depth)==0) {
+        log4r::warn(fn_logger, paste0("Error: paralogs based on contig depth unavailable for ", sp))
+    } else {
+        ls_paralogs <- data.table::fread(fn_paralogs_depth)
+        ls_paralogs <- ls_paralogs$V2[ls_paralogs$V4]
+        ls_paralogs <- gsub("gene ", "", ls_paralogs)
         ls_busco <- ls_busco[!ls_busco%in%ls_paralogs]
     }
 
@@ -172,8 +176,8 @@ foreach(busco = ls_busco) %dopar% {
     fn_out_fa <- paste0(dir_output_filtered, busco, "_final.fa")
     
     # filter the alignments
-    f_x2gap(fn_in_fa, fn_n2gap_fa)
-    f_remove_seq(fn_n2gap_fa, fn_rmSeq_fa, 0.5)
+    f_x2gap(fn_in_fa, fn_x2gap_fa)
+    f_remove_seq(fn_x2gap_fa, fn_rmSeq_fa, 0.5)
     f_mafft(fn_rmSeq_fa, fn_mafft, "--retree 2", params$exe_mafft)
     f_cialign(fn_mafft, prefix_cialign, params$exe_cialign)
     f_remove_seq(fn_cialign, fn_out_fa, 0.5)
@@ -305,7 +309,7 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
                   "[Output]",
                   paste0("OutputPath: ", temp_outdir_quibl, "quibl.csv")),
                 file=paste0(temp_outdir_quibl, "quibl.txt"), quote=F, row.names=F, col.names=F)
-    f_quibl(paste0(temp_outdir_quibl, "quibl.txt"), exe_quibl)
+    f_quibl(paste0(temp_outdir_quibl, "quibl.txt"), params$exe_quibl)
 
     write.table(c("[Input]",
                   paste0("treefile: ", temp_outdir_quibl, "all_transformed.tre"),
@@ -320,7 +324,7 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
                   "[Output]",
                   paste0("OutputPath: ", temp_outdir_quibl, "quibl_transformed.csv")),
                 file=paste0(temp_outdir_quibl, "quibl_transformed.txt"), quote=F, row.names=F, col.names=F)
-    f_quibl(paste0(temp_outdir_quibl, "quibl_transformed.txt"), exe_quibl)
+    f_quibl(paste0(temp_outdir_quibl, "quibl_transformed.txt"), params$exe_quibl)
 
     # extract QuIBL results
     df_quibl <- data.table::fread(paste0(temp_outdir_quibl, "quibl.csv"))
