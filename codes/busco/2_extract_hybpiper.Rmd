@@ -158,7 +158,7 @@ nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
 
 # iterate over BUSCO
-foreach(busco = ls_busco) %dopar% {
+foreach(busco = ls_target_busco) %dopar% {
     # output directory
     dir_output_filtered <- paste0(params$outdir, "/", busco, "/post_mafft/")
     if (!dir.exists(dir_output_filtered)) {
@@ -221,7 +221,6 @@ f_astral(fn_all_treefile, fn_astral, fn_astral_log, params$exe_astral)
 # read alltree
 alltrees <- ape::read.tree(fn_all_treefile)
 sptree <- ape::read.tree(fn_astral)
-sptree$edge.length <- rep(1, nrow(sptree$edge))
 sptree_distance <- ape::cophenetic.phylo(sptree)
 
 # output directory
@@ -327,14 +326,31 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
     f_quibl(paste0(temp_outdir_quibl, "quibl_transformed.txt"), params$exe_quibl)
 
     # extract QuIBL results
-    df_quibl <- data.table::fread(paste0(temp_outdir_quibl, "quibl.csv"))
-    df_quibl_transformed <- data.table::fread(paste0(temp_outdir_quibl, "quibl_transformed.csv"))
+    quibl_mixprop2 <- NA
+    quibl_count <- NA
+    quibl_transformed_mixprop2 <- NA
+    quibl_transformed_count <- NA
+
+    if (file.exists(paste0(temp_outdir_quibl, "quibl.csv"))) {
+        df_quibl <- data.table::fread(paste0(temp_outdir_quibl, "quibl.csv"))
+
+        quibl_mixprop2 <- df_quibl$mixprop2[df_quibl$outgroup==df_quibl_metadata$species_three[i]]
+        quibl_count <- df_quibl$count[df_quibl$outgroup==df_quibl_metadata$species_three[i]]
+    }
+
+    if (file.exists(paste0(temp_outdir_quibl, "quibl_transformed.csv"))) {
+        df_quibl_transformed <- data.table::fread(paste0(temp_outdir_quibl, "quibl_transformed.csv"))
+
+        quibl_transformed_mixprop2 <- df_quibl_transformed$mixprop2[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]]
+        quibl_transformed_count <- df_quibl_transformed$count[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]]
+    }
+
     return(data.table::data.table(species_one=df_quibl_metadata$species_one[i],
                                   species_two=df_quibl_metadata$species_two[i],
-                                  quibl_mixprop2=df_quibl$mixprop2[df_quibl$outgroup==df_quibl_metadata$species_three[i]],
-                                  quibl_count=df_quibl$count[df_quibl$outgroup==df_quibl_metadata$species_three[i]],
-                                  quibl_transformed_mixprop2=df_quibl_transformed$mixprop2[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]],
-                                  quibl_transformed_count=df_quibl_transformed$count[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]],
+                                  quibl_mixprop2=quibl_mixprop2,
+                                  quibl_count=quibl_count,
+                                  quibl_transformed_mixprop2=quibl_transformed_mixprop2,
+                                  quibl_transformed_count=quibl_transformed_count,
                                   f1_hybrid=df_quibl_metadata$percentage_hybrid[i],
                                   astral_pairwise_dist=sptree_distance[rownames(sptree_distance)==df_quibl_metadata$species_one[i],
                                                                        colnames(sptree_distance)==df_quibl_metadata$species_two[i]]

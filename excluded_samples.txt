@@ -1,0 +1,17 @@
+C_calophylla_1
+E_scoparia
+E_albopurpurea_3
+E_largiflorens_3
+E_calycogona_calycogona_1
+E_decipiens_2
+E_decipiens_3
+E_drummondii_1
+E_falcata
+E_quadrans
+E_conglobata_conglobata_2
+E_conglobata_conglobata_4
+E_torquata
+E_camaldulensis_camaldulensis
+E_megacornuta
+E_occidentalis
+E_caesia_Boyagin_Rock_1
