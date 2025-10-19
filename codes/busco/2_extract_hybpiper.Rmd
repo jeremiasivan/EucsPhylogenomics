@@ -92,7 +92,7 @@ for (busco in ls_target_busco) {
 
     # update BUSCO headers
     names(busco_seq) <- sapply(names(busco_seq), function(x) {
-        header <- gsub(paste0("-", busco, "$"), "", x)
+        header <- gsub(paste0("-", busco, "$"), "_REF", x)
     })
 
     # output file
