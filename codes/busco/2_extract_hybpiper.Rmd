@@ -92,6 +92,15 @@ for (busco in ls_target_busco) {
 
     # update BUSCO headers
     names(busco_seq) <- sapply(names(busco_seq), function(x) {
+        # ls_header <- unlist(strsplit(x, split="_"))
+        #
+        # header <- paste(ls_header[1:2], collapse="_")
+        # if (header=="E_sid") {
+        #     header <- "E_sid_E_mel"
+        # }
+        # header <- gsub(paste0("-", busco, "$"), "", x)
+        # header <- paste0(header, "_REF")
+
         header <- gsub(paste0("-", busco, "$"), "_REF", x)
     })
 
@@ -336,6 +345,10 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
 
         quibl_mixprop2 <- df_quibl$mixprop2[df_quibl$outgroup==df_quibl_metadata$species_three[i]]
         quibl_count <- df_quibl$count[df_quibl$outgroup==df_quibl_metadata$species_three[i]]
+
+        quibl_mixprop2_count <- quibl_mixprop2*quibl_count
+        quibl_count <- sum(df_quibl$count)
+        quibl_mixprop2 <- quibl_mixprop2_count/quibl_count
     }
 
     if (file.exists(paste0(temp_outdir_quibl, "quibl_transformed.csv"))) {
@@ -343,6 +356,10 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
 
         quibl_transformed_mixprop2 <- df_quibl_transformed$mixprop2[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]]
         quibl_transformed_count <- df_quibl_transformed$count[df_quibl_transformed$outgroup==df_quibl_metadata$species_three[i]]
+
+        quibl_transformed_mixprop2_count <- quibl_transformed_mixprop2*quibl_transformed_count
+        quibl_transformed_count <- sum(df_quibl_transformed$count)
+        quibl_transformed_mixprop2 <- quibl_transformed_mixprop2_count/quibl_transformed_count
     }
 
     return(data.table::data.table(species_one=df_quibl_metadata$species_one[i],
