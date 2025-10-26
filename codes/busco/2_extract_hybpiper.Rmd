@@ -369,7 +369,7 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
                                   quibl_transformed_mixprop2=quibl_transformed_mixprop2,
                                   quibl_transformed_count=quibl_transformed_count,
                                   f1_hybrid=df_quibl_metadata$percentage_hybrid[i],
-                                  astral_pairwise_dist=sptree_distance[rownames(sptree_distance)==df_quibl_metadata$species_one[i],
+                                  sptree_pairwise_dist=sptree_distance[rownames(sptree_distance)==df_quibl_metadata$species_one[i],
                                                                        colnames(sptree_distance)==df_quibl_metadata$species_two[i]]
     ))
 }

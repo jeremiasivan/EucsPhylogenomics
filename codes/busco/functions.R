@@ -226,6 +226,14 @@ f_mafft <- function(fn_input, fn_output, params_mafft, exe_mafft) {
     system(cmd_mafft)
 }
 
+# function: run MAFFT --keeplength
+f_mafft_keeplen <- function(fn_input, fn_alignment, fn_output, exe_mafft) {
+    cmd_mafft <- paste(exe_mafft, "--addfull",
+                       fn_input, "--keeplength", fn_alignment,
+                       ">", fn_output)
+    system(cmd_mafft)
+}
+
 # function: run CIAlign
 f_cialign <- function(fn_input, prefix, exe_cialign) {
     cmd_cialign <- paste(exe_cialign,
