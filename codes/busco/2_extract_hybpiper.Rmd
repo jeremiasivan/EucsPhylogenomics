@@ -20,7 +20,7 @@ params:
   fn_target_dna: ""
   dir_hybpiper_output: ""
 
-  fn_quibl_metadata: "~/EucsPhylogenomics/files/target_species.tsv"
+  fn_metadata: "~/EucsPhylogenomics/files/hybridisation_metadata.tsv"
 
   # executable
   exe_cialign: ""
@@ -29,6 +29,9 @@ params:
   exe_amas: ""
   exe_fasttree: ""
   exe_quibl: ""
+  exe_seqkit: ""
+  exe_snpsites: ""
+  exe_pixy: ""
 ---
 
 ## Load required libraries and functions
@@ -238,7 +241,7 @@ sptree_distance <- ape::cophenetic.phylo(sptree)
 dir_output_quibl <- paste0(params$outdir, "/quibl/")
 
 # read QuIBL metadata
-df_quibl_metadata <- data.table::fread(params$fn_quibl_metadata)
+df_quibl_metadata <- data.table::fread(params$fn_metadata)
 
 # create doSNOW clusters
 nwcl <- makeCluster(params$thread)
@@ -246,7 +249,7 @@ registerDoSNOW(nwcl)
 
 # iterate over quartet
 df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %dopar% {
-    require(ggplot2)
+    # require(ggplot2)
 
     # output directory
     temp_outdir_quibl <- paste0(dir_output_quibl, df_quibl_metadata$species_two[i], "/")
@@ -380,4 +383,67 @@ stopCluster(nwcl)
 
 # save data.table
 data.table::fwrite(df_output_quibl, file=paste0(dir_output_quibl, "quibl.tsv"), sep="\t", quote=F)
+```
+
+```{r pixy}
+# output directory
+dir_output_pixy <- paste0(params$outdir, "/pixy/")
+
+# read QuIBL metadata
+df_pixy_metadata <- data.table::fread(params$fn_metadata)
+
+# convert partition file to BED format
+fn_partition_bed <- paste0(params$outdir, "/partition.bed")
+f_nexus2bed(fn_partition, fn_partition_bed)
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over quartet
+df_output_pixy <- foreach (i = 1:nrow(df_pixy_metadata), .combine='rbind') %dopar% {
+    # output directory
+    temp_outdir_pixy <- paste0(dir_output_pixy, df_pixy_metadata$species_two[i], "/")
+    if (!dir.exists(temp_outdir_pixy)) {
+        dir.create(temp_outdir_pixy, recursive=T)
+    }
+
+    # input/output files
+    fn_species_list <- paste0(temp_outdir_pixy, "species_list.txt")
+    fn_population <- paste0(temp_outdir_pixy, "population.txt")
+    fn_concat_subset <- paste0(temp_outdir_pixy, "concat.fa")
+    fn_vcf_subset <- paste0(temp_outdir_pixy, "concat.vcf")
+
+    # save the species list
+    ls_species <- c(df_pixy_metadata$species_one[i],
+                    df_pixy_metadata$species_two[i],
+                    df_pixy_metadata$species_three[i],
+                    df_pixy_metadata$outgroup[i])
+    writeLines(ls_species, con=fn_species_list)
+
+    # save the population
+    ls_population <- sapply(ls_species, function(x) {
+        paste(unlist(strsplit(x, split="_"))[1:2], collapse="_")
+    })
+    df_population <- data.table::data.table(species=ls_species, population=ls_population)
+    data.table::fwrite(df_population, file=fn_population, sep="\t", quote=F, col.names=F, row.names=F)
+
+    # extract species from concatenated MSA
+    cmd_seqkit_grep <- paste(params$exe_seqkit, "grep -n -f", fn_species_list, fn_concat, ">", fn_concat_subset)
+    system(cmd_seqkit_grep)
+
+    # convert MSA to VCF
+    cmd_snpsites <- paste(params$exe_snpsites, "-v -o", fn_vcf_subset, fn_concat_subset)
+    system(cmd)
+
+    # run pixy
+    cmd_pixy <- paste(params$exe_pixy, "--stats pi dxy fst",
+                      "--vcf", fn_vcf_subset,
+                      "--populations", fn_population,
+                      "--bed_file", fn_partition_bed,
+                      "--output_folder", temp_outdir_pixy)
+    system(cmd_pixy)
+}
+
+stopCluster(nwcl)
 ```
