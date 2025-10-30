@@ -206,8 +206,18 @@ f_remove_col <- function(fn_fasta, fn_output, threshold) {
 
 # function: run FastTree
 f_fasttree <- function(fn_fasta, fn_output, exe_fasttree) {
-    cmd_fasttree <- paste(exe_fasttree, fn_fasta, ">", fn_output)
+    cmd_fasttree <- paste(exe_fasttree, "-gtr", fn_fasta, ">", fn_output)
     system(cmd_fasttree)
+}
+
+# function: run AMAS
+f_amas_dna <- function(input_regex, fn_output_aln, fn_output_part, exe_amas) {
+    cmd_amas <- paste("python3", exe_amas, "concat -f fasta -d dna",
+                      "-i", input_regex,
+                      "--part-format nexus",
+                      "-t", fn_output_aln,
+                      "-p", fn_output_part)
+    system(cmd_amas)
 }
 
 # function: run TreeShrink

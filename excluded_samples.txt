@@ -16,3 +16,5 @@ E_megacornuta
 E_occidentalis
 E_caesia_Boyagin_Rock_1
 E_conglobata_conglobata_1
+E_tereticornis_tereticornis_1
+E_tereticornis_tereticornis_2

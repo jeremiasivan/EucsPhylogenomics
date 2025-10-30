@@ -26,7 +26,8 @@ params:
   exe_cialign: ""
   exe_mafft: ""
   exe_iqtree2: ""
-  exe_astral: ""
+  exe_amas: ""
+  exe_fasttree: ""
   exe_quibl: ""
 ---
 
@@ -215,21 +216,22 @@ stopCluster(nwcl)
 
 # output files
 fn_all_treefile <- paste0(params$outdir, "/all.treefile")
-fn_astral <- paste0(params$outdir, "/astral.treefile")
-fn_astral_log <- paste0(params$outdir, "/astral.log")
+fn_concat <- paste0(params$outdir, "/concat.fa")
+fn_partition <- paste0(params$outdir, "/partition.nex")
+fn_sptree <- paste0(params$outdir, "/fasttree.tre")
 
 # combine all treefiles
-cmd <- paste0("cat ", params$outdir, "/*/*_aligned.fa.treefile > ", fn_all_treefile)
-system(cmd)
+f_amas_dna(paste0(params$outdir, "/*/post_mafft/*_final.fa"), fn_concat, fn_partition, params$exe_amas)
+system(paste("sed 's/\?/-/g'", fn_concat))
 
-# run ASTRAL
-f_astral(fn_all_treefile, fn_astral, fn_astral_log, params$exe_astral)
+# run FastTree
+f_fasttree(fn_concat, fn_sptree, params$exe_fasttree)
 ```
 
 ```{r quibl}
 # read alltree
 alltrees <- ape::read.tree(fn_all_treefile)
-sptree <- ape::read.tree(fn_astral)
+sptree <- ape::read.tree(fn_sptree)
 sptree_distance <- ape::cophenetic.phylo(sptree)
 
 # output directory
@@ -294,14 +296,14 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
     ls_dist_transformed <- unlist(ls_dist_transformed)
     write.table(ls_dist_transformed, file=paste0(temp_outdir_quibl, "all_transformed_dist.txt"), quote=F, row.names=F, col.names=F)
 
-    # visualisation
-    plot <- ggplot() +
-        geom_density(aes(x=ls_dist), colour="blue") +
-        geom_density(aes(x=ls_dist_transformed), colour="red")
-
-    tiff(filename=paste0(temp_outdir_quibl, "dist.tiff"))
-    print(plot)
-    dev.off()
+    # # visualisation
+    # plot <- ggplot() +
+    #     geom_density(aes(x=ls_dist), colour="blue") +
+    #     geom_density(aes(x=ls_dist_transformed), colour="red")
+    #
+    # tiff(filename=paste0(temp_outdir_quibl, "dist.tiff"))
+    # print(plot)
+    # dev.off()
 
     # run QuIBL
     write.table(c("[Input]",
