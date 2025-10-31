@@ -401,7 +401,7 @@ nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
 
 # iterate over quartet
-df_output_pixy <- foreach (i = 1:nrow(df_pixy_metadata), .combine='rbind') %dopar% {
+foreach (i = 1:nrow(df_pixy_metadata)) %dopar% {
     # output directory
     temp_outdir_pixy <- paste0(dir_output_pixy, df_pixy_metadata$species_two[i], "/")
     if (!dir.exists(temp_outdir_pixy)) {
@@ -413,6 +413,7 @@ df_output_pixy <- foreach (i = 1:nrow(df_pixy_metadata), .combine='rbind') %dopa
     fn_population <- paste0(temp_outdir_pixy, "population.txt")
     fn_concat_subset <- paste0(temp_outdir_pixy, "concat.fa")
     fn_vcf_subset <- paste0(temp_outdir_pixy, "concat.vcf")
+    fn_vcf_subset_gz <- paste0(temp_outdir_pixy, "concat.vcf.gz")
 
     # save the species list
     ls_species <- c(df_pixy_metadata$species_one[i],
@@ -434,14 +435,19 @@ df_output_pixy <- foreach (i = 1:nrow(df_pixy_metadata), .combine='rbind') %dopa
 
     # convert MSA to VCF
     cmd_snpsites <- paste(params$exe_snpsites, "-v -o", fn_vcf_subset, fn_concat_subset)
-    system(cmd)
+    system(cmd_snpsites)
+
+    # compress the VCF
+    system(paste("bgzip", fn_vcf_subset))
+    system(paste("tabix", fn_vcf_subset_gz))
 
     # run pixy
-    cmd_pixy <- paste(params$exe_pixy, "--stats pi dxy fst",
-                      "--vcf", fn_vcf_subset,
+    cmd_pixy <- paste(params$exe_pixy, "--stats pi dxy",
+                      "--vcf", fn_vcf_subset_gz,
                       "--populations", fn_population,
                       "--bed_file", fn_partition_bed,
-                      "--output_folder", temp_outdir_pixy)
+                      "--output_folder", temp_outdir_pixy,
+                      "--bypass_invariant_check")
     system(cmd_pixy)
 }
 

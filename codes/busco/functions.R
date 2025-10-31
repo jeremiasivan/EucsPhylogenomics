@@ -372,12 +372,17 @@ f_get_closest_taxa <- function(tre, focal_sp, min_bootstrap) {
 
 # function: convert NEXUS to BED format (source: ChatGPT)
 f_nexus2bed <- function(fn_input, fn_output) {
-    df_partition <- readLines(fn_input)
-    df_partition <- grep("charset", df_partition, value = TRUE)
-    df_partition <- gsub(".*charset\\s+|\\s*=\\s*|;.*", "", df_partition)
+    ls_partition <- readLines(fn_input)
+    ls_partition <- grep("charset", ls_partition, value = TRUE)
     
-    df_bed <- read.table(text = df_partition, sep = "-", col.names = c("gene", "start", "end"))
-    df_bed$start <- df_bed$start - 1
+    ls_start_end <- sapply(ls_partition, function(x){
+        pos <- unlist(strsplit(x, split=" = "))[2]
+        pos <- gsub(";", "", pos)
+    })
+    
+    df_bed <- data.table::data.table(chr="1",
+                                     start=sapply(ls_start_end, function(x) { unlist(strsplit(x, split="-"))[1] }),
+                                     stop=sapply(ls_start_end, function(x) { unlist(strsplit(x, split="-"))[2] }))
 
-    write.table(df_bed, fn_output, sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+    data.table::fwrite(df_bed, fn_output, sep="\t", quote=FALSE, row.names=FALSE, col.names=FALSE)
 }
