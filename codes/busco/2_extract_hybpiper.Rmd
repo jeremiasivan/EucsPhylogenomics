@@ -282,6 +282,51 @@ df_output_quibl <- foreach (i = 1:nrow(df_quibl_metadata), .combine='rbind') %do
     ape::write.tree(ls_subset_tre, file=paste0(temp_outdir_quibl, "all.tre"))
     ape::write.tree(ls_subset_tre_transformed, file=paste0(temp_outdir_quibl, "all_transformed.tre"))
 
+    # extract topology proportion
+    ls_subset_top <- sapply(ls_subset_tre, function(x) {
+        x$node.label <- NULL
+        x$edge.length <- NULL
+        x <- ape::root(x, outgroup=df_quibl_metadata$outgroup[i])
+        x <- ape::drop.tip(x, tip=df_quibl_metadata$outgroup[i])
+        ape::write.tree(x)
+    })
+
+    # match the topology names
+    df_subset_top <- data.table::data.table()
+    uq_subset_top1 <- unique(ls_subset_top)
+    uq_subset_top2 <- unique(ls_subset_top)
+
+    for (j in uq_subset_top1) {
+        for (k in uq_subset_top2) {
+            if (j==k) {
+                df_subset_top <- rbind(df_subset_top, data.table::data.table(top1=j, top2=k))
+                uq_subset_top2 <- uq_subset_top2[uq_subset_top2!=k]
+                next
+            }
+
+            if (ape::all.equal.phylo(ape::read.tree(text = j), ape::read.tree(text = k))) {
+                df_subset_top <- rbind(df_subset_top, data.table::data.table(top1=j, top2=k))
+                uq_subset_top1 <- uq_subset_top1[uq_subset_top1!=k]
+                uq_subset_top2 <- uq_subset_top2[uq_subset_top2!=k]
+            }
+        }
+    }
+
+    for (j in 1:nrow(df_subset_top)) {
+        ls_subset_top[ls_subset_top == df_subset_top$top2[j]] <- df_subset_top$top1[j]
+    }
+
+    # count the proportion of each topology
+    df_top_prop <- data.frame(top=ls_subset_top, freq=1) %>%
+                        group_by(top) %>%
+                        summarise_all(sum) %>%
+                        arrange(desc(freq)) %>%
+                        mutate(top=forcats::fct_inorder(top))
+    df_top_prop$top <- gsub(df_quibl_metadata$species_one[i], "1", df_top_prop$top)
+    df_top_prop$top <- gsub(df_quibl_metadata$species_two[i], "2", df_top_prop$top)
+    df_top_prop$top <- gsub(df_quibl_metadata$species_three[i], "3", df_top_prop$top)
+    data.table::fwrite(df_top_prop, file=paste0(temp_outdir_quibl, "topology_count.tsv"), sep="\t", quote=F)
+
     # extract distances
     ls_dist <- lapply(ls_subset_tre, function(x) {
         dist <- ape::cophenetic.phylo(x)
