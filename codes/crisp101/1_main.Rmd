@@ -1,0 +1,82 @@
+---
+title: "Run HybPiper to extract Crisp101 loci"
+author: "Jeremias Ivan"
+date: "`r format(Sys.time(), '%d %B %Y, %H:%M%p')`"
+
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_float: true
+
+params:
+  # general
+  codedir: "~/EucsPhylogenomics/codes/busco"
+  outdir: "~/simulation"
+  thread: 10
+  redo: FALSE
+
+  # input directory
+  dir_fastq: ""
+  fn_hybpiper_metadata: ""
+
+  # executable
+  exe_hybpiper: ""
+---
+
+## Load required libraries and functions
+```{r}
+source(paste0(params$codedir, "/codes/crisp101/functions.R"))
+
+library(data.table)
+```
+
+```{r, include=FALSE}
+# install.packages("log4r")
+
+# store initial system time
+sys_tic <- Sys.time()
+
+# create outdir
+currentdir <- paste0(params$outdir, "/")
+if (!dir.exists(currentdir)) {
+  dir.create(currentdir, recursive = T)
+}
+
+# create log file
+fn_log <- paste0(params$outdir, "/run_crisp101.log")
+log_appender <- log4r::file_appender(fn_log, append = TRUE, layout = log4r::default_log_layout())
+fn_logger <- log4r::logger(threshold = "INFO", appenders = log_appender)
+if (params$redo || !file.exists(fn_log)) {
+  unlink(fn_log)
+  write.table(c("EucsPhylogenomics",
+                "Developed by Jeremias Ivan"),
+              file=fn_log, quote=F, row.names=F, col.names=F)
+}
+
+knitr::opts_knit$set(root.dir = currentdir)
+```
+
+```{r run-hybpiper}
+# create output directory
+dir_hybpiper_output <- paste0(params$outdir, "/hybpiper_run/")
+if (!dir.exists(dir_hybpiper_output)) {
+    dir.create(dir_hybpiper_output, recursive=T)
+}
+
+# open metadata
+df_hybpiper_metadata <- data.table::fread(params$fn_hybpiper_metadata)
+
+# iterate over samples
+for (i in 1:nrow(df_hybpiper_metadata)) {
+    msg <- f_hybpiper(sample=df_hybpiper_metadata$sample[i],
+                      dir_sample=params$dir_fastq,
+                      target_file=df_hybpiper_metadata$target_file[i],
+                      data_type=df_hybpiper_metadata$data_type[i],
+                      thread=params$thread,
+                      outdir=dir_hybpiper_output,
+                      exe_hybpiper=params$exe_hybpiper)
+
+    log4r::info(fn_logger, msg)
+}
+```
