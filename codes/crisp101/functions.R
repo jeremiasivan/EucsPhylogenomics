@@ -65,3 +65,50 @@ f_mafft_add <- function(fn_ref, fn_sample, fn_out, exe_mafft) {
   cmd_mafft <- paste(exe_mafft, "--addfull", fn_sample, "--keeplength", fn_ref, ">", fn_out)
   system(cmd_mafft)
 }
+
+# function: delete sequence with >=threshold gaps
+f_remove_seq <- function(fn_fasta, fn_output, threshold) {
+    # read the DNA alignment
+    seq <- Biostrings::readBStringSet(fn_fasta, format="fasta")
+
+    # iterate over sequences
+    pl <- c()
+    for (i in 1:length(seq)) {
+        seq_chr <- as.character(seq[i])
+        
+        # count the proportion of gaps
+        n_gaps <- stringr::str_count(seq_chr, "-")
+        n_total <- stringr::str_count(seq_chr)
+        prop_gaps <- n_gaps / n_total
+
+        if (prop_gaps >= threshold) {
+            pl <- c(pl, i)
+        }
+    }
+   
+    # remove sequences with >=50% gaps
+    if (length(pl)>0) {
+      seq <- seq[-pl]
+    }
+
+    # save the new DNA alignment
+    Biostrings::writeXStringSet(seq, filepath=fn_output)
+}
+
+# function: run IQ-TREE 2
+f_iqtree2 <- function(fn_input, exe_iqtree2) {
+    cmd_iqtree2 <- paste(exe_iqtree2,
+                         "-s", fn_input,
+                         "-bb 1000",
+                         "-T 1 --quiet -redo")
+    system(cmd_iqtree2)
+}
+
+# function: run ASTRAL-III 
+f_astral <- function(fn_input, fn_output, fn_log, exe_astral) {
+    cmd_astral <- paste("java -jar", exe_astral,
+                    "-i", fn_input,
+                    "-o", fn_output,
+                    "-t 2 2>", fn_log)
+    system(cmd_astral)
+}

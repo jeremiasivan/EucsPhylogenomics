@@ -22,17 +22,22 @@ params:
 
   # executable
   exe_hybpiper: ""
+  exe_mafft: ""
+  exe_iqtree2: ""
+  exe_astral: ""
 ---
 
 ## Load required libraries and functions
 ```{r}
 source(paste0(params$codedir, "/codes/crisp101/functions.R"))
 
+library(Biostrings)
 library(data.table)
 ```
 
 ```{r, include=FALSE}
 # install.packages("log4r")
+# install.packages("tidyverse")
 
 # store initial system time
 sys_tic <- Sys.time()
@@ -197,3 +202,49 @@ stopCluster(nwcl)
 data.table::fwrite(df_excluded_loci, file=paste0(params$outdir, "/excluded_loci_per_sample.tsv"), quote=F, sep="\t")
 ```
 
+## Filter locus alignments
+```{r filter}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over loci
+foreach(locus = ls_locus_final) %dopar% {
+    # input files
+    fn_fasta_aligned <- paste0(dir_alignment_output, locus, "/", locus, "_aligned.fna")
+    fn_fasta_hybpiper <- paste0(dir_alignment_output, locus, "/", locus, "_hybpiper.fna")
+
+    # output files
+    fn_combined <- paste0(dir_alignment_output, locus, "/", locus, "_combined.fna")
+    fn_final <- paste0(dir_alignment_output, locus, "/", locus, "_final.fna")
+
+    # run MAFFT
+    f_mafft_add(fn_fasta_aligned, fn_fasta_hybpiper, fn_combined, params$exe_mafft)
+
+    # delete sequences with >=50% gaps
+    f_remove_seq(fn_combined, fn_final, 0.5)
+}
+
+stopCluster(nwcl)
+```
+
+## Generate locus trees and species tree
+```{r tree}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over loci
+foreach(locus = ls_locus_final) %dopar% {
+    # input files
+    fn_final <- paste0(dir_alignment_output, locus, "/", locus, "_final.fna")
+
+    # run MAFFT
+    f_iqtree2(fn_final, params$exe_iqtree2)
+}
+
+stopCluster(nwcl)
+
+# generate ASTRAL tree
+# tbc
+```
