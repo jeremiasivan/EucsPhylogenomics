@@ -29,3 +29,27 @@ f_hybpiper <- function(sample, dir_sample, target_file, data_type, thread, outdi
 
   return(paste0("HybPiper run finished for ", sample, "."))
 }
+
+# check HybPiper paralogs
+f_check_hybpiper_paralogs <- function(sample, outdir) {
+  # initiate variable
+  ls_paralogs_final <- c()
+
+  # read files containing paralogs
+  fn_paralogs <- paste0(outdir, "/", sample, "_genes_with_long_paralog_warnings.txt")
+  if (file.exists(fn_paralogs)) {
+      ls_paralogs <- readLines(fn_paralogs)
+      ls_paralogs <- sapply(ls_paralogs, function(x) { unlist(strsplit(x, "-"))[2] })
+      ls_paralogs_final <- c(ls_paralogs_final, ls_paralogs)
+  }
+
+  fn_paralogs_depth <- paste0(outdir, "/", sample, "_genes_with_paralog_warnings_by_contig_depth.csv")
+  if (file.exists(fn_paralogs_depth) && file.size(fn_paralogs_depth)>0) {
+      ls_paralogs <- data.table::fread(fn_paralogs_depth)
+      ls_paralogs <- ls_paralogs$V2[ls_paralogs$V4]
+      ls_paralogs <- gsub("gene ", "", ls_paralogs)
+      ls_paralogs_final <- c(ls_paralogs_final, ls_paralogs)
+  }
+
+  return(unique(ls_paralogs_final))
+}

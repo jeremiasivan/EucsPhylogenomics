@@ -11,7 +11,7 @@ output:
 
 params:
   # general
-  codedir: "~/EucsPhylogenomics/codes/busco"
+  codedir: "~/EucsPhylogenomics/"
   outdir: "~/simulation"
   thread: 10
   redo: FALSE
@@ -93,7 +93,7 @@ if (!dir.exists(dir_alignment_output)) {
 # iterate over target file
 for (file in unique(df_hybpiper_metadata$target_file)) {
     # open the target file
-    seq <- Biostrings::readDNAStringSet(file)
+    seq <- Biostrings::readBStringSet(file)
     ls_locus <- sapply(names(seq), function(x) { header <- unlist(strsplit(x, split="-")); header[length(header)] })
     ls_locus <- unique(ls_locus)
 
@@ -120,3 +120,56 @@ for (file in unique(df_hybpiper_metadata$target_file)) {
     }
 }
 ```
+
+## Extract DNA sequences from HybPiper
+```{r extract-sequence-hybpiper}
+# initiate data.frame to store excluded loci
+df_excluded_loci <- data.table::data.table(sample=character(), initial=numeric(), putative_paralogs=numeric(), final=numeric())
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over samples
+for (sample in df_hybpiper_metadata$sample) {
+    # directories
+    dir_hybpiper_output_sample <- paste0(dir_hybpiper_output, sample, "/")
+
+    # extract the list of locus
+    ls_locus_sample <- list.dirs(dir_hybpiper_output_sample, recursive=F, full.names=F)
+    init_locus_len <- length(ls_locus_sample)
+
+    # remove putative paralogs
+    ls_paralogs_sample <- f_check_hybpiper_paralogs(sample, dir_hybpiper_output_sample)
+    ls_locus_sample <- ls_locus_sample[!ls_locus_sample%in%ls_paralogs_sample]
+
+    # iterate over loci
+    foreach (locus = ls_locus_sample) %dopar% {
+        # output file
+        fn_out_hybpiper <- paste0(dir_alignment_output, locus, "/", locus, "_hybpiper.fna")
+
+        # input file
+        fn_in_hybpiper <- paste0(dir_hybpiper_output_sample, locus, "/", sample, "/sequences/FNA/", locus, ".FNA")
+        if (!file.exists(fn_in_hybpiper)) {
+            log4r::error(fn_logger, paste0("File not found: ", locus, " for ", sample))
+            return(NULL)
+        }
+
+        # open and save sequence
+        seq_in_hybpiper <- Biostrings::readBStringSet(fn_in_hybpiper)
+        Biostrings::writeXStringSet(seq_in_hybpiper, file=fn_out_hybpiper, append=T)
+    }
+
+    # update data.frame
+    df_excluded_loci <- rbind(df_excluded_loci, data.table::data.table(sample=sample,
+                                                                       initial=init_locus_len,
+                                                                       putative_paralogs=length(ls_paralogs_sample),
+                                                                       final=length(ls_locus_sample)))
+}
+
+stopCluster(nwcl)
+
+# save data.frame
+data.table::fwrite(df_excluded_loci, file=paste0(params$outdir, "/excluded_loci_per_sample.tsv"), quote=F, sep="\t")
+```
+
