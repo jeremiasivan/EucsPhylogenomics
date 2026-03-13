@@ -53,3 +53,15 @@ f_check_hybpiper_paralogs <- function(sample, outdir) {
 
   return(unique(ls_paralogs_final))
 }
+
+# run MAFFT
+f_mafft <- function(fn_input, fn_out, exe_mafft) {
+  cmd_mafft <- paste(exe_mafft, "--retree 2", fn_input, ">", fn_out)
+  system(cmd_mafft)
+}
+
+# run MAFFT --add
+f_mafft_add <- function(fn_ref, fn_sample, fn_out, exe_mafft) {
+  cmd_mafft <- paste(exe_mafft, "--addfull", fn_sample, "--keeplength", fn_ref, ">", fn_out)
+  system(cmd_mafft)
+}

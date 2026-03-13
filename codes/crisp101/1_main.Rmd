@@ -119,6 +119,23 @@ for (file in unique(df_hybpiper_metadata$target_file)) {
         Biostrings::writeXStringSet(seq_locus, file=fn_fasta, append=T)
     }
 }
+
+# extract final set of locus
+ls_locus_final <- list.dirs(dir_alignment_output, recursive=F, full.names=F)
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over each locus sequence
+foreach (locus = ls_locus_final) %dopar% {
+    # input and output files
+    fn_fasta <- paste0(dir_alignment_output, locus, "/", locus, ".fna")
+    fn_fasta_aligned <- paste0(dir_alignment_output, locus, "/", locus, "_aligned.fna")
+    f_mafft(fn_fasta, fn_fasta_aligned, params$exe_mafft) 
+}
+
+stopCluster(nwcl)
 ```
 
 ## Extract DNA sequences from HybPiper
@@ -155,8 +172,15 @@ for (sample in df_hybpiper_metadata$sample) {
             return(NULL)
         }
 
-        # open and save sequence
+        # open sequence
         seq_in_hybpiper <- Biostrings::readBStringSet(fn_in_hybpiper)
+
+        # convert X into gaps
+        for (i in 1:length(seq_in_hybpiper)) {
+            seq_in_hybpiper[i] <- gsub("N", "-", seq_in_hybpiper[i])
+            seq_in_hybpiper[i] <- gsub("X", "-", seq_in_hybpiper[i])
+        }
+
         Biostrings::writeXStringSet(seq_in_hybpiper, file=fn_out_hybpiper, append=T)
     }
 
