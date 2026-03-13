@@ -57,6 +57,7 @@ if (params$redo || !file.exists(fn_log)) {
 knitr::opts_knit$set(root.dir = currentdir)
 ```
 
+## Run HybPiper
 ```{r run-hybpiper}
 # create output directory
 dir_hybpiper_output <- paste0(params$outdir, "/hybpiper_run/")
@@ -78,5 +79,44 @@ for (i in 1:nrow(df_hybpiper_metadata)) {
                       exe_hybpiper=params$exe_hybpiper)
 
     log4r::info(fn_logger, msg)
+}
+```
+
+## Extract DNA sequences from the original study
+```{r extract-sequence-ref}
+# create output directory
+dir_alignment_output <- paste0(params$outdir, "/alignment/")
+if (!dir.exists(dir_alignment_output)) {
+    dir.create(dir_alignment_output, recursive=T)
+}
+
+# iterate over target file
+for (file in unique(df_hybpiper_metadata$target_file)) {
+    # open the target file
+    seq <- Biostrings::readDNAStringSet(file)
+    ls_locus <- sapply(names(seq), function(x) { header <- unlist(strsplit(x, split="-")); header[length(header)] })
+    ls_locus <- unique(ls_locus)
+
+    # iterate over locus
+    for (locus in ls_locus) {
+        # create output directory
+        dir_fasta_output <- paste0(dir_alignment_output, locus, "/")
+        if (!dir.exists(dir_fasta_output)) {
+            dir.create(dir_fasta_output, recursive=T)
+        }
+
+        # output file
+        fn_fasta <- paste0(dir_fasta_output, locus, ".fna")
+        if (file.exists(fn_fasta)) {
+            log4r::warn(fn_logger, paste0("File found: FASTA file for ", locus, ". Locus sequences from the target file will be appended."))
+        }
+
+        # extract sequences
+        seq_locus <- seq[grepl(paste0("-",locus,"$"), names(seq))]
+        names(seq_locus) <- gsub(paste0("-",locus), "", names(seq_locus))
+
+        # save sequences
+        Biostrings::writeXStringSet(seq_locus, file=fn_fasta, append=T)
+    }
 }
 ```
