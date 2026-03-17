@@ -96,19 +96,41 @@ f_remove_seq <- function(fn_fasta, fn_output, threshold) {
 }
 
 # function: run IQ-TREE 2
-f_iqtree2 <- function(fn_input, exe_iqtree2) {
-    cmd_iqtree2 <- paste(exe_iqtree2,
-                         "-s", fn_input,
-                         "-bb 1000",
-                         "-T 1 --quiet -redo")
-    system(cmd_iqtree2)
+f_iqtree2_multiple <- function(dir_aln, prefix, thread, exe_iqtree2) {
+    iqtree_cmd <- paste(exe_iqtree2,
+                        "-S", dir_aln,
+                        "-pre", prefix,
+                        "-T", thread,
+                        "-B 1000 --quiet -redo")
+    system(iqtree_cmd)
 }
 
 # function: run ASTRAL-III 
-f_astral <- function(fn_input, fn_output, fn_log, exe_astral) {
-    cmd_astral <- paste("java -jar", exe_astral,
-                    "-i", fn_input,
-                    "-o", fn_output,
-                    "-t 2 2>", fn_log)
+f_astral <- function(fn_input, fn_output, fn_log, max_memory, exe_astral) {
+    cmd_astral <- paste("java -Xmx", max_memory, "-jar", exe_astral,
+                        "-i", fn_input,
+                        "-o", fn_output,
+                        "-t 2 2>", fn_log)
     system(cmd_astral)
+}
+
+
+# function: calculate sCF and gCF
+f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, dir_output, thread, exe_iqtree2) {
+    # calculate gCF
+    cmd_gcf <- paste(exe_iqtree2,
+                     "-t", fn_sp_tree,
+                     "--gcf", fn_all_trees,
+                     "-T", thread,
+                     "--prefix", paste0(dir_output, "/gcf"))
+    system(cmd_gcf)
+
+    # calculate sCF
+    cmd_scf <- paste(exe_iqtree2,
+                     "-te", fn_sp_tree,
+                     "-p", dir_fasta,
+                     "--scfl 100",
+                     "-T", thread,
+                     "--prefix", paste0(dir_output, "/scf"))
+    system(cmd_scf)
 }

@@ -204,6 +204,12 @@ data.table::fwrite(df_excluded_loci, file=paste0(params$outdir, "/excluded_loci_
 
 ## Filter locus alignments
 ```{r filter}
+# create output directory
+dir_alignment_final <- paste0(params$outdir, "/final/alignment/")
+if (!dir.exists(dir_alignment_final)) {
+    dir.create(dir_alignment_final, recursive=T)
+}
+
 # create doSNOW clusters
 nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
@@ -216,7 +222,7 @@ foreach(locus = ls_locus_final) %dopar% {
 
     # output files
     fn_combined <- paste0(dir_alignment_output, locus, "/", locus, "_combined.fna")
-    fn_final <- paste0(dir_alignment_output, locus, "/", locus, "_final.fna")
+    fn_final <- paste0(dir_alignment_final, locus, "/", locus, "_final.fna")
 
     # run MAFFT
     f_mafft_add(fn_fasta_aligned, fn_fasta_hybpiper, fn_combined, params$exe_mafft)
@@ -230,21 +236,25 @@ stopCluster(nwcl)
 
 ## Generate locus trees and species tree
 ```{r tree}
-# create doSNOW clusters
-nwcl <- makeCluster(params$thread)
-registerDoSNOW(nwcl)
-
-# iterate over loci
-foreach(locus = ls_locus_final) %dopar% {
-    # input files
-    fn_final <- paste0(dir_alignment_output, locus, "/", locus, "_final.fna")
-
-    # run MAFFT
-    f_iqtree2(fn_final, params$exe_iqtree2)
+# create output directory
+dir_tree_final <- paste0(params$outdir, "/final/tree/")
+if (!dir.exists(dir_tree_final)) {
+    dir.create(dir_tree_final, recursive=T)
 }
 
-stopCluster(nwcl)
+# output files
+prefix_alltrees <- paste0(dir_tree_final, "alltrees")
+
+fn_alltrees <- paste0(prefix_alltrees, ".treefile")
+fn_astral_tre <- paste0(dir_tree_final, "astral.treefile")
+fn_astral_log <- paste0(dir_tree_final, "astral.log")
+
+# infer gene trees
+f_iqtree2_multiple(dir_alignment_final, prefix_alltrees, params$thread, params$exe_iqtree2)
 
 # generate ASTRAL tree
-# tbc
+f_astral(fn_alltrees, fn_astral_tre, fn_astral_log, "4g", params$exe_astral)
+
+# calculate gCF and sCF
+f_calculate_cf(fn_alltrees, fn_astral_tre, dir_alignment_final, dir_tree_final, params$thread, params$exe_iqtree2)
 ```
