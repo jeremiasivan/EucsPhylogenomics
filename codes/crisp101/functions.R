@@ -116,21 +116,47 @@ f_astral <- function(fn_input, fn_output, fn_log, max_memory, exe_astral) {
 
 
 # function: calculate sCF and gCF
-f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, dir_output, thread, exe_iqtree2) {
-    # calculate gCF
-    cmd_gcf <- paste(exe_iqtree2,
-                     "-t", fn_sp_tree,
-                     "--gcf", fn_all_trees,
-                     "-T", thread,
-                     "--prefix", paste0(dir_output, "/gcf"))
-    system(cmd_gcf)
+f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, prefix, thread, exe_iqtree2) {
+    cmd_cf <- paste(exe_iqtree2,
+                    "-t", fn_sp_tree,
+                    "--gcf", fn_all_trees,
+                    "-p", dir_fasta,
+                    "--scfl 100",
+                    "-T", thread,
+                    "--prefix", prefix)
+    system(cmd_cf)
+}
 
-    # calculate sCF
-    cmd_scf <- paste(exe_iqtree2,
-                     "-te", fn_sp_tree,
-                     "-p", dir_fasta,
-                     "--scfl 100",
-                     "-T", thread,
-                     "--prefix", paste0(dir_output, "/scf"))
-    system(cmd_scf)
+# function: calculate distances from a node to all tips (source: Claude)
+node_to_tip_distances <- function(tree, node) {
+    # calculate the number of tips
+    n_tips <- length(tree$tip.label)
+    
+    # create a children lookup list
+    children <- vector("list", n_tips + tree$Nnode)
+    for (i in 1:nrow(tree$edge)) {
+        parent <- tree$edge[i,1]
+        child  <- tree$edge[i,2]
+
+        # extract the edge length, treating NA as 0
+        edge_len <- ifelse(is.na(tree$edge.length[i]), 0, tree$edge.length[i])
+        children[[parent]] <- rbind(children[[parent]], c(child, edge_len))
+    }
+    
+    # recursive walk: accumulate branch lengths down to tips
+    walk <- function(node, accumulated) {
+        kids <- children[[node]]
+        if (is.null(kids)) {
+            # return tip label and total distance
+            return(data.frame(tip = tree$tip.label[node],
+                              distance = accumulated))
+        }
+
+        # recurse into each child
+        do.call(rbind, lapply(1:nrow(kids), function(i) {
+            walk(kids[i,1], accumulated + kids[i,2])
+        }))
+    }
+    
+    walk(node, 0)
 }

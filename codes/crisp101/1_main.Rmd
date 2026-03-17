@@ -244,10 +244,12 @@ if (!dir.exists(dir_tree_final)) {
 
 # output files
 prefix_alltrees <- paste0(dir_tree_final, "alltrees")
+prefix_cf <- paste0(dir_tree_final, "concord")
 
 fn_alltrees <- paste0(prefix_alltrees, ".treefile")
 fn_astral_tre <- paste0(dir_tree_final, "astral.treefile")
 fn_astral_log <- paste0(dir_tree_final, "astral.log")
+fn_cf_stat <- paste0(prefix_cf, ".cf.stat")
 
 # infer gene trees
 f_iqtree2_multiple(dir_alignment_final, prefix_alltrees, params$thread, params$exe_iqtree2)
@@ -256,5 +258,28 @@ f_iqtree2_multiple(dir_alignment_final, prefix_alltrees, params$thread, params$e
 f_astral(fn_alltrees, fn_astral_tre, fn_astral_log, "4g", params$exe_astral)
 
 # calculate gCF and sCF
-f_calculate_cf(fn_alltrees, fn_astral_tre, dir_alignment_final, dir_tree_final, params$thread, params$exe_iqtree2)
+f_calculate_cf(fn_alltrees, fn_astral_tre, dir_alignment_final, prefix_cf, params$thread, params$exe_iqtree2)
+
+# open the CF output file
+astral_tre <- ape::read.tree(fn_astral_tre)
+df_cf <- read.delim(fn_cf_stat, header = T, comment.char= '#')
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# extract branch length, bootstrap, gCF, and sCF
+df_output <- foreach (i = 1:nrow(df_cf), .combine='rbind') %dopar% {
+    data.table::data.table(id=df_cf$ID[i],
+                           gcf=df_cf$gCF[i],
+                           scf=df_cf$sCF[i],
+                           pp=df_cf$bootstrap[i],
+                           edge_len=min(node_to_tip_distances(astral_tre, df_cf$ID[i])$distance))
+}
+
+stopCluster(nwcl)
+
+# visualisation
+plot <- ggplot(df_output, aes(x=edge_len, y=gCF, colour=pp)) + geom_point() + scale_colour_viridis(direction = -1)
+plot <- ggplot(df_output, aes(x=edge_len, y=sCF, colour=pp)) + geom_point() + scale_colour_viridis(direction = -1)
 ```
