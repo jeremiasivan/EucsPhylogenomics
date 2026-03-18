@@ -84,7 +84,7 @@ f_remove_seq <- function(fn_fasta, fn_output, threshold) {
         
         # count the proportion of gaps
         n_gaps <- stringr::str_count(seq_chr, "-")
-        n_total <- stringr::str_count(seq_chr)
+        n_total <- nchar(seq_chr)
         prop_gaps <- n_gaps / n_total
 
         if (prop_gaps >= threshold) {
@@ -116,7 +116,9 @@ f_iqtree2_multiple <- function(dir_aln, prefix, thread, exe_iqtree2) {
 
 # function: run ASTRAL-III 
 f_astral <- function(fn_input, fn_output, fn_log, max_memory, exe_astral) {
-    cmd_astral <- paste("java -Xmx", max_memory, "-jar", exe_astral,
+    cmd_astral <- paste("java",
+                        paste0("-Xmx", max_memory),
+                        "-jar", exe_astral,
                         "-i", fn_input,
                         "-o", fn_output,
                         "-t 2 2>", fn_log)
@@ -130,7 +132,7 @@ f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, prefix, thread, 
                     "-t", fn_sp_tree,
                     "--gcf", fn_all_trees,
                     "-p", dir_fasta,
-                    "--scfl 100",
+                    "--scf 100",
                     "-T", thread,
                     "--prefix", prefix)
     system(cmd_cf)
