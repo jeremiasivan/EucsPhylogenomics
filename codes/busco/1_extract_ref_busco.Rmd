@@ -240,7 +240,7 @@ df_busco_summary <- foreach (busco = ls_busco, .combine='rbind') %dopar% {
   seq4_len <- str_count(as.character(seq4[1]))
   seq4_gappercent <- round(sum(str_count(as.character(seq4), "-")) / sum(str_count(as.character(seq4))) * 100, 3)
 
-  # step 5: run TreeShrink and exclude busco with insufficient number of species
+  # step 5: exclude busco with insufficient number of species
   seq_final <- Biostrings::readDNAStringSet(paste0(dir_output_final, busco, ".fna"))
   seq_final_sp <- length(seq_final)
   seq_final_len <- str_count(as.character(seq_final[1]))

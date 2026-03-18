@@ -14,11 +14,14 @@ params:
   codedir: "~/EucsPhylogenomics/"
   outdir: "~/simulation"
   thread: 10
-  redo: FALSE
 
   # input directory
   dir_fastq: ""
   fn_hybpiper_metadata: ""
+  fn_coverage_metadata: ""
+
+  # variables
+  min_coverage: 10
 
   # executable
   exe_hybpiper: ""
@@ -33,11 +36,11 @@ source(paste0(params$codedir, "/codes/crisp101/functions.R"))
 
 library(Biostrings)
 library(data.table)
+library(tidyverse)
 ```
 
 ```{r, include=FALSE}
 # install.packages("log4r")
-# install.packages("tidyverse")
 
 # store initial system time
 sys_tic <- Sys.time()
@@ -62,6 +65,22 @@ if (params$redo || !file.exists(fn_log)) {
 knitr::opts_knit$set(root.dir = currentdir)
 ```
 
+```{r init, include=FALSE}
+# open metadata
+df_hybpiper_metadata <- data.table::fread(params$fn_hybpiper_metadata)
+init_n_sample <- nrow(df_hybpiper_metadata)
+
+# exclude samples with <10x coverage (optional)
+if (!is.null(params$fn_coverage_metadata) && file.exists(params$fn_coverage_metadata)) {
+    df_coverage <- data.table::fread(params$fn_coverage_metadata)
+    df_coverage <- df_coverage %>% filter(cov >= as.numeric(params$min_coverage))
+    df_hybpiper_metadata <- df_hybpiper_metadata %>% filter(sample %in% df_coverage$file)
+}
+
+cat(paste("Initial number of samples:", init_n_sample))
+cat(paste("Final number of samples after excluding low-coverage samples:", nrow(df_hybpiper_metadata)))
+```
+
 ## Run HybPiper
 ```{r run-hybpiper}
 # create output directory
@@ -69,9 +88,6 @@ dir_hybpiper_output <- paste0(params$outdir, "/hybpiper_run/")
 if (!dir.exists(dir_hybpiper_output)) {
     dir.create(dir_hybpiper_output, recursive=T)
 }
-
-# open metadata
-df_hybpiper_metadata <- data.table::fread(params$fn_hybpiper_metadata)
 
 # iterate over samples
 for (i in 1:nrow(df_hybpiper_metadata)) {
@@ -85,6 +101,8 @@ for (i in 1:nrow(df_hybpiper_metadata)) {
 
     log4r::info(fn_logger, msg)
 }
+
+cat("HybPiper runs finished!")
 ```
 
 ## Extract DNA sequences from the original study
@@ -224,11 +242,13 @@ foreach(locus = ls_locus_final) %dopar% {
     fn_combined <- paste0(dir_alignment_output, locus, "/", locus, "_combined.fna")
     fn_final <- paste0(dir_alignment_final, locus, "/", locus, "_final.fna")
 
-    # run MAFFT
-    f_mafft_add(fn_fasta_aligned, fn_fasta_hybpiper, fn_combined, params$exe_mafft)
+    if (all(file.exists(fn_fasta_aligned, fn_fasta_hybpiper))) {
+        # run MAFFT
+        f_mafft_add(fn_fasta_aligned, fn_fasta_hybpiper, fn_combined, params$exe_mafft)
 
-    # delete sequences with >=50% gaps
-    f_remove_seq(fn_combined, fn_final, 0.5)
+        # delete sequences with >=50% gaps
+        f_remove_seq(fn_combined, fn_final, 0.5)
+    }
 }
 
 stopCluster(nwcl)

@@ -12,7 +12,13 @@ f_hybpiper <- function(sample, dir_sample, target_file, data_type, thread, outdi
   } else {
     return(paste0("Invalid data type for ", sample, ". Skipped."))
   }
-  
+
+  # check if run exists
+  dir_hybpiper <-  paste0(outdir, "/", sample, "/")
+  if (dir.exists(dir_hybpiper)) {
+    return(paste0("HybPiper run already exists for ", sample, ". Skipped."))
+  }
+
   # check if FASTQ files exist
   ls_fastq <- list.files(dir_sample, pattern=paste0(sample, "_R[12].fastq.gz"))
   if (length(ls_fastq) == 0) {
@@ -56,13 +62,13 @@ f_check_hybpiper_paralogs <- function(sample, outdir) {
 
 # run MAFFT
 f_mafft <- function(fn_input, fn_out, exe_mafft) {
-  cmd_mafft <- paste(exe_mafft, "--retree 2", fn_input, ">", fn_out)
+  cmd_mafft <- paste(exe_mafft, "--auto", fn_input, ">", fn_out)
   system(cmd_mafft)
 }
 
 # run MAFFT --add
 f_mafft_add <- function(fn_ref, fn_sample, fn_out, exe_mafft) {
-  cmd_mafft <- paste(exe_mafft, "--addfull", fn_sample, "--keeplength", fn_ref, ">", fn_out)
+  cmd_mafft <- paste(exe_mafft, "--auto --addfull", fn_sample, "--keeplength", fn_ref, ">", fn_out)
   system(cmd_mafft)
 }
 
@@ -91,6 +97,9 @@ f_remove_seq <- function(fn_fasta, fn_output, threshold) {
       seq <- seq[-pl]
     }
 
+    # update sequence headers
+    names(seq) <- sapply(names(seq), function(x) { unlist(strsplit(x, split=" "))[1] })
+
     # save the new DNA alignment
     Biostrings::writeXStringSet(seq, filepath=fn_output)
 }
@@ -101,7 +110,7 @@ f_iqtree2_multiple <- function(dir_aln, prefix, thread, exe_iqtree2) {
                         "-S", dir_aln,
                         "-pre", prefix,
                         "-T", thread,
-                        "-B 1000 --quiet -redo")
+                        "-B 1000 --quiet")
     system(iqtree_cmd)
 }
 
