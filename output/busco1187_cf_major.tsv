@@ -1,0 +1,53 @@
+taxonomy_name	level	gCF	sCF	gN	notes
+angophora	genus	85.46	82.18	1142	
+corymbia	genus	43.82	62.24	1132	including_C_trachyphloia_amphistomatica
+blakella	genus	66.61	73.09	1165	
+angophora-corymbia	genus	31	37.49	1171	
+angophora-corymbia-blakella	genus	98.39	96.64	1178	
+b_maculatae	subgenus	43.52	69.03	1149	
+b_abbreviatae	subgenus	39	51.89	1136	
+b_naviculares	subgenus	31.96	61.39	1142	
+b_abbreviatae-naviculares	subgenus	13.33	34.23	1155	
+c_calophyllae	subgenus	12.89	42.43	1164	
+c_corymbia	subgenus	18.26	60.37	1161	excluding_C_trachyphloia_amphistomatica
+c_calophyllae-corymbia	subgenus	16.01	36.05	1137	excluding_C_trachyphloia_amphistomatica
+eucalyptus	genus	98.39	96.64	1178	
+e_eudesmia	subgenus	73.98	69.92	1130	
+e_idiogenes	subgenus	71.19	85.87	972	
+e_eucalyptus	subgenus	4.29	38.21	1142	excluding_E_acies
+e_idiogenes-eucalyptus	subgenus	24.8	64.64	1105	excluding_E_acies
+e_euc_eucayptus	section	5.15	42.04	1145	
+e_euc_frutices	section	3.26	45.77	1164	
+e_euc_longistylus	section	2.54	35.58	1143	
+e_euc_eucalyptus-frutices	section	1.28	42.45	1171	
+e_euc_eucalyptus_frutices-longistylus	section	1.66	39.69	1142	
+e_cuboidea	subgenus	83.45	83.27	894	
+e_acerosae	subgenus	83.72	82.98	958	
+e_cuboidea-acerosae	subgenus	23.67	44.6	1149	
+e_idiogenes_eucalyptus-cuboidea_acerosae	subgenus	11.43	43.56	1181	including_E_acies
+e_alveolata	subgenus	81.08	85.68	983	
+e_cruciformes	subgenus	81.15	88.78	1151	
+e_alveolata-cruciformes	subgenus	16.58	38.88	1176	
+e_symphyomyrtus	subgenus	9.54	51.86	1185	including_E_virginea
+e_alveolata_cruciformes-symphyomyrtus	subgenus	11.22	45.67	1185	
+e_sym_pumilio	section	7.34	50.02	1172	
+e_sym_maidenaria	section	0.7	43.62	1136	
+e_sym_latoangulatae	section	7.31	34.1	1135	
+e_sym_maidenaria-latoangulatae	section	1.84	37.17	1140	
+e_sym_incognitae	section	66.05	81.31	1137	
+e_sym_exsertaria	section	0.26	35.42	1149	
+e_sym_incognitae-exsertaria	section	0.17	40.4	1150	
+e_sym_maidenaria_latoangulatae-incognitae_exsertaria	section	1.01	34.1	1183	including_E_robusta_x_E_tereticornis
+e_sym_pumilio-maidenaria_latoangulatae_incognitae_exsertaria	section	17.74	58.65	1071	
+e_sym_platysperma	section	12.78	65.14	1158	
+e_sym_adnataria	section	0.17	38.5	1182	
+e_sym_platysperma-adnataria	section	0	35.05	1184	
+e_sym_sejunctae	section	42.36	66.8	1112	excluding_E_camaldulensis_camaldulensis
+e_sym_glandulosae	section	0.51	41.26	1180	
+e_sym_dumaria	section	0.09	40.69	1143	
+e_sym_glandulosae-dumaria	section	0.08	44.31	1182	
+e_sym_glandulosae_dumaria-sejunctae	section	0	34.46	1183	including_E_camadulensis_camadulensis
+e_sym_platysperma_adnataria-glandulosae_dumaria_sejunctae	section	2.82	44.3	1134	
+e_sym_platysperma_adnataria_glandulosae_dumaria_sejunctae-domesticae	section	2.91	39.48	1134	
+e_sym_bisectae	section	1.52	44.21	1186	
+e_sym_platysperma_adnataria_glandulosae_dumaria_sejunctae_domesticae-bisectae	section	1.1	38.18	1187	
