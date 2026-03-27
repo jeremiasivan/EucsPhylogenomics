@@ -117,7 +117,12 @@ if (!dir.exists(dir_alignment_output)) {
 for (file in unique(df_hybpiper_metadata$target_file)) {
     # open the target file
     seq <- Biostrings::readBStringSet(file)
-    ls_locus <- sapply(names(seq), function(x) { header <- unlist(strsplit(x, split="-")); header[length(header)] })
+    ls_locus <- sapply(names(seq), function(x) {
+        header <- unlist(strsplit(x, split="-"))
+        header <- header[length(header)]
+        gsub(" ", "", header)
+    })
+    
     ls_locus <- unique(ls_locus)
 
     # iterate over locus

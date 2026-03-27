@@ -1,4 +1,4 @@
-tip_label	type	target_file
+sample	data_type	target_file
 A_floribunda	dna	~/EucsPhylogenomics/files/hybpiper/busco1187_noneucs.fna
 A_floribunda_Ferguson2024	dna	~/EucsPhylogenomics/files/hybpiper/busco1187_noneucs.fna
 A_leiocarpa_1	dna	~/EucsPhylogenomics/files/hybpiper/busco1187_noneucs.fna
