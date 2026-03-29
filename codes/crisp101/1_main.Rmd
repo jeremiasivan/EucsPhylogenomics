@@ -117,6 +117,8 @@ if (!dir.exists(dir_alignment_output)) {
 for (file in unique(df_hybpiper_metadata$target_file)) {
     # open the target file
     seq <- Biostrings::readBStringSet(file)
+    names(seq) <- trimws(names(seq), which="right")
+
     ls_locus <- sapply(names(seq), function(x) {
         header <- unlist(strsplit(x, split="-"))
         header <- header[length(header)]
@@ -308,6 +310,9 @@ df_output <- foreach (i = 1:nrow(df_cf), .combine='rbind') %dopar% {
 }
 
 stopCluster(nwcl)
+
+# save data.frame
+data.table::fwrite(df_output, file=paste0(params$outdir, "/final/summary_cf.tsv"), sep="\t", quote=F)
 
 # visualisation
 plot <- ggplot(df_output, aes(x=edge_len, y=gCF, colour=pp)) + geom_point() + scale_colour_viridis(direction = -1)
