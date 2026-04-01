@@ -1,0 +1,838 @@
+initial_label	genus	subgenus	section	is_included	is_label_swapped	final_label	notes
+A_floribunda	Angophora	Angophora	Angophora	TRUE	FALSE	A_floribunda	
+A_floribunda_Ferguson2024	Angophora	Angophora	Angophora	TRUE	FALSE	A_floribunda_Ferguson2024	
+A_leiocarpa_1	Angophora	Angophora	Angophora	TRUE	FALSE	A_leiocarpa_1	
+A_leiocarpa_2	Angophora	Angophora	Angophora	TRUE	FALSE	A_leiocarpa_2	
+C_aparrerinja	Corymbia	Blakella	Abbreviatae	TRUE	FALSE	C_aparrerinja	
+C_arnhemensis	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_arnhemensis	
+C_calophylla_1	Corymbia	Corymbia	Calophyllae	FALSE	TRUE	E_brachycalyx_2	Different genus
+C_calophylla_2	Corymbia	Corymbia	Calophyllae	TRUE	FALSE	C_calophylla_2	
+C_calophylla_3	Corymbia	Corymbia	Calophyllae	TRUE	FALSE	C_calophylla_3	
+C_calophylla_Ferguson2024	Corymbia	Corymbia	Calophyllae	TRUE	FALSE	C_calophylla_Ferguson2024	
+C_candida	Corymbia	Blakella	Abbreviatae	TRUE	FALSE	C_candida	
+C_chippendalei	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_chippendalei	
+C_chlorolampra	Corymbia	Corymbia	Calophyllae	TRUE	FALSE	C_chlorolampra	
+C_citriodora_1	Corymbia	Blakella	Maculatae	TRUE	FALSE	C_citriodora_1	
+C_citriodora_2	Corymbia	Blakella	Maculatae	TRUE	FALSE	C_citriodora_2	
+C_cliftoniana	Corymbia	Corymbia	Corymbia	FALSE	FALSE	C_cliftoniana	Estimated mean coverage <10x
+C_deserticola_deserticola_1	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_deserticola_deserticola_1	
+C_deserticola_deserticola_2	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_deserticola_deserticola_2	
+C_eremaea_oligiocarpa	Corymbia	Corymbia	Corymbia	TRUE	TRUE	C_eremaea_oligocarpa_1	Set the label clearer
+C_eremaea_oligocarpa	Corymbia	Corymbia	Corymbia	FALSE	TRUE	E_punctata_1	Different genus
+C_ficifolia	Corymbia	Corymbia	Calophyllae	TRUE	FALSE	C_ficifolia	
+C_haematoxylon	Corymbia	Corymbia	Calophyllae	FALSE	TRUE	E_discreta	Different genus
+C_henryi_2	Corymbia	Blakella	Maculatae	TRUE	FALSE	C_henryi_2	
+C_henryi_3	Corymbia	Blakella	Maculatae	TRUE	FALSE	C_henryi_3	
+C_henryi_4	Corymbia	Blakella	Maculatae	TRUE	FALSE	C_henryi_4	
+C_leichhardii_1	Corymbia	Blakella	Naviculares	TRUE	FALSE	C_leichhardii_1	
+C_leichhardii_2	Corymbia	Blakella	Naviculares	TRUE	FALSE	C_leichhardii_2	
+C_lenziana	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_lenziana	
+C_leptoloma	Corymbia	Blakella	Naviculares	FALSE	FALSE	C_leptoloma	Different subgenus
+C_maculata	Corymbia	Blakella	Maculatae	TRUE	FALSE	C_maculata	
+C_maculata_Ferguson2024	Corymbia	Blakella	Maculatae	TRUE	FALSE	C_maculata_Ferguson2024	
+C_papillosa	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_papillosa	
+C_petalophylla	Corymbia	Blakella	Naviculares	TRUE	FALSE	C_petalophylla	
+C_polycarpa_1	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_polycarpa_1	
+C_polycarpa_2	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_polycarpa_2	
+C_ptychocarpa_ptychocarpa	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_ptychocarpa_ptychocarpa	
+C_rhodops	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_rhodops	
+C_scabrida	Corymbia	Blakella	Naviculares	TRUE	FALSE	C_scabrida	
+C_setosa_pedicellaris_x_C_brachycarpa	Corymbia-H	Corymbia-H	Corymbia-H	FALSE	FALSE	C_setosa_pedicellaris_x_C_brachycarpa	Hybrid
+C_setosa_setosa	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_setosa_setosa	
+C_sphaerica	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_sphaerica	
+C_terminalis	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_terminalis	
+C_tessellaris_1	Corymbia	Blakella	Abbreviatae	TRUE	FALSE	C_tessellaris_1	
+C_tessellaris_2	Corymbia	Blakella	Abbreviatae	TRUE	FALSE	C_tessellaris_2	
+C_tessellaris_3	Corymbia	Blakella	Abbreviatae	TRUE	FALSE	C_tessellaris_3	
+C_trachyphloia_amphistomatica	Corymbia	Corymbia	Corymbia	FALSE	FALSE	C_trachyphloia_amphistomatica	Did not group together with other samples
+C_trachyphloia_trachyphloia_1	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_trachyphloia_trachyphloia_1	
+C_trachyphloia_trachyphloia_2	Corymbia	Corymbia	Corymbia	TRUE	FALSE	C_trachyphloia_trachyphloia_2	
+C_variegata	Corymbia	Blakella	Maculatae	TRUE	FALSE	C_variegata	
+E_absita	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_absita	Different section
+E_acies	Eucalyptus	Eucalyptus	'Frutices' ms	FALSE	FALSE	E_acies	Located at the basal position of E. subg. Eucalyptus and subg. Idiogenes
+E_adesmophloia	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_adesmophloia	
+E_aenea	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_aenea	
+E_aequioperta	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_aequioperta	
+E_aequioperta_x_E_sheathiana	Eucalyptus-H	Symphyomyrtus-H	Dumaria-H	FALSE	FALSE	E_aequioperta_x_E_sheathiana	Hybrid
+E_agglomerata	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_agglomerata	
+E_aggregata	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_aggregata	
+E_alaticaulis	Eucalyptus	Symphyomyrtus	Maidenaria	FALSE	FALSE	E_alaticaulis	Different section
+E_alatissima_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_alatissima_1	
+E_alatissima_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_alatissima_2	
+E_albens_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_albens_1	
+E_albens_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_albens_2	
+E_albens_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_albens_Ferguson2024	
+E_albopurpurea_1	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_albopurpurea_1	Estimated mean coverage <10x 
+E_albopurpurea_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_albopurpurea_2	
+E_albopurpurea_3	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_albopurpurea_3	Different section
+E_albopurpurea_4	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_albopurpurea_4	
+E_alipes	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_alipes	
+E_ammophila	Eucalyptus	Symphyomyrtus	Exsertaria	FALSE	FALSE	E_ammophila	Estimated mean coverage <10x
+E_amygdalina_1	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_amygdalina_1	
+E_amygdalina_2	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_amygdalina_2	
+E_ANBG9806169_Ferguson2024	Eucalyptus	Eucalyptus	Eucalyptus	FALSE	FALSE	E_ANBG9806169_Ferguson2024	Uncertain species
+E_angulosa_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_angulosa_1	Did not group together with other samples
+E_angulosa_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_angulosa_2	Did not group together with other samples
+E_angulosa_3	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_angulosa_3	Did not group together with other samples
+E_angustissima	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_angustissima	
+E_annulata	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_annulata	
+E_apodophylla_1	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_apodophylla_1	
+E_apodophylla_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_apodophylla_2	
+E_apothalassica	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_apothalassica	
+E_arachnaea_arachnaea	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_arachnaea_arachnaea	
+E_arachnaea_arrecta_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_arachnaea_arrecta_1	
+E_arachnaea_arrecta_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_arachnaea_arrecta_2	
+E_arachnaea_x_E_pluricaulis_intergrade_1	Eucalyptus-H	Symphyomyrtus-H	Glandulosae' ms-H	FALSE	FALSE	E_arachnaea_x_E_pluricaulis_intergrade_1	Hybrid
+E_arborella	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	TRUE	E_erythrocorys_4	Different subgenus
+E_arenacea	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_arenacea	
+E_argutifolia	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_argutifolia	
+E_aridomontana_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_aridomontana_1	
+E_aridomontana_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_aridomontana_2	
+E_aridomontana_3	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_aridomontana_3	
+E_armillata	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_armillata	
+E_articulata	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_articulata	Estimated mean coverage <10x 
+E_aspersa	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_aspersa	Different section
+E_aspratilis_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_aspratilis_1	
+E_aspratilis_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_aspratilis_2	
+E_aspratilis_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_aspratilis_3	
+E_assimilans_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_assimilans_1	
+E_assimilans_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_assimilans_2	
+E_astringens_redacta_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_astringens_redacta_1	
+E_astringens_redacta_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_astringens_redacta_2	
+E_astringens_redacta_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_astringens_redacta_3	
+E_atrata_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_atrata_1	
+E_atrata_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_atrata_2	
+E_baiophylla	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	TRUE	E_obesa_1	Different section
+E_bakeri	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_bakeri	
+E_balladoniensis_balladoniensis	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_balladoniensis_balladoniensis	Different section
+E_bancroftii	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_bancroftii	
+E_baudiniana_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_baudiniana_1	
+E_baudiniana_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_baudiniana_2	
+E_baudiniana_x_E_oraria_intergrade_1	Eucalyptus-H	Symphyomyrtus-H	Dumaria-H	FALSE	FALSE	E_baudiniana_x_E_oraria_intergrade_1	Hybrid
+E_baudiniana_x_E_oraria_intergrade_2	Eucalyptus-H	Symphyomyrtus-H	Dumaria-H	FALSE	FALSE	E_baudiniana_x_E_oraria_intergrade_2	Hybrid
+E_baueriana	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_baueriana	
+E_baxteri_1	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_baxteri_1	
+E_baxteri_2	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_baxteri_2	
+E_beardiana_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_beardiana_1	
+E_beardiana_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_beardiana_2	
+E_behriana	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_behriana	
+E_behriana_x_E_largiflorens	Eucalyptus-H	Symphyomyrtus-H	Adnataria-H	FALSE	FALSE	E_behriana_x_E_largiflorens	Hybrid
+E_behriana_x_E_xodorata	Eucalyptus-H	Symphyomyrtus-H	Adnataria-H	FALSE	FALSE	E_behriana_x_E_xodorata	Hybrid
+E_bicostata	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_bicostata	
+E_blaxellii_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_blaxellii_1	
+E_blaxellii_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_blaxellii_2	
+E_botryoides	Eucalyptus	Symphyomyrtus	Latoangulatae	TRUE	FALSE	E_botryoides	
+E_brachycalyx_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_brachycalyx_1	
+E_brachycalyx_2	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	TRUE	C_calophylla_1	Different genus
+E_brandiana	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_brandiana	
+E_brandiana_Ferguson2024	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_brandiana_Ferguson2024	
+E_brassiana	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_brassiana	
+E_brevipes_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_brevipes_1	
+E_brevipes_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_brevipes_2	
+E_brevistylis	Eucalyptus	Eucalyptus	Longistylus	TRUE	FALSE	E_brevistylis	
+E_bridgesiana	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_bridgesiana	
+E_brockwayi	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_brockwayi	
+E_brownii	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_brownii	
+E_burracoppinensis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_burracoppinensis	
+E_cadens	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_cadens	
+E_caesia_Boyagin_Rock_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_Boyagin_Rock_1	
+E_caesia_Boyagin_Rock_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_Boyagin_Rock_2	
+E_caesia_caesia_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_caesia_1	
+E_caesia_caesia_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_caesia_2	
+E_caesia_magna_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_magna_1	
+E_caesia_magna_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_magna_2	
+E_caesia_magna_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_magna_3	
+E_caesia_magna_4	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_magna_4	
+E_caesia_magna_5	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_magna_5	
+E_caesia_Southern_rocks	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_caesia_Southern_rocks	
+E_cajuputea	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_cajuputea	
+E_calcareana_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_calcareana_1	Did not group together with other samples
+E_calcareana_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_calcareana_2	Did not group together with other samples
+E_calcareana_3	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_calcareana_3	Did not group together with other samples
+E_calcareana_4	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_calcareana_4	Different section
+E_calcicola_unita_1	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_calcicola_unita_1	
+E_calcicola_unita_2	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_calcicola_unita_2	
+E_caleyi_caleyi_x_ovendenii_intergrade	Eucalyptus-H	Symphyomyrtus-H	Adnataria-H	FALSE	FALSE	E_caleyi_caleyi_x_ovendenii_intergrade	Hybrid
+E_caleyi_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_caleyi_Ferguson2024	
+E_caliginosa	Eucalyptus	Eucalyptus	Eucalyptus	FALSE	FALSE	E_caliginosa	Different subgenus
+E_calycogona_calycogona_1	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	TRUE	E_pluricaulis_porphyrea	Different section
+E_calycogona_calycogona_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_calycogona_calycogona_2	Did not group together with other samples
+E_calycogona_trachybasis	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_calycogona_trachybasis	Did not group together with other samples
+E_camaldulensis_arida_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_camaldulensis_arida_2	
+E_camaldulensis_arida_3	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_camaldulensis_arida_3	
+E_camaldulensis_arida_4	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_camaldulensis_arida_4	
+E_camaldulensis_arida_5	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_camaldulensis_arida_5	
+E_camaldulensis_camaldulensis	Eucalyptus	Symphyomyrtus	Exsertaria	FALSE	FALSE	E_camaldulensis_camaldulensis	Different section
+E_camaldulensis_Ferguson2024	Eucalyptus	Symphyomyrtus	Exsertaria	FALSE	FALSE	E_camaldulensis_Ferguson2024	Did not group together with other samples
+E_camaldulensis_refulgens_1	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_camaldulensis_refulgens_1	
+E_camaldulensis_refulgens_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_camaldulensis_refulgens_2	
+E_camaldulensis_simulata	Eucalyptus	Symphyomyrtus	Exsertaria	FALSE	FALSE	E_camaldulensis_simulata	Did not group together with other samples
+E_cameronii	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_cameronii	
+E_campaspe	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_campaspe	
+E_camphora_camphora	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_camphora_camphora	
+E_canaliculata	Eucalyptus	Symphyomyrtus	Pumilio	TRUE	FALSE	E_canaliculata	
+E_canescens_beadellii	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_canescens_beadellii	
+E_canescens_canescens	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_canescens_canescens	
+E_capillosa_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_capillosa_1	
+E_capillosa_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_capillosa_2	
+E_capillosa_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_capillosa_3	
+E_capillosa_4	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_capillosa_4	
+E_capitanea	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_capitanea	Different section
+E_captiosa	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_captiosa	
+E_carnei	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_carnei	
+E_celastroides_celastroides	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_celastroides_celastroides	
+E_celastroides_virella_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_celastroides_virella_1	
+E_celastroides_virella_2	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	TRUE	E_macrandra_2	Different section
+E_cerasiformis	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_cerasiformis	
+E_cernua	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_cernua	
+E_chloroclada_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_chloroclada_2	
+E_chloroclada_3	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_chloroclada_3	
+E_chlorophylla_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_chlorophylla_1	Did not group together with other samples
+E_chlorophylla_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_chlorophylla_2	Did not group together with other samples
+E_cladocalyx_crassa	Eucalyptus	Symphyomyrtus	Sejunctae	TRUE	FALSE	E_cladocalyx_crassa	
+E_cladocalyx_Ferguson2024	Eucalyptus	Symphyomyrtus	Sejunctae	TRUE	FALSE	E_cladocalyx_Ferguson2024	
+E_clelandii	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_clelandii	
+E_cloeziana_Ferguson2024	Eucalyptus	Idiogenes		TRUE	FALSE	E_cloeziana_Ferguson2024	
+E_cneorifolia	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_cneorifolia	
+E_codonocarpa_1	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_codonocarpa_1	
+E_codonocarpa_2	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_codonocarpa_2	
+E_comitaexvallis	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_comitaexvallis	
+E_concinna	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_concinna	Estimated mean coverage <10x
+E_confluens	Eucalyptus	Symphyomyrtus	Platysperma	TRUE	FALSE	E_confluens	
+E_conglobata_conglobata_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_conglobata_conglobata_1	Estimated mean coverage <10x
+E_conglobata_conglobata_2	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_conglobata_conglobata_2	Different section
+E_conglobata_conglobata_3	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_conglobata_conglobata_3	
+E_conglobata_conglobata_4	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_conglobata_conglobata_4	Different section
+E_conglobata_conglobata_5	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_conglobata_conglobata_5	
+E_conica	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_conica	
+E_conica_x_E_microcarpa	Eucalyptus-H	Symphyomyrtus-H	Adnataria-H	FALSE	FALSE	E_conica_x_E_microcarpa	Hybrid
+E_conveniens	Eucalyptus	Eudesmia	Limbatae	FALSE	FALSE	E_conveniens	Different subgenus
+E_coolabah	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_coolabah	
+E_coolabah_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_coolabah_Ferguson2024	
+E_cooperiana_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_cooperiana_1	
+E_cooperiana_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_cooperiana_2	
+E_cooperiana_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_cooperiana_3	
+E_cordata_quadrangulosa_1	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_cordata_quadrangulosa_1	
+E_cordata_quadrangulosa_2	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_cordata_quadrangulosa_2	
+E_cornuta	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_cornuta	
+E_corrugata	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_corrugata	
+E_corynodes	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_corynodes	
+E_cosmophylla_1	Eucalyptus	Symphyomyrtus	Incognitae	TRUE	FALSE	E_cosmophylla_1	
+E_cosmophylla_2	Eucalyptus	Symphyomyrtus	Incognitae	TRUE	FALSE	E_cosmophylla_2	
+E_cretata	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_cretata	
+E_crucis_lanceolata_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_crucis_lanceolata_1	
+E_crucis_lanceolata_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_crucis_lanceolata_2	
+E_crucis_lanceolata_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_crucis_lanceolata_3	
+E_crucis_lanceolata_4	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_crucis_lanceolata_4	
+E_crucis_praecipua	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_crucis_praecipua	
+E_cullenii	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_cullenii	
+E_cupularis	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_cupularis	
+E_curtisii_Ferguson2024	Eucalyptus	Acerosae		TRUE	FALSE	E_curtisii_Ferguson2024	
+E_cyclostoma	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_cyclostoma	
+E_cylindriflora	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_cylindriflora	
+E_cylindrocarpa_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_cylindrocarpa_1	
+E_cylindrocarpa_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_cylindrocarpa_2	
+E_dalrympleana_heptantha_1	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_dalrympleana_heptantha_1	
+E_dalrympleana_heptantha_2	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_dalrympleana_heptantha_2	
+E_dalrympleana_Tasmania_1	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_dalrympleana_Tasmania_1	
+E_dalrympleana_Tasmania_2	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_dalrympleana_Tasmania_2	
+E_dawsonii	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_dawsonii	
+E_dawsonii_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_dawsonii_Ferguson2024	
+E_deanei	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_deanei	
+E_decipiens_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_decipiens_1	
+E_decipiens_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_decipiens_2	Different section
+E_decipiens_3	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_decipiens_3	Different section
+E_decipiens_Ferguson2024	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_decipiens_Ferguson2024	
+E_decorticans	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_decorticans	
+E_deflexa	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_deflexa	
+E_delicata	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_delicata	
+E_dendromorpha	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_dendromorpha	
+E_densa_densa	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_densa_densa	Different subgenus
+E_desmondensis	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_desmondensis	
+E_desmondensis_x_E_occidentalis	Eucalyptus-H	Symphyomyrtus-H	Glandulosae' ms-H	FALSE	FALSE	E_desmondensis_x_E_occidentalis	Hybrid
+E_deuaensis	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_deuaensis	
+E_dielsii_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_dielsii_1	Did not group together with other samples
+E_dielsii_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_dielsii_2	Did not group together with other samples
+E_diminuta_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_diminuta_1	
+E_diminuta_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_diminuta_2	
+E_diminuta_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_diminuta_3	
+E_diminuta_4	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_diminuta_4	
+E_diminuta_5	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_diminuta_5	
+E_diptera	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_diptera	
+E_discreta	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	TRUE	C_haematoxylon	Different genus
+E_dissimulata_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_dissimulata_1	Did not group together with other samples
+E_dissimulata_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_dissimulata_2	Did not group together with other samples
+E_diversifolia_diversifolia	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_diversifolia_diversifolia	
+E_diversifolia_hesperia	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_diversifolia_hesperia	
+E_dolichocera	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_dolichocera	
+E_dolichorhyncha	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_dolichorhyncha	Different section
+E_dorrigoensis	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_dorrigoensis	
+E_dorrigoensis_x_E_xsaligna	Eucalyptus-H	Symphyomyrtus-H	Maidenaria-H	FALSE	FALSE	E_dorrigoensis_x_E_xsaligna	Hybrid
+E_drepanophylla_1	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_drepanophylla_1	Did not group together with other samples
+E_drepanophylla_2	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_drepanophylla_2	Did not group together with other samples
+E_drepanophylla_3	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_drepanophylla_3	
+E_drepanophylla_4	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_drepanophylla_4	
+E_drummondii_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	TRUE	E_scoparia	Different section
+E_drummondii_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_drummondii_2	
+E_dumosa	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_dumosa	
+E_dundasii	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_dundasii	Different section
+E_dwyeri	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_dwyeri	
+E_ebbanoensis_ebbanoensis	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_ebbanoensis_ebbanoensis	
+E_ebbanoensis_photina	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_ebbanoensis_photina	
+E_ecostata_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_ecostata_1	
+E_ecostata_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_ecostata_2	
+E_educta_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_educta_1	
+E_educta_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_educta_2	
+E_educta_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_educta_3	
+E_effusa_effusa	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_effusa_effusa	
+E_effusa_exsul_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_effusa_exsul_2	
+E_elata_1	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_elata_1	
+E_elata_2	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_elata_2	
+E_eremicola_eremicola	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_eremicola_eremicola	
+E_eremicola_peeneri_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_eremicola_peeneri_1	
+E_eremicola_peeneri_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_eremicola_peeneri_2	Estimated mean coverage <10x
+E_erythrocorys_1	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_erythrocorys_1	
+E_erythrocorys_2	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_erythrocorys_2	
+E_erythrocorys_3	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_erythrocorys_3	
+E_erythrocorys_4	Eucalyptus	Eudesmia	Limbatae	FALSE	TRUE	E_arborella	Different subgenus
+E_erythrocorys_Ferguson2024	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_erythrocorys_Ferguson2024	
+E_erythronema_inornata	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_erythronema_inornata	
+E_eudesmioides_1	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_eudesmioides_1	
+E_eudesmioides_2	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_eudesmioides_2	
+E_eugenioides	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_eugenioides	
+E_ewartiana	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_ewartiana	
+E_ewartiana_x_E_leptopoda_arctata	Eucalyptus-H	Symphyomyrtus-H	Bisectae-H	FALSE	FALSE	E_ewartiana_x_E_leptopoda_arctata	Hybrid
+E_exigua	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_exigua	
+E_exilipes_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_exilipes_1	
+E_exilipes_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_exilipes_2	
+E_exilis_1	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_exilis_1	
+E_exilis_2	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_exilis_2	
+E_expressa	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_expressa	
+E_exserta	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_exserta	
+E_falcata	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_falcata	Different section
+E_fasciculosa	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_fasciculosa	
+E_fergusonii_dorsiventralis	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_fergusonii_dorsiventralis	
+E_fibrosa_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_fibrosa_Ferguson2024	
+E_flavida	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_flavida	
+E_flindersii_1	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_flindersii_1	
+E_flindersii_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_flindersii_2	
+E_flocktoniae_flocktoniae_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_flocktoniae_flocktoniae_1	
+E_flocktoniae_flocktoniae_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_flocktoniae_flocktoniae_2	Did not group together with other samples
+E_flocktoniae_flocktoniae_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_flocktoniae_flocktoniae_3	Did not group together with other samples
+E_flocktoniae_flocktoniae_x_E_occidentalis	Eucalyptus-H	Symphyomyrtus-H	Bisectae-H	FALSE	FALSE	E_flocktoniae_flocktoniae_x_E_occidentalis	Hybrid
+E_flocktoniae_hebes	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_flocktoniae_hebes	
+E_foliosa	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_foliosa	
+E_formanii_Broadxleaf_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_formanii_Broadxleaf_1	
+E_formanii_Broadxleaf_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_formanii_Broadxleaf_2	
+E_formanii_Broadxleaf_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_formanii_Broadxleaf_3	
+E_formanii_formanii_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_formanii_formanii_1	
+E_formanii_formanii_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_formanii_formanii_2	Did not group together with other samples
+E_formanii_formanii_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_formanii_formanii_3	
+E_forrestiana	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_forrestiana	Estimated mean coverage <10x
+E_fraseri_fraseri_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_fraseri_fraseri_1	
+E_fraseri_fraseri_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_fraseri_fraseri_2	
+E_fraseri_melanobasis	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_fraseri_melanobasis	Did not group together with other samples
+E_frenchiana	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_frenchiana	
+E_froggattii	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_froggattii	
+E_fruticosa_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_fruticosa_1	Estimated mean coverage <10x
+E_fruticosa_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_fruticosa_2	Estimated mean coverage <10x
+E_gamophylla	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_gamophylla	
+E_gardneri_gardneri	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_gardneri_gardneri	
+E_gardneri_ravensthorpensis	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_gardneri_ravensthorpensis	
+E_georgei_fulgida	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_georgei_fulgida	
+E_georgei_georgei	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_georgei_georgei	
+E_gillenii_1	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_gillenii_1	Did not group together with other samples
+E_gillenii_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_gillenii_2	Did not group together with other samples
+E_gillii_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_gillii_1	Did not group together with other samples
+E_gillii_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_gillii_2	Did not group together with other samples
+E_gittinsii_gittinsii	Eucalyptus	Eudesmia	Limbatae	FALSE	FALSE	E_gittinsii_gittinsii	Different subgenus
+E_gittinsii_illucida	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_gittinsii_illucida	
+E_glaucina_1	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_glaucina_1	
+E_glaucina_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_glaucina_2	
+E_globulus_Ferguson2024	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_globulus_Ferguson2024	
+E_glomerosa_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_glomerosa_1	
+E_glomerosa_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_glomerosa_2	
+E_gomphocephala	Eucalyptus	Symphyomyrtus	Bolites	TRUE	FALSE	E_gomphocephala	
+E_gomphocephala_x_E_zopherophloia_1	Eucalyptus	Symphyomyrtus	Bolites	FALSE	FALSE	E_gomphocephala_x_E_zopherophloia_1	Hybrid
+E_gomphocephala_x_E_zopherophloia_2	Eucalyptus	Symphyomyrtus	Bolites	FALSE	FALSE	E_gomphocephala_x_E_zopherophloia_2	Hybrid
+E_goniantha_goniantha	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_goniantha_goniantha	
+E_goniocalyx_viridissima	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_goniocalyx_viridissima	
+E_goniocarpa	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_goniocarpa	
+E_gracilis	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_gracilis	
+E_grandis	Eucalyptus	Symphyomyrtus	Latoangulatae	TRUE	FALSE	E_grandis	
+E_grandis_Ferguson2024	Eucalyptus	Symphyomyrtus	Latoangulatae	TRUE	FALSE	E_grandis_Ferguson2024	
+E_granitica	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_granitica	
+E_grasbyi_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_grasbyi_1	
+E_grasbyi_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_grasbyi_2	
+E_grasbyi_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_grasbyi_3	Did not group together with other samples
+E_grasbyi_4	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_grasbyi_4	Did not group together with other samples
+E_griffithsii	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_griffithsii	Different section
+E_grisea	Eucalyptus	Symphyomyrtus	Pumilio	TRUE	FALSE	E_grisea	
+E_grossa_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_grossa_1	
+E_grossa_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_grossa_2	
+E_guilfoylei_1	Eucalyptus	Cruciformes		TRUE	FALSE	E_guilfoylei_1	
+E_guilfoylei_2	Eucalyptus	Cruciformes		TRUE	FALSE	E_guilfoylei_2	
+E_guilfoylei_Ferguson2024	Eucalyptus	Cruciformes		TRUE	FALSE	E_guilfoylei_Ferguson2024	
+E_gypsophila_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_gypsophila_1	Estimated mean coverage <10x
+E_gypsophila_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_gypsophila_2	
+E_gypsophila_3	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_gypsophila_3	Estimated mean coverage <10x
+E_halophila	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_halophila	
+E_hebetifolia	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_hebetifolia	
+E_histophylla_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_histophylla_1	
+E_histophylla_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_histophylla_2	
+E_horistes_horistes_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_horistes_horistes_1	Different section
+E_horistes_horistes_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_horistes_horistes_2	
+E_horistes_horistes_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_horistes_horistes_3	
+E_horistes_Southern_smooth_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_horistes_Southern_smooth_1	
+E_horistes_Southern_smooth_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_horistes_Southern_smooth_2	
+E_hypolaena	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_hypolaena	
+E_incerata	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_incerata	
+E_incrassata_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_incrassata_1	
+E_incrassata_2	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_incrassata_2	Different section
+E_incrassata_3	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_incrassata_3	Different section
+E_incrassata_4	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_incrassata_4	
+E_indurata_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_indurata_1	
+E_indurata_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_indurata_2	
+E_infera	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_infera	
+E_insulana	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_insulana	
+E_insularis_continentalis	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_insularis_continentalis	
+E_intertexta_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_intertexta_1	
+E_intertexta_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_intertexta_2	
+E_jacksonii_1	Eucalyptus	Eucalyptus	Longistylus	TRUE	FALSE	E_jacksonii_1	
+E_jacksonii_2	Eucalyptus	Eucalyptus	Longistylus	TRUE	FALSE	E_jacksonii_2	
+E_jensenii	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_jensenii	
+E_jucunda	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_jucunda	
+E_jutsonii_jutsonii	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_jutsonii_jutsonii	Estimated mean coverage <10x
+E_kessellii_eugnosta_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kessellii_eugnosta_1	
+E_kessellii_eugnosta_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kessellii_eugnosta_2	
+E_kingsmillii_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kingsmillii_1	
+E_kingsmillii_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kingsmillii_2	
+E_kitsoniana_x_E_ovata_subp_grandiflora	Eucalyptus-H	Symphyomyrtus-H	Maidenaria-H	FALSE	FALSE	E_kitsoniana_x_E_ovata_subp_grandiflora	Hybrid
+E_kochii_amaryssia	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kochii_amaryssia	
+E_kochii_borealis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kochii_borealis	
+E_kochii_kochii	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kochii_kochii	
+E_kondininensis	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_kondininensis	
+E_kruseana_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_kruseana_1	
+E_kruseana_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_kruseana_2	
+E_kumarlensis_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kumarlensis_1	Did not group together with other samples
+E_kumarlensis_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_kumarlensis_2	Did not group together with other samples
+E_laevis	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_laevis	
+E_lansdowneana	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_lansdowneana	
+E_lansdowneana_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_lansdowneana_Ferguson2024	
+E_largiflorens_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_largiflorens_1	Did not group together with other samples
+E_largiflorens_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_largiflorens_2	Did not group together with other samples
+E_largiflorens_3	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_largiflorens_3	Estimated mean coverage <10x 
+E_latens_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_latens_1	Did not group together with other samples
+E_latens_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_latens_2	
+E_latens_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_latens_3	
+E_lehmannii_lehmannii	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_lehmannii_lehmannii	
+E_lehmannii_parallela	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_lehmannii_parallela	
+E_leptocalyx_leptocalyx	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_leptocalyx_leptocalyx	
+E_leptophleba	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_leptophleba	
+E_leptophylla_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptophylla_1	
+E_leptophylla_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptophylla_2	
+E_leptophylla_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptophylla_3	
+E_leptopoda_arctata_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptopoda_arctata_1	
+E_leptopoda_arctata_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptopoda_arctata_2	
+E_leptopoda_arctata_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptopoda_arctata_3	
+E_leptopoda_elevata	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptopoda_elevata	
+E_leptopoda_leptopoda	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptopoda_leptopoda	
+E_leptopoda_subluta	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_leptopoda_subluta	
+E_leptopoda_x_E_oldfieldii_intergrade	Eucalyptus-H	Symphyomyrtus-H	Bisectae-H	FALSE	FALSE	E_leptopoda_x_E_oldfieldii_intergrade	Hybrid
+E_lesouefii	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_lesouefii	
+E_leucophloia_1	Eucalyptus	Symphyomyrtus	Platysperma	TRUE	FALSE	E_leucophloia_1	
+E_leucophloia_2	Eucalyptus	Symphyomyrtus	Platysperma	TRUE	FALSE	E_leucophloia_2	
+E_leucophloia_euroa	Eucalyptus	Symphyomyrtus	Platysperma	TRUE	FALSE	E_leucophloia_euroa	
+E_leucophloia_Ferguson2024	Eucalyptus	Symphyomyrtus	Platysperma	TRUE	FALSE	E_leucophloia_Ferguson2024	
+E_leucophloia_leucophloia	Eucalyptus	Symphyomyrtus	Platysperma	TRUE	FALSE	E_leucophloia_leucophloia	
+E_leucophylla_1	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_leucophylla_1	Different section
+E_leucophylla_2	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_leucophylla_2	Estimated mean coverage <10x 
+E_leucophylla_3	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_leucophylla_3	Estimated mean coverage <10x 
+E_leucophylla_4	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_leucophylla_4	
+E_leucophylla_5	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_leucophylla_5	
+E_leucoxylon_megalocarpa_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_leucoxylon_megalocarpa_1	
+E_leucoxylon_megalocarpa_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_leucoxylon_megalocarpa_2	
+E_leucoxylon_megalocarpa_3	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_leucoxylon_megalocarpa_3	
+E_leucoxylon_pruinosa	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_leucoxylon_pruinosa	Estimated mean coverage <10x 
+E_litorea	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_litorea	
+E_lockyeri_1	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_lockyeri_1	
+E_lockyeri_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_lockyeri_2	
+E_lockyeri_3	Eucalyptus	Symphyomyrtus	Exsertaria	FALSE	FALSE	E_lockyeri_3	Estimated mean coverage <10x
+E_longirostrata	Eucalyptus	Symphyomyrtus	Pumilio	TRUE	FALSE	E_longirostrata	
+E_longissima	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_longissima	
+E_loxophleba_gratiae	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_loxophleba_gratiae	
+E_loxophleba_lissophloia	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_loxophleba_lissophloia	
+E_loxophleba_loxophleba	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_loxophleba_loxophleba	
+E_loxophleba_supralaevis_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_loxophleba_supralaevis_1	
+E_loxophleba_supralaevis_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_loxophleba_supralaevis_2	
+E_lucasii_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_lucasii_1	
+E_lucasii_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_lucasii_2	
+E_mackintii	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_mackintii	
+E_macrandra_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_macrandra_1	
+E_macrandra_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	TRUE	E_celastroides_virella_2	Different section
+E_macrocarpa_elachantha	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_macrocarpa_elachantha	
+E_macrocarpa_macrocarpa	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_macrocarpa_macrocarpa	
+E_macrorhyncha_macrorhyncha	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_macrorhyncha_macrorhyncha	
+E_macta	Eucalyptus	Symphyomyrtus	Latoangulatae	FALSE	FALSE	E_macta	Estimated mean coverage <10x
+E_malacoxylon	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_malacoxylon	
+E_mannensis_mannensis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_mannensis_mannensis	
+E_marginata	Eucalyptus	Eucalyptus	Longistylus	TRUE	FALSE	E_marginata	
+E_marginata_Dull_leaf_1	Eucalyptus	Eucalyptus	Longistylus	TRUE	FALSE	E_marginata_Dull_leaf_1	
+E_marginata_Dull_leaf_2	Eucalyptus	Eucalyptus	Longistylus	TRUE	FALSE	E_marginata_Dull_leaf_2	
+E_marginata_Ferguson2024	Eucalyptus	Eucalyptus	Longistylus	TRUE	FALSE	E_marginata_Ferguson2024	
+E_megacarpa_1	Eucalyptus	Eucalyptus	'Frutices' ms	FALSE	TRUE	E_sporadica_2	Different subgenus
+E_megacarpa_2	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_megacarpa_2	
+E_megacornuta	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_megacornuta	Different section
+E_melanophitra	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_melanophitra	
+E_melanophloia	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_melanophloia	Did not group together with other samples
+E_melanophloia_melanophloia	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_melanophloia_melanophloia	
+E_melanophloia_nana	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_melanophloia_nana	
+E_melanoxylon	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_melanoxylon	
+E_melliodora_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_melliodora_Ferguson2024	
+E_merrickiae	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_merrickiae	
+E_microcarpa	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_microcarpa	
+E_microcorys_Ferguson2024	Eucalyptus	Alveolata		TRUE	FALSE	E_microcorys_Ferguson2024	
+E_microtheca	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_microtheca	Estimated mean coverage <10x 
+E_mimica_continens	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_mimica_continens	Did not group together with other samples
+E_mimica_mimica	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_mimica_mimica	Did not group together with other samples
+E_minniritchi	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_minniritchi	
+E_misella	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_misella	
+E_moderata_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_moderata_1	
+E_moderata_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_moderata_2	
+E_molyneuxii	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_molyneuxii	
+E_moorei_serpentinicola	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_moorei_serpentinicola	
+E_morrisbyi_1	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_morrisbyi_1	
+E_morrisbyi_2	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_morrisbyi_2	
+E_myriadena_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_myriadena_1	
+E_myriadena_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_myriadena_2	
+E_myriadena_3	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_myriadena_3	
+E_myriadena_4	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_myriadena_4	
+E_myriadena_5	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_myriadena_5	
+E_myriadena_6	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_myriadena_6	
+E_nebulosa_1	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_nebulosa_1	
+E_nebulosa_2	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_nebulosa_2	
+E_neutra_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_neutra_1	
+E_neutra_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_neutra_2	
+E_neutra_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_neutra_3	
+E_neutra_4	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_neutra_4	
+E_neutra_5	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_neutra_5	
+E_neutra_6	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_neutra_6	
+E_normantonensis	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_normantonensis	Estimated mean coverage <10x 
+E_notactites	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_notactites	
+E_obesa_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	TRUE	E_baiophylla	Different section
+E_obesa_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_obesa_2	
+E_obtusiflora_dongarraensis	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_obtusiflora_dongarraensis	
+E_occidentalis	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_occidentalis	Different section
+E_ochrophloia	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_ochrophloia	
+E_odorata	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_odorata	
+E_odorata_x_E_phenax	Eucalyptus-H	Symphyomyrtus-H	Adnataria-H	FALSE	FALSE	E_odorata_x_E_phenax	Hybrid
+E_oleosa_ampliata_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_oleosa_ampliata_1	Did not group together with other samples
+E_oleosa_ampliata_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_oleosa_ampliata_2	Did not group together with other samples
+E_oleosa_ampliata_3	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_oleosa_ampliata_3	Estimated mean coverage <10x
+E_oleosa_cylindroidea	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_oleosa_cylindroidea	Did not group together with other samples
+E_oligantha_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_oligantha_1	
+E_oligantha_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_oligantha_2	
+E_oligantha_3	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_oligantha_3	
+E_oligantha_4	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_oligantha_4	
+E_oligantha_5	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_oligantha_5	
+E_olivina_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_olivina_1	
+E_olivina_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_olivina_2	
+E_opimiflora	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_opimiflora	
+E_optima	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_optima	
+E_oraria_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_oraria_1	
+E_oraria_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_oraria_2	
+E_orbifolia	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_orbifolia	
+E_ornata	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_ornata	
+E_ovata_grandiflora	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_ovata_grandiflora	
+E_ovata_ovata_1	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_ovata_ovata_1	
+E_ovata_ovata_2	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_ovata_ovata_2	
+E_ovata_ovata_3	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_ovata_ovata_3	
+E_ovata_ovata_4	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_ovata_ovata_4	
+E_ovularis	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_ovularis	Different section
+E_oxymitra_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_oxymitra_1	
+E_oxymitra_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_oxymitra_2	
+E_pachycalyx_pachycalyx	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_pachycalyx_pachycalyx	
+E_pallida	Eucalyptus	Eudesmia	Limbatae	TRUE	FALSE	E_pallida	
+E_panda	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_panda	
+E_paniculata_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_paniculata_Ferguson2024	
+E_patellaris	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_patellaris	
+E_patens	Eucalyptus	Eucalyptus	Longistylus	TRUE	FALSE	E_patens	
+E_pauciflora_parvifructa_1	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_pauciflora_parvifructa_1	
+E_pauciflora_parvifructa_2	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_pauciflora_parvifructa_2	
+E_peninsularis_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_peninsularis_1	Different section
+E_peninsularis_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_peninsularis_2	
+E_peninsularis_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_peninsularis_3	
+E_perangusta	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_perangusta	
+E_percostata_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_percostata_1	
+E_percostata_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_percostata_2	
+E_perriniana_1	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_perriniana_1	
+E_perriniana_2	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_perriniana_2	
+E_petiolaris_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_petiolaris_1	Did not group together with other samples
+E_petiolaris_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_petiolaris_2	Did not group together with other samples
+E_petraea_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_petraea_1	
+E_petraea_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_petraea_2	
+E_petraea_3	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_petraea_3	
+E_petrensis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_petrensis	
+E_phaenophylla_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_phaenophylla_2	Did not group together with other samples
+E_phaenophylla_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_phaenophylla_3	Did not group together with other samples
+E_phaenophylla_4	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_phaenophylla_4	Did not group together with other samples
+E_phenax_compressa	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_phenax_compressa	Different section
+E_phenax_phenax	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_phenax_phenax	Different section
+E_pileata_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_pileata_1	Did not group together with other samples
+E_pileata_2	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_pileata_2	Different section
+E_pileata_3	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_pileata_3	
+E_pileata_4	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_pileata_4	
+E_pimpiniana	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_pimpiniana	
+E_planipes_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_planipes_1	
+E_planipes_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_planipes_2	
+E_planipes_3	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_planipes_3	
+E_planipes_4	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_planipes_4	
+E_planipes_5	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_planipes_5	
+E_platydisca	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_platydisca	
+E_platyphylla	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_platyphylla	
+E_platypus_platypus_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_platypus_platypus_1	
+E_platypus_platypus_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_platypus_platypus_2	
+E_pluricaulis_pluricaulis	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_pluricaulis_pluricaulis	
+E_pluricaulis_porphyrea	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	TRUE	E_calycogona_calycogona_1	Different section
+E_polyanthemos_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_polyanthemos_Ferguson2024	
+E_polybractea_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_polybractea_1	
+E_polybractea_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_polybractea_2	
+E_populnea_bimbil	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_populnea_bimbil	
+E_porosa	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_porosa	
+E_praetermissa	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_praetermissa	
+E_preissiana_lobata_1	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_preissiana_lobata_1	
+E_preissiana_lobata_2	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_preissiana_lobata_2	
+E_preissiana_lobata_3	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_preissiana_lobata_3	
+E_prominens	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_prominens	
+E_propinqua	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_propinqua	
+E_protensa	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_protensa	
+E_pruinosa_pruinosa	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_pruinosa_pruinosa	
+E_pterocarpa	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_pterocarpa	Estimated mean coverage <10x
+E_pulverulenta	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_pulverulenta	
+E_pumila_Ferguson2024	Eucalyptus	Symphyomyrtus	Pumilio	TRUE	FALSE	E_pumila_Ferguson2024	
+E_punctata_1	Eucalyptus	Symphyomyrtus	Pumilio	FALSE	TRUE	C_eremea_oligocarpa_2	Different genus
+E_pyriformis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_pyriformis	
+E_pyrocarpa	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_pyrocarpa	
+E_quadrans	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_quadrans	Different section
+E_quaerenda_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_quaerenda_1	
+E_quaerenda_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_quaerenda_2	
+E_rameliana	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rameliana	
+E_raveretiana	Eucalyptus	Symphyomyrtus	Domesticae	TRUE	FALSE	E_raveretiana	
+E_ravida	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_ravida	
+E_recta_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_recta_1	
+E_recta_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_recta_2	
+E_reducta	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_reducta	
+E_redunca	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_redunca	
+E_regnans_Ferguson2024	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_regnans_Ferguson2024	
+E_relicta	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_relicta	
+E_remota	Eucalyptus	Eucalyptus	Eucalyptus	FALSE	FALSE	E_remota	Different section
+E_repullulans	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_repullulans	Estimated mean coverage <10x
+E_revelata_ms	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_revelata_ms	
+E_rigens	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_rigens	
+E_rigidula_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_1	
+E_rigidula_10	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_10	
+E_rigidula_11	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_11	
+E_rigidula_12	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_12	
+E_rigidula_13	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_13	
+E_rigidula_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_2	
+E_rigidula_4	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_4	
+E_rigidula_5	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_5	
+E_rigidula_6	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_6	
+E_rigidula_7	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_7	
+E_rigidula_8	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rigidula_8	
+E_rigidula_9	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_rigidula_9	Estimated mean coverage <10x
+E_robusta_x_E_tereticornis	Eucalyptus-H	Symphyomyrtus-H	Latoangulatae-H	FALSE	FALSE	E_robusta_x_E_tereticornis	Hybrid
+E_rosacea_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rosacea_1	
+E_rosacea_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_rosacea_2	
+E_rubida_canobolensis	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_rubida_canobolensis	
+E_rubiginosa	Eucalyptus	Eucalyptus	'Primitiva' ms	TRUE	FALSE	E_rubiginosa	
+E_rudis_cratyantha_1	Eucalyptus	Symphyomyrtus	Exsertaria	FALSE	FALSE	E_rudis_cratyantha_1	Did not group together with other samples
+E_rudis_cratyantha_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_rudis_cratyantha_2	
+E_rudis_cratyantha_3	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_rudis_cratyantha_3	
+E_rugosa	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_rugosa	
+E_rummeryi	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_rummeryi	
+E_rupestris_1	Eucalyptus	Symphyomyrtus	Platysperma	TRUE	FALSE	E_rupestris_1	
+E_rupestris_2	Eucalyptus	Symphyomyrtus	Platysperma	TRUE	FALSE	E_rupestris_2	
+E_sabulosa_x_E_ovata_ovata	Eucalyptus-H	Symphyomyrtus-H	Maidenaria-H	FALSE	FALSE	E_sabulosa_x_E_ovata_ovata	Hybrid
+E_salmonophloia	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_salmonophloia	Different section
+E_salubris	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_salubris	
+E_sargentii_sargentii_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_sargentii_sargentii_1	
+E_sargentii_sargentii_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_sargentii_sargentii_2	
+E_sargentii_sargentii_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_sargentii_sargentii_3	
+E_scoparia	Eucalyptus	Symphyomyrtus	Maidenaria	FALSE	TRUE	E_drummondii_1	Different section
+E_scyphocalyx_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_scyphocalyx_1	Estimated mean coverage <10x
+E_scyphocalyx_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_scyphocalyx_2	
+E_sepulcralis	Eucalyptus	Eucalyptus	'Frutices' ms	TRUE	FALSE	E_sepulcralis	
+E_sessilis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_sessilis	
+E_sheathiana_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_sheathiana_1	
+E_sheathiana_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_sheathiana_2	
+E_sheathiana_3	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_sheathiana_3	
+E_sheathiana_4	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_sheathiana_4	
+E_shirleyi	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_shirleyi	
+E_shirleyi_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_shirleyi_Ferguson2024	
+E_sicilifolia	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_sicilifolia	
+E_sid_E_mel_Ferguson2024	Eucalyptus-H	Symphyomyrtus-H	Adnataria-H	FALSE	FALSE	E_sid_E_mel_Ferguson2024	Hybrid
+E_sideroxylon	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_sideroxylon	
+E_sideroxylon_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_sideroxylon_Ferguson2024	
+E_sieberi	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_sieberi	
+E_socialis_socialis_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_socialis_socialis_1	
+E_socialis_socialis_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_socialis_socialis_2	
+E_socialis_socialis_3	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_socialis_socialis_3	Did not group together with other samples
+E_socialis_victoriensis_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_socialis_victoriensis_1	
+E_socialis_victoriensis_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_socialis_victoriensis_2	
+E_socialis_viridans	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_socialis_viridans	
+E_sp	Eucalyptus			FALSE	FALSE	E_sp	Uncertain species
+E_sp_Adelaide	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_sp_Adelaide	Uncertain species
+E_sp_Cable_Haul_Road_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Cable_Haul_Road_1	Uncertain species
+E_sp_Cable_Haul_Road_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Cable_Haul_Road_2	Uncertain species
+E_sp_Dartmoor_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_sp_Dartmoor_1	Uncertain species
+E_sp_Dartmoor_2	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_sp_Dartmoor_2	Uncertain species
+E_sp_Dunbar_Road_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Dunbar_Road_1	Uncertain species
+E_sp_Dunbar_Road_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Dunbar_Road_2	Uncertain species
+E_sp_Great_Victoria_Desert_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Great_Victoria_Desert_1	Uncertain species
+E_sp_Great_Victoria_Desert_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Great_Victoria_Desert_2	Uncertain species
+E_sp_Great_Victoria_Desert_3	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Great_Victoria_Desert_3	Uncertain species
+E_sp_Great_Victoria_Desert_4	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Great_Victoria_Desert_4	Uncertain species
+E_sp_Kalbarri_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Kalbarri_1	Uncertain species
+E_sp_Kalbarri_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Kalbarri_2	Uncertain species
+E_sp_Kitchener_1	Eucalyptus			FALSE	FALSE	E_sp_Kitchener_1	Uncertain species
+E_sp_Kitchener_2	Eucalyptus			FALSE	FALSE	E_sp_Kitchener_2	Uncertain species
+E_sp_Lake_Magenta_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_sp_Lake_Magenta_1	Uncertain species
+E_sp_Lake_Magenta_2	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_sp_Lake_Magenta_2	Uncertain species
+E_sp_Mulga_Rock_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Mulga_Rock_1	Uncertain species
+E_sp_Mulga_Rock_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Mulga_Rock_2	Uncertain species
+E_sp_Mulga_Rock_3	Eucalyptus			FALSE	FALSE	E_sp_Mulga_Rock_3	Uncertain species
+E_sp_Mulga_Rock_4	Eucalyptus			FALSE	FALSE	E_sp_Mulga_Rock_4	Uncertain species
+E_sp_Queen_Victoria_Spring_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_sp_Queen_Victoria_Spring_1	Uncertain species
+E_sp_Queen_Victoria_Spring_2	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_sp_Queen_Victoria_Spring_2	Uncertain species
+E_sp_South_Newdegate_Lakes	Eucalyptus			FALSE	FALSE	E_sp_South_Newdegate_Lakes	Uncertain species
+E_sp_Southern_wheatbelt_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_sp_Southern_wheatbelt_1	Uncertain species
+E_sp_Southern_wheatbelt_2	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_sp_Southern_wheatbelt_2	Uncertain species
+E_sp_Sullivan_Soak_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Sullivan_Soak_1	Uncertain species
+E_sp_Sullivan_Soak_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Sullivan_Soak_2	Uncertain species
+E_sp_Sullivan_Soak_3	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Sullivan_Soak_3	Uncertain species
+E_sp_Sullivan_Soak_4	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_sp_Sullivan_Soak_4	Uncertain species
+E_spathulata_spathulata	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_spathulata_spathulata	Different section
+E_spectatrix	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_spectatrix	
+E_sporadica_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_sporadica_1	Did not group together with other samples
+E_sporadica_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	TRUE	E_megacarpa_1	Different subgenus
+E_sporadica_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_sporadica_3	
+E_sporadica_4	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_sporadica_4	
+E_sporadica_5	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_sporadica_5	
+E_spreta	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_spreta	
+E_staeri	Eucalyptus	Eucalyptus	Longistylus	FALSE	FALSE	E_staeri	Different subgenus
+E_steedmanii	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_steedmanii	
+E_stellulata_Little_Star	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_stellulata_Little_Star	
+E_stoatei	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_stoatei	
+E_stowardii_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_stowardii_1	
+E_stowardii_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_stowardii_2	
+E_striaticalyx_1	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_striaticalyx_1	Did not group together with other samples
+E_striaticalyx_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_striaticalyx_2	Did not group together with other samples
+E_stricklandii	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_stricklandii	
+E_stricta	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_stricta	
+E_subangusta_cerina	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_subangusta_cerina	
+E_subangusta_pusilla	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_subangusta_pusilla	
+E_subangusta_subangusta	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_subangusta_subangusta	
+E_subtilis_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_subtilis_1	
+E_subtilis_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_subtilis_2	
+E_subtilis_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_subtilis_3	
+E_suffulgens	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_suffulgens	
+E_suggrandis_promiscua	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_suggrandis_promiscua	
+E_suggrandis_suggrandis_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_suggrandis_suggrandis_1	
+E_suggrandis_suggrandis_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_suggrandis_suggrandis_2	Different section
+E_sweedmaniana	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_sweedmaniana	
+E_synandra_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_synandra_1	
+E_synandra_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_synandra_2	
+E_synandra_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_synandra_3	
+E_synandra_4	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_synandra_4	
+E_talyuberlup	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	FALSE	FALSE	E_talyuberlup	Estimated mean coverage <10x 
+E_tenera_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_tenera_1	Did not group together with other samples
+E_tenera_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_tenera_2	Did not group together with other samples
+E_tenuipes_Ferguson2024	Eucalyptus	Cuboidea		TRUE	FALSE	E_tenuipes_Ferguson2024	
+E_tenuis	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_tenuis	
+E_tephroclada	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_tephroclada	
+E_terebra	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_terebra	
+E_tereticornis_rotunda_1	Eucalyptus	Symphyomyrtus	Exsertaria	FALSE	FALSE	E_tereticornis_rotunda_1	Different section
+E_tereticornis_rotunda_2	Eucalyptus	Symphyomyrtus	Exsertaria	FALSE	FALSE	E_tereticornis_rotunda_2	Different section
+E_tereticornis_tereticornis_1	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_tereticornis_tereticornis_1	
+E_tereticornis_tereticornis_2	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_tereticornis_tereticornis_2	
+E_tereticornis_tereticornis_3	Eucalyptus	Symphyomyrtus	Exsertaria	TRUE	FALSE	E_tereticornis_tereticornis_3	
+E_tholiformis_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_tholiformis_1	
+E_tholiformis_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_tholiformis_2	
+E_thozetiana	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_thozetiana	
+E_torquata	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_torquata	Different section
+E_tortilis	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_tortilis	
+E_transcontinentalis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_transcontinentalis	
+E_tricarpa	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_tricarpa	
+E_trivalva_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_trivalva_1	
+E_trivalva_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_trivalva_2	
+E_tumida	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_tumida	
+E_uncinata_Esperance_Plains_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_uncinata_Esperance_Plains_1	
+E_uncinata_Esperance_Plains_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_uncinata_Esperance_Plains_2	
+E_uncinata_uncinata_1	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_uncinata_uncinata_1	Different subgenus
+E_uncinata_uncinata_2	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_uncinata_uncinata_2	Different subgenus
+E_urna_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_urna_1	
+E_urna_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_urna_2	
+E_utilis_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_utilis_1	
+E_utilis_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_utilis_2	
+E_utilis_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_utilis_3	
+E_varia_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_varia_2	
+E_varia_3	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_varia_3	
+E_vegrandis_recondita_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_vegrandis_recondita_1	
+E_vegrandis_recondita_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_vegrandis_recondita_2	
+E_vegrandis_vegrandis_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_vegrandis_vegrandis_1	
+E_vegrandis_vegrandis_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_vegrandis_vegrandis_2	
+E_verrucata	Eucalyptus	Eucalyptus	Eucalyptus	TRUE	FALSE	E_verrucata	
+E_victrix_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_victrix_1	
+E_victrix_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_victrix_2	
+E_victrix_3	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_victrix_3	
+E_victrix_Ferguson2024	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_victrix_Ferguson2024	
+E_viminalis_cygnetensis	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_viminalis_cygnetensis	
+E_viminalis_Ferguson2024	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_viminalis_Ferguson2024	
+E_viminalis_hentyensis_1	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_viminalis_hentyensis_1	
+E_viminalis_hentyensis_2	Eucalyptus	Symphyomyrtus	Maidenaria	TRUE	FALSE	E_viminalis_hentyensis_2	
+E_virginea	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_virginea	"Located at the basal position of E. subg. Symphyomyrtus sect. Maidenaria, etc."
+E_virginea_Ferguson2024	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_virginea_Ferguson2024	
+E_vokesensis	Eucalyptus	Symphyomyrtus	Bisectae	FALSE	FALSE	E_vokesensis	Estimated mean coverage <10x
+E_wandoo_pulverea_1	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_wandoo_pulverea_1	
+E_wandoo_pulverea_2	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_wandoo_pulverea_2	
+E_wandoo_wandoo	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_wandoo_wandoo	
+E_websteriana_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_websteriana_1	
+E_websteriana_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_websteriana_2	
+E_websteriana_3	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_websteriana_3	
+E_websteriana_4	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_websteriana_4	
+E_websteriana_5	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_websteriana_5	
+E_wimmerensis	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_wimmerensis	
+E_woodwardii_1	Eucalyptus	Symphyomyrtus	Dumaria	FALSE	FALSE	E_woodwardii_1	Different section
+E_woodwardii_2	Eucalyptus	Symphyomyrtus	Dumaria	TRUE	FALSE	E_woodwardii_2	
+E_wyolensis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_wyolensis	
+E_x_alpina_1	Eucalyptus-H	Eucalyptus-H	Eucalyptus-H	FALSE	FALSE	E_x_alpina_1	Hybrid
+E_x_alpina_2	Eucalyptus-H	Eucalyptus-H	Eucalyptus-H	FALSE	FALSE	E_x_alpina_2	Hybrid
+E_x_balanopelex	Eucalyptus-H	Symphyomyrtus-H	Bisectae-H	FALSE	FALSE	E_x_balanopelex	Hybrid
+E_x_brachyphylla_1	Eucalyptus-H	Symphyomyrtus-H	Glandulosae' ms-H	FALSE	FALSE	E_x_brachyphylla_1	Hybrid
+E_x_brachyphylla_2	Eucalyptus-H	Symphyomyrtus-H	Glandulosae' ms-H	FALSE	FALSE	E_x_brachyphylla_2	Hybrid
+E_x_bunyip_1	Eucalyptus-H	Symphyomyrtus-H	Maidenaria-H	FALSE	FALSE	E_x_bunyip_1	Hybrid
+E_x_bunyip_2	Eucalyptus-H	Symphyomyrtus-H	Maidenaria-H	FALSE	FALSE	E_x_bunyip_2	Hybrid
+E_x_carolaniae_1	Eucalyptus-H	Symphyomyrtus-H	Maidenaria-H	FALSE	FALSE	E_x_carolaniae_1	Hybrid
+E_x_carolaniae_2	Eucalyptus-H	Symphyomyrtus-H	Maidenaria-H	FALSE	FALSE	E_x_carolaniae_2	Hybrid
+E_x_hawkeri_1	Eucalyptus-H	Symphyomyrtus-H	Adnataria-H	FALSE	FALSE	E_x_hawkeri_1	Hybrid
+E_x_hawkeri_2	Eucalyptus-H	Symphyomyrtus-H	Adnataria-H	FALSE	FALSE	E_x_hawkeri_2	Hybrid
+E_x_impensa	Eucalyptus-H	Symphyomyrtus-H	Bisectae-H	FALSE	FALSE	E_x_impensa	Hybrid
+E_x_pruiniramis	Eucalyptus-H	Symphyomyrtus-H	Glandulosae' ms-H	FALSE	FALSE	E_x_pruiniramis	Hybrid
+E_x_redimulicifera	Eucalyptus-H	Symphyomyrtus-H	Dumaria-H	FALSE	FALSE	E_x_redimulicifera	Hybrid
+E_x_walshii_1	Eucalyptus-H			FALSE	FALSE	E_x_walshii_1	Hybrid
+E_x_walshii_2	Eucalyptus-H			FALSE	FALSE	E_x_walshii_2	Hybrid
+E_xanthonema_apposita	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_xanthonema_apposita	
+E_xanthonema_xanthonema	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_xanthonema_xanthonema	
+E_xerothermica_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_xerothermica_1	
+E_xerothermica_2	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_xerothermica_2	Different section
+E_xerothermica_3	Eucalyptus	Symphyomyrtus	Adnataria	FALSE	FALSE	E_xerothermica_3	Different section
+E_yalatensis	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_yalatensis	
+E_yilgarnensis_1	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_yilgarnensis_1	
+E_yilgarnensis_2	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_yilgarnensis_2	
+E_yilgarnensis_3	Eucalyptus	Symphyomyrtus	Adnataria	TRUE	FALSE	E_yilgarnensis_3	
+E_youngiana_1	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_youngiana_1	
+E_youngiana_2	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_youngiana_2	
+E_yumbarrana	Eucalyptus	Symphyomyrtus	Bisectae	TRUE	FALSE	E_yumbarrana	
+E_zopherophloia	Eucalyptus	Symphyomyrtus	'Glandulosae' ms	TRUE	FALSE	E_zopherophloia	
+MM17	Eucalyptus-H	Symphyomyrtus-H	Maidenaria-H	TRUE	TRUE	Meelup_mallee	Set the label clearer

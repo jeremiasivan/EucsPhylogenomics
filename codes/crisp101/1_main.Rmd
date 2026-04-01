@@ -288,7 +288,9 @@ f_astral(fn_alltrees, fn_astral_tre, fn_astral_log, "4g", params$exe_astral)
 
 # calculate gCF and sCF
 f_calculate_cf(fn_alltrees, fn_astral_tre, dir_alignment_final, prefix_cf, params$thread, params$exe_iqtree2)
+```
 
+```{r summary}
 # open the CF output file
 astral_tre <- ape::read.tree(fn_astral_tre)
 df_cf <- read.delim(fn_cf_stat, header = T, comment.char= '#')
@@ -315,6 +317,23 @@ stopCluster(nwcl)
 data.table::fwrite(df_output, file=paste0(params$outdir, "/final/summary_cf.tsv"), sep="\t", quote=F)
 
 # visualisation
-plot <- ggplot(df_output, aes(x=edge_len, y=gCF, colour=pp)) + geom_point() + scale_colour_viridis(direction = -1)
-plot <- ggplot(df_output, aes(x=edge_len, y=sCF, colour=pp)) + geom_point() + scale_colour_viridis(direction = -1)
+plot <- ggplot(df_output, aes(x=gcf, y=scf, colour=pp, xmin=0, xmax=100, ymin=0, ymax=100)) +
+            geom_point() +
+            geom_abline(slope=1, linetype=2, colour="red") +
+            ggtitle("Correlation between gCF and sCF") +
+            xlab("gCF") +
+            ylab("sCF") +
+            theme(
+                plot.title = element_text(size=30, face="bold"),
+                axis.title.x=element_text(size=20, margin=margin(t=15)),
+                axis.title.y=element_text(size=20),
+                axis.text.y=element_text(size=20),
+                axis.text.x=element_text(size=20),
+                legend.title=element_text(size=15, margin=margin(b=10)),
+                legend.text = element_text(size=15)
+            )
+
+tiff(filename=paste0(params$outdir, "/final/scf_vs_gcf.tiff"), height=1200, width=1900, units="px)
+print(plot)
+dev.off()
 ```
