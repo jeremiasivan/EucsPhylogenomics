@@ -52,6 +52,9 @@ This README file lists out the steps to retrieve the metadata files.
 - `tree_taxonomy_label.tsv` <br>
     This file extracts the taxonomic groupings of 837 Eucalypts from `currency_creek/combined_metadata.tsv` and Ferguson et al. (<a href="https://doi.org/10.1101/gr.277999.123">2024</a>)
 
+- `tree_taxonomy_strict.txt` <br>
+    This file is the extension of `tree_taxonomy_label.tsv`, with tagged samples with putative misannotation (`is_included==FALSE`) and/or label swap (`is_label_swapped==TRUE`) based on the <a href="../output/busco1187_sptree.tre">BUSCO species tree</a>
+
 ## `hybpiper/`
 - `crisp101_eucs.fna` and `crisp101_noneucs.fna`
     1. Download the concatenated alignment (<i>.phy</i>) and partition file (<i>.nex</i>) from <a href="https://datadryad.org/dataset/doi:10.5061/dryad.gb5mkkwww">Dryad</a>
