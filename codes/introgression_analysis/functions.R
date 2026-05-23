@@ -126,7 +126,7 @@ f_taper_dna <- function(fn_fasta, fn_output, exe_taper) {
 # function: convert "N" to gaps
 f_n2gap <- function(fn_fasta, fn_output) {
     # read the DNA alignment
-    seq <- Biostrings::readDNAStringSet(fn_fasta, format="fasta")
+    seq <- Biostrings::readBStringSet(fn_fasta, format="fasta")
 
     # convert "N" to gaps
     for (i in 1:length(seq)) {
@@ -140,7 +140,7 @@ f_n2gap <- function(fn_fasta, fn_output) {
 # function: convert "N" and "X" to gaps
 f_x2gap <- function(fn_fasta, fn_output) {
     # read the DNA alignment
-    seq <- Biostrings::readDNAStringSet(fn_fasta, format="fasta")
+    seq <- Biostrings::readBStringSet(fn_fasta, format="fasta")
 
     # convert "N" to gaps
     for (i in 1:length(seq)) {
@@ -155,7 +155,7 @@ f_x2gap <- function(fn_fasta, fn_output) {
 # function: delete sequence with >=threshold gaps
 f_remove_seq <- function(fn_fasta, fn_output, threshold) {
     # read the DNA alignment
-    seq <- Biostrings::readDNAStringSet(fn_fasta, format="fasta")
+    seq <- Biostrings::readBStringSet(fn_fasta, format="fasta")
 
     # iterate over sequences
     pl <- c()
@@ -180,7 +180,7 @@ f_remove_seq <- function(fn_fasta, fn_output, threshold) {
 # function: delete columns with >=threshold gaps
 f_remove_col <- function(fn_fasta, fn_output, threshold) {
     # read the multiple sequence alignment
-    seq <- Biostrings::readDNAStringSet(fn_fasta, format="fasta")
+    seq <- Biostrings::readBStringSet(fn_fasta, format="fasta")
     seq <- as.character(seq)
 
     # convert sequence into matrix
@@ -238,7 +238,7 @@ f_mafft <- function(fn_input, fn_output, params_mafft, exe_mafft) {
 
 # function: run MAFFT --keeplength
 f_mafft_keeplen <- function(fn_input, fn_alignment, fn_output, exe_mafft) {
-    cmd_mafft <- paste(exe_mafft, "--addfull",
+    cmd_mafft <- paste(exe_mafft, "--add",
                        fn_input, "--keeplength", fn_alignment,
                        ">", fn_output)
     system(cmd_mafft)
