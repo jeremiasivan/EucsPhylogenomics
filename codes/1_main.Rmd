@@ -1,0 +1,82 @@
+---
+title: "Eucalypts Phylogenomics"
+author: "Jeremias Ivan"
+date: "`r format(Sys.time(), '%d %B %Y, %H:%M%p')`"
+
+output:
+  html_document:
+    code_folding: show
+    toc: true
+    toc_float: true
+    
+params:
+  # --- General -------------------------------------------------
+  codedir: "/home/user/EucsPhylogenomics/"
+  prefix: ""
+  outdir: "/home/user/output/"
+  thread: 1
+  redo: FALSE
+  
+  # --- Executables ---------------------------------------------
+  exe_captus: "captus"
+  exe_fasttree: "fasttree"
+  exe_astral4: "astral4"
+  exe_iqtree: "iqtree2"
+
+  # --- Input Files ---------------------------------------------
+  fn_captus_sample_metadata: ""
+  fn_captus_target_metadata: ""
+  fn_eucs_metadata: ""
+  dir_fastq: ""
+
+  # Previous results [Optional]
+  fn_eucs_tree: ""
+  fn_eucs_alignment: ""
+  fn_eucs_partition: ""
+  
+---
+
+```{r, include=FALSE}
+# store initial system time
+sys_tic <- Sys.time()
+
+# load libraries and function
+suppressPackageStartupMessages(library(doNOW))
+suppressPackageStartupMessages(library(tidyverse))
+
+source(file.path(path.expand(params$codedir), "codes", "functions.R"), local=TRUE)
+
+# create outdir
+currentdir <- file.path(path.expand(params$outdir), params$prefix)
+if (!dir.exists(currentdir)) {
+  dir.create(currentdir, recursive = T)
+}
+
+# create log file
+fn_log <- file.path(currentdir, paste0(params$prefix, ".log"))
+log_appender <- log4r::file_appender(fn_log, append=TRUE, layout=log4r::default_log_layout())
+fn_logger <- log4r::logger(threshold="INFO", appenders=log_appender)
+if (params$redo) {
+  unlink(fn_log)
+}
+
+if (!file.exists(fn_log)) {
+  readr::write_lines(c("####################################",
+                       "####      EucsPhylogenomics     ####",
+                       "####################################"), path=fn_log)
+}
+
+knitr::opts_knit$set(root.dir=currentdir)
+```
+
+```{r child = file.path(path.expand(params$codedir), "codes", "2_run.Rmd")}
+```
+
+```{r, include=FALSE}
+# store final system time
+sys_toc <- Sys.time()
+
+# write the system time in log file
+readr::write_lines(c("", paste0("Total elapsed time: ", round(as.numeric(difftime(sys_toc, sys_tic, units = "mins")), 3), " mins")),
+                   path=fn_log, append=T)
+```

@@ -1,0 +1,64 @@
+---
+title: "Run EucsPhylogenomics"
+---
+
+```{r setup, include=FALSE}
+# create output directories
+outdir_clean_reads <- file.path(currentdir, "01_clean_reads")
+outdir_assemblies <- file.path(currentdir, "02_assemblies")
+outdir_extractions <- file.path(currentdir, "03_extractions")
+outdir_extractions_all <- file.path(outdir_extractions, "all/")
+outdir_alignments <- file.path(currentdir, "04_alignments")
+outdir_phylogeny <- file.path(currentdir, "05_phylogeny")
+sapply(c(outdir_clean_reads, outdir_assemblies, outdir_extractions, outdir_extractions_all, outdir_alignments, outdir_phylogeny), function(x) {
+  if (!dir.exists(x)) { dir.create(x, recursive=T) }})
+
+# open CAPTUS metadata
+df_captus_sample_metadata <- data.table::fread(params$fn_captus_sample_metadata)
+df_captus_target_metadata <- data.table::fread(params$fn_captus_sample_metadata)
+ls_group <- unique(df_captus_target_metadata$group)
+```
+
+```{r run-captus}
+# run CAPTUS to clean raw reads
+f_run_captus_cleaning(params$exe_captus, params$dir_fastq, outdir_clean_reads, params$thread) 
+
+# run CAPTUS assemble and extraction for each group
+for (group in ls_group) {
+    # update group name
+    group_no_ws <- gsub("\\s+", "", group)
+
+    # output directory
+    outdir_clean_reads_group <- file.path(outdir_clean_reads, group_no_ws)
+    outdir_assemblies_group <- file.path(outdir_assemblies, group_no_ws)
+    outdir_extractions_group <- file.path(outdir_extractions, group_no_ws)
+    sapply(c(outdir_clean_reads_group, outdir_assemblies_group, outdir_extractions_group), function(x) {
+        if (!dir.exists(x)) { dir.create(x, recursive=T) }})
+
+    # move the CAPTUS output directories
+    ls_group_sample <- df_captus_sample_metadata$sample[df_captus_sample_metadata$group==group]
+    for (sample in ls_group_sample) {
+        system(paste("mv",
+                     paste0(outdir_clean_reads, "/", sample, "*"),
+                     paste0(outdir_clean_reads_group, "/")))
+    }
+
+    # run CAPTUS assemble
+    f_run_captus_assembly(params$exe_captus, outdir_clean_reads_group, outdir_assemblies_group, params$thread)
+
+    # run CAPTUS assemble
+    f_run_captus_extraction(params$exe_captus,
+                            df_captus_target_metadata$dir_target_loci, 
+                            outdir_assemblies_group,
+                            outdir_extractions_group,
+                            params$thread)
+
+    # move all CAPTUS extractions to one folder
+    system(paste("mv",
+                 paste0(outdir_assemblies_group, "/*__captus-ext"),
+                 outdir_extractions_all))
+}
+
+# run CAPTUS align
+f_run_captus_alignment(params$exe_captus, outdir_extractions_all, outdir_alignments, params$thread)
+```
