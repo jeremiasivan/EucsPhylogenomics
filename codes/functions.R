@@ -76,6 +76,44 @@ f_remove_col <- function(fn_fasta, fn_output, threshold) {
     Biostrings::writeXStringSet(seq_matrix_filtered, filepath=fn_output)
 }
 
+# function: trim CAPTUS labels
+f_trim_captus_label <- function(fn_input, locus, fn_output) {
+    # read the DNA alignment
+    seq <- Biostrings::readBStringSet(fn_input)
+
+    # extract CAPTUS headers (source: Claude)
+    df_output <- rbindlist(lapply(names(seq), function(header) {
+      # extract sequence ID
+      seq_id <- trimws(str_extract(header, "^\\S+"))
+      
+      # extract all [key=value] pairs
+      matches <- str_match_all(header, "\\[([^=]+)=([^]]+)\\]")[[1]]
+      
+      # matches is a matrix: col1=full match, col2=key, col3=value
+      pairs <- setNames(as.list(trimws(matches[, 3])), trimws(matches[, 2]))
+      
+      c(list(seq_id = seq_id, locus = locus), pairs)
+    }))
+
+    # update sequence headers
+    names(seq) <- sapply(names(seq), function(x) { unlist(strsplit(x, split=" "))[1] })
+
+    # save the new DNA alignment
+    Biostrings::writeXStringSet(seq, filepath=fn_output)
+
+    return(df_output)
+}
+
+# function: run AMAS
+f_amas_dna <- function(input_regex, fn_output_aln, fn_output_part, exe_amas) {
+    cmd_amas <- paste("python3", exe_amas, "concat -f fasta -d dna",
+                      "-i", input_regex,
+                      "--part-format nexus",
+                      "-t", fn_output_aln,
+                      "-p", fn_output_part)
+    system(cmd_amas)
+}
+
 # function: convert "N" and "?" to gaps
 f_unknown2gap <- function(fn_fasta, fn_output) {
     # read the DNA alignment
@@ -91,45 +129,43 @@ f_unknown2gap <- function(fn_fasta, fn_output) {
     Biostrings::writeXStringSet(seq, filepath=fn_output)
 }
 
-# function: run AMAS
-f_amas_dna <- function(input_regex, fn_output_aln, fn_output_part, exe_amas) {
-    cmd_amas <- paste("python3", exe_amas, "concat -f fasta -d dna",
-                      "-i", input_regex,
-                      "--part-format nexus",
-                      "-t", fn_output_aln,
-                      "-p", fn_output_part)
-    system(cmd_amas)
-}
-
 # function: run FastTree
 f_fasttree <- function(fn_fasta, fn_output, exe_fasttree) {
     cmd_fasttree <- paste(exe_fasttree, "-gtr", fn_fasta, ">", fn_output)
     system(cmd_fasttree)
 }
 
-# function: run MAFFT --keeplength
-f_mafft_keeplen <- function(fn_input, fn_alignment, fn_output, exe_mafft) {
-    cmd_mafft <- paste(exe_mafft, "--add",
-                       fn_input, "--keeplength", fn_alignment,
-                       ">", fn_output)
-    system(cmd_mafft)
-}
-
 # function: run IQ-Tree 2
-f_iqtree2 <- function(fn_input, thread, exe_iqtree2) {
+f_iqtree2 <- function(fn_input, fn_tree, fn_partition, prefix, thread, exe_iqtree2) {
     cmd_iqtree2 <- paste(exe_iqtree2,
                          "-s", fn_input,
-                         "-B 1000",
+                         "-t", fn_tree,
+                         "-p", fn_partition,
+                         "--prefix", prefix,
                          "-T", thread, "--quiet -redo")
     system(cmd_iqtree2)
 }
 
 # function: run ASTRAL-IV
-f_astral4 <- function(fn_input, fn_output, fn_log, exe_astral) {
+f_astral4 <- function(fn_input, fn_tree, fn_output, fn_log, thread, exe_astral) {
     cmd_astral <- paste(exe_astral,
                         "-u 2",
                         "-i", fn_input,
+                        "-c", fn_tree,
                         "-o", fn_output,
+                        "-t", thread,
                         "2>", fn_log)
     system(cmd_astral)
+}
+
+# function: calculate sCF and gCF
+f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, prefix, thread, exe_iqtree2) {
+    cmd_cf <- paste(exe_iqtree2,
+                    "-t", fn_sp_tree,
+                    "--gcf", fn_all_trees,
+                    "-p", dir_fasta,
+                    "--scf 100",
+                    "-T", thread,
+                    "--prefix", prefix)
+    system(cmd_cf)
 }

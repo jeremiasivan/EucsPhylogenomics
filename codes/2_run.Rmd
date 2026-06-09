@@ -9,8 +9,8 @@ outdir_assemblies <- file.path(currentdir, "02_assemblies")
 outdir_extractions <- file.path(currentdir, "03_extractions")
 outdir_extractions_all <- file.path(outdir_extractions, "all/")
 outdir_alignments <- file.path(currentdir, "04_alignments")
-outdir_phylogeny <- file.path(currentdir, "05_phylogeny")
-sapply(c(outdir_clean_reads, outdir_assemblies, outdir_extractions, outdir_extractions_all, outdir_alignments, outdir_phylogeny), function(x) {
+outdir_final <- file.path(currentdir, "05_final")
+sapply(c(outdir_clean_reads, outdir_assemblies, outdir_extractions, outdir_extractions_all, outdir_alignments, outdir_final), function(x) {
   if (!dir.exists(x)) { dir.create(x, recursive=T) }})
 
 # open CAPTUS metadata
@@ -61,4 +61,80 @@ for (group in ls_group) {
 
 # run CAPTUS align
 f_run_captus_alignment(params$exe_captus, outdir_extractions_all, outdir_alignments, params$thread)
+```
+
+```{r filter-alignment}
+# create output directories
+outdir_final_seq50 <- file.path(outdir_final, "01_seq50")
+outdir_final_col50 <- file.path(outdir_final, "02_col50")
+outdir_final_trimlabel <- file.path(outdir_final, "03_trimlabel")
+outdir_final_phylogeny <- file.path(outdir_final, "04_phylogeny")
+sapply(c(outdir_final_seq50, outdir_final_col50, outdir_final_trimlabel, outdir_final_phylogeny), function(x) {
+  if (!dir.exists(x)) { dir.create(x, recursive=T) }})
+
+# extract list of locus
+ls_locus <- list.files(file.path(outdir_alignments, "03_trimmed", "05_naive", "04_misc_DNA", "01_matches"), recursive=F, full.names=F)
+ls_locus <- gsub(".fna", "", ls_locus)
+
+# iterate over locus
+df_captus_label <- NULL
+
+for (locus in ls_locus) {
+    fn_input <- file.path(outdir_alignments, "03_trimmed", "05_naive", "04_misc_DNA", "01_matches", paste0(locus, ".fna"))
+    fn_seq50 <- file.path(outdir_final_seq50, paste0(locus, ".fna"))
+    fn_col50 <- file.path(outdir_final_col50, paste0(locus, ".fna"))
+    fn_trimlabel <- file.path(outdir_final_trimlabel, paste0(locus, ".fna"))
+
+    # filter locus alignment
+    f_remove_seq(fn_input, fn_seq50, 0.5)
+    f_remove_col(fn_seq50, fn_col50, 0.5)
+    df_captus_label_locus <- f_trim_captus_label(fn_col50, locus, fn_trimlabel)
+
+    # update data.frame
+    df_captus_label <- rbind(df_captus_label, df_captus_label_locus)
+}
+
+data.table::fwrite(df_captus_label, file=file.path(currentdir, "captus_summary.tsv"), sep="\t", quote=F)
+
+# concatenate locus alignments
+f_amas_dna(input_regex=file.path(outdir_final_trimlabel, "*.fna"),
+           fn_output_aln=file.path(outdir_final_phylogeny, "concatenated.out"),
+           fn_output_part=file.path(outdir_final_phylogeny, "partitions.nex"),
+           exe_amas=params$exe_amas)
+f_unknown2gap(file.path(outdir_final_phylogeny, "concatenated.out"), file.path(outdir_final_phylogeny, "concatenated.fna"))
+```
+
+
+```{r tree}
+# infer FastTree tree
+f_fasttree(fn_fasta=file.path(outdir_final_phylogeny, "concatenated.fna"),
+           fn_output=file.path(outdir_final_phylogeny, "fasttree.tre"),
+           exe_fasttree=params$exe_fasttree)
+
+# refine the species tree using IQ-TREE2
+f_iqtree2(fn_input=file.path(outdir_final_phylogeny, "concatenated.fna"),
+          fn_tree=file.path(outdir_final_phylogeny, "concatenated.fna"),
+          fn_partition=file.path(outdir_final_phylogeny, "partitions.nex"),
+          prefix=paste0(outdir_final_phylogeny, "/iqtree"),
+          thread=params$thread,
+          exe_iqtree2=params$exe_iqtree)
+
+# infer individual gene trees
+
+
+# calculate qCF using Astral4
+f_astral4(fn_input=file.path(outdir_final_phylogeny, "alltrees.tre"),
+          fn_tree=file.path(outdir_final_phylogeny, "iqtree.treefile"),
+          fn_output=file.path(outdir_final_phylogeny, "iqtree_qcf.tre"),
+          fn_log=file.path(outdir_final_phylogeny, "iqtree_qcf.log"),
+          thread=params$thread,
+          exe_astral=params$exe_astral4)
+
+# calculate sCF and gCF
+f_calculate_cf(fn_all_trees=file.path(outdir_final_phylogeny, "alltrees.tre"),
+               fn_sp_tree=file.path(outdir_final_phylogeny, "iqtree_qcf.tre"),
+               dir_fasta=outdir_final_trimlabel,
+               prefix=paste0(outdir_final_phylogeny, "/iqtree_concord"),
+               thread=params$thread,
+               exe_iqtree2=params$exe_iqtree)
 ```
