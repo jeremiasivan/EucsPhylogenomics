@@ -1,26 +1,46 @@
 # functions for running EucsPhylogenomics
 
 # function: run CAPTUS to clean FASTQ files
-f_run_captus_cleaning <- function(exe_captus, input_dir, output_dir, thread) {
-  captus_cmd <- paste(exe_captus, "clean -r", input_dir, "-o", output_dir, "--threads", thread, "--overwrite")
+f_run_captus_cleaning <- function(exe_captus, input_dir, output_dir, thread, is_redo) {
+  captus_cmd <- paste(exe_captus, "clean -r", input_dir, "-o", output_dir, "--threads", thread)
+
+  if (is_redo) {
+    captus_cmd <- paste(captus_cmd, "--overwrite")
+  }
+
   system(captus_cmd)
 }
 
 # function: run CAPTUS to assemble short reads
-f_run_captus_assembly <- function(exe_captus, input_dir, output_dir, thread) {
-  captus_cmd <- paste(exe_captus, "assemble -r", input_dir, "-o", output_dir, "--threads", thread, "--overwrite")
+f_run_captus_assembly <- function(exe_captus, input_dir, output_dir, thread, is_redo) {
+  captus_cmd <- paste(exe_captus, "assemble -r", input_dir, "-o", output_dir, "--threads", thread)
+
+  if (is_redo) {
+    captus_cmd <- paste(captus_cmd, "--overwrite")
+  }
+  
   system(captus_cmd)
 }
 
 # function: run CAPTUS to extract target loci
-f_run_captus_extraction <- function(exe_captus, fn_target_loci, input_dir, output_dir, thread) {
-  captus_cmd <- paste(exe_captus, "extract -f", fn_target_loci, "-a", input_dir, "-o", output_dir, "--threads", thread, "--overwrite")
+f_run_captus_extraction <- function(exe_captus, fn_target_loci, input_dir, output_dir, thread, is_redo) {
+  captus_cmd <- paste(exe_captus, "extract -f", fn_target_loci, "-a", input_dir, "-o", output_dir, "--threads", thread)
+
+  if (is_redo) {
+    captus_cmd <- paste(captus_cmd, "--overwrite")
+  }
+
   system(captus_cmd)
 }
 
 # function: run CAPTUS to align extracted loci
-f_run_captus_alignment <- function(exe_captus, input_dir, output_dir, thread) {
-  captus_cmd <- paste(exe_captus, "align -e", input_dir, "-o", output_dir, "--threads", thread, "--overwrite")
+f_run_captus_alignment <- function(exe_captus, input_dir, output_dir, thread, is_redo) {
+  captus_cmd <- paste(exe_captus, "align -e", input_dir, "-o", output_dir, "--threads", thread)
+
+  if (is_redo) {
+    captus_cmd <- paste(captus_cmd, "--overwrite")
+  }
+
   system(captus_cmd)
 }
 
@@ -136,22 +156,32 @@ f_fasttree <- function(fn_fasta, fn_output, exe_fasttree) {
 }
 
 # function: run IQ-Tree 2
-f_iqtree2 <- function(fn_input, fn_tree, fn_partition, prefix, thread, exe_iqtree2) {
+f_iqtree2 <- function(fn_input, fn_tree, fn_partition, prefix, thread, is_redo, exe_iqtree2) {
     cmd_iqtree2 <- paste(exe_iqtree2,
                          "-s", fn_input,
                          "-t", fn_tree,
                          "-p", fn_partition,
                          "--prefix", prefix,
-                         "-T", thread, "--quiet -redo")
+                         "-T", thread, "--quiet")
+                         
+    if (is_redo) {
+        cmd_iqtree2 <- paste(cmd_iqtree2, "-redo")
+    }
+
     system(cmd_iqtree2)
 }
 
 # function: run IQ-Tree 2 (-T 1)
-f_iqtree2_singlethread <- function(fn_input, prefix, exe_iqtree2) {
+f_iqtree2_singlethread <- function(fn_input, prefix, is_redo, exe_iqtree2) {
     cmd_iqtree2 <- paste(exe_iqtree2,
                          "-s", fn_input,
                          "--prefix", prefix,
-                         "-T 1 --quiet -redo")
+                         "-T 1 --quiet")
+    
+    if (is_redo) {
+        cmd_iqtree2 <- paste(cmd_iqtree2, "-redo")
+    }
+
     system(cmd_iqtree2)
 }
 
@@ -168,7 +198,7 @@ f_astral4 <- function(fn_input, fn_tree, fn_output, fn_log, thread, exe_astral) 
 }
 
 # function: calculate sCF and gCF
-f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, prefix, thread, exe_iqtree2) {
+f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, prefix, thread, is_redo, exe_iqtree2) {
     cmd_cf <- paste(exe_iqtree2,
                     "-t", fn_sp_tree,
                     "--gcf", fn_all_trees,
@@ -176,5 +206,10 @@ f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, prefix, thread, 
                     "--scf 100",
                     "-T", thread,
                     "--prefix", prefix)
+
+    if (is_redo) {
+        cmd_cf <- paste(cmd_cf, "-redo")
+    }
+    
     system(cmd_cf)
 }
