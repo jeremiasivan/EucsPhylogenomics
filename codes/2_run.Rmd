@@ -61,7 +61,7 @@ for (group in ls_group) {
 }
 
 # check if previous results are provided
-if (dir.exists(params$dir_locus_alignment)) {
+if (params$dir_locus_alignment!="" && dir.exists(params$dir_locus_alignment)) {
     # create doSNOW clusters
     nwcl <- makeCluster(params$thread)
     registerDoSNOW(nwcl)
@@ -199,22 +199,35 @@ fn_alltrees_tre <- file.path(outdir_final_phylogeny, "alltrees.tre")
 fn_astral_tre <- file.path(outdir_final_phylogeny, "iqtree_qcf.tre")
 fn_astral_log <- file.path(outdir_final_phylogeny, "iqtree_qcf.log")
 
-# check if file exists
-if (!file.exists(fn_fasttree_tre) || params$redo) {
-    # infer FastTree tree
-    f_fasttree(fn_fasta=fn_concatenated_filtered,
-               fn_output=fn_fasttree_tre,
-               exe_fasttree=params$exe_fasttree)
-}
+# check if previous tree is provided
+if (params$fn_species_tree!="" && file.exists(params$fn_species_tree)) {
+    # refine the species tree using IQ-TREE2
+    f_iqtree2_fixtop(fn_input=fn_concatenated_filtered,
+                     fn_tree=params$fn_species_tree,
+                     fn_partition=fn_partition,
+                     prefix=paste0(outdir_final_phylogeny, "/iqtree"),
+                     thread=params$thread,
+                     is_redo=params$redo,
+                     exe_iqtree2=params$exe_iqtree)
 
-# refine the species tree using IQ-TREE2
-f_iqtree2(fn_input=fn_concatenated_filtered,
-          fn_tree=fn_fasttree_tre,
-          fn_partition=fn_partition,
-          prefix=paste0(outdir_final_phylogeny, "/iqtree"),
-          thread=params$thread,
-          is_redo=params$redo,
-          exe_iqtree2=params$exe_iqtree)
+} else {
+    # check if file exists
+    if (!file.exists(fn_fasttree_tre) || params$redo) {
+        # infer FastTree tree
+        f_fasttree(fn_fasta=fn_concatenated_filtered,
+                   fn_output=fn_fasttree_tre,
+                   exe_fasttree=params$exe_fasttree)
+    }
+
+    # refine the species tree using IQ-TREE2
+    f_iqtree2(fn_input=fn_concatenated_filtered,
+              fn_tree=fn_fasttree_tre,
+              fn_partition=fn_partition,
+              prefix=paste0(outdir_final_phylogeny, "/iqtree"),
+              thread=params$thread,
+              is_redo=params$redo,
+              exe_iqtree2=params$exe_iqtree)
+}
 
 # infer individual gene trees
 nwcl <- makeCluster(params$thread)

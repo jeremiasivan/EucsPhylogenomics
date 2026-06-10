@@ -195,6 +195,22 @@ f_iqtree2 <- function(fn_input, fn_tree, fn_partition, prefix, thread, is_redo, 
     system(cmd_iqtree2)
 }
 
+# function: run IQ-Tree 2 (fix topology)
+f_iqtree2_fixtop <- function(fn_input, fn_tree, fn_partition, prefix, thread, is_redo, exe_iqtree2) {
+    cmd_iqtree2 <- paste(exe_iqtree2,
+                         "-s", fn_input,
+                         "-g", fn_tree,
+                         "-p", fn_partition,
+                         "--prefix", prefix,
+                         "-T", thread, "--quiet")
+                         
+    if (is_redo) {
+        cmd_iqtree2 <- paste(cmd_iqtree2, "-redo")
+    }
+
+    system(cmd_iqtree2)
+}
+
 # function: run IQ-Tree 2 (-T 1)
 f_iqtree2_singlethread <- function(fn_input, prefix, is_redo, exe_iqtree2) {
     cmd_iqtree2 <- paste(exe_iqtree2,
