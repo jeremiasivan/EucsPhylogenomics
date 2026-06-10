@@ -146,6 +146,15 @@ f_iqtree2 <- function(fn_input, fn_tree, fn_partition, prefix, thread, exe_iqtre
     system(cmd_iqtree2)
 }
 
+# function: run IQ-Tree 2 (-T 1)
+f_iqtree2_singlethread <- function(fn_input, prefix, exe_iqtree2) {
+    cmd_iqtree2 <- paste(exe_iqtree2,
+                         "-s", fn_input,
+                         "--prefix", prefix,
+                         "-T 1 --quiet -redo")
+    system(cmd_iqtree2)
+}
+
 # function: run ASTRAL-IV
 f_astral4 <- function(fn_input, fn_tree, fn_output, fn_log, thread, exe_astral) {
     cmd_astral <- paste(exe_astral,

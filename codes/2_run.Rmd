@@ -120,7 +120,29 @@ f_iqtree2(fn_input=file.path(outdir_final_phylogeny, "concatenated.fna"),
           exe_iqtree2=params$exe_iqtree)
 
 # infer individual gene trees
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
 
+# create output directory
+outdir_locus_tree <- file.path(outdir_final_phylogeny, "gene_tree")
+if (!dir.exists(outdir_locus_tree)) {
+    dir.create(outdir_locus_tree, recursive=T)
+}
+
+# iterate over loci
+foreach (locus = ls_locus) %dopar% {
+    prefix <- paste0(outdir_locus_tree, "/", locus)
+    fn_input <- file.path(outdir_final_trimlabel, paste0(locus, ".fna"))
+
+    f_iqtree2_singlethread(fn_input, prefix, params$exe_iqtree)
+}
+
+stopCluster(nwcl)
+
+# move all locus trees onto one file
+system(paste("cat",
+             paste0(outdir_locus_tree, "/*.treefile"),
+             ">", file.path(outdir_final_phylogeny, "alltrees.tre")))
 
 # calculate qCF using Astral4
 f_astral4(fn_input=file.path(outdir_final_phylogeny, "alltrees.tre"),
