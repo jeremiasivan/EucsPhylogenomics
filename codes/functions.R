@@ -44,6 +44,27 @@ f_run_captus_alignment <- function(exe_captus, input_dir, output_dir, thread, is
   system(captus_cmd)
 }
 
+# function: add new sequences from CAPTUS to existing alignment
+f_add_captus_seq <- function(fn_fasta, fn_captus, fn_output) {
+    # read the existing DNA alignment
+    seq <- Biostrings::readBStringSet(fn_fasta, format="fasta")
+
+    # read the new sequences from CAPTUS
+    seq_captus <- Biostrings::readBStringSet(fn_captus, format="fasta")
+
+    # combine the two sets of sequences
+    seq_combined <- c(seq, seq_captus)
+
+    # save the new DNA alignment
+    Biostrings::writeXStringSet(seq_combined, filepath=fn_output)
+}
+
+# run MAFFT --add
+f_mafft_add <- function(fn_ref, fn_sample, fn_out, exe_mafft) {
+  cmd_mafft <- paste(exe_mafft, "--auto --add", fn_sample, "--keeplength", fn_ref, ">", fn_out)
+  system(cmd_mafft)
+}
+
 # function: delete sequence with >=threshold gaps
 f_remove_seq <- function(fn_fasta, fn_output, threshold) {
     # read the DNA alignment
@@ -108,6 +129,9 @@ f_trim_captus_label <- function(fn_input, locus, fn_output) {
       
       # extract all [key=value] pairs
       matches <- str_match_all(header, "\\[([^=]+)=([^]]+)\\]")[[1]]
+      if (nrow(matches) == 0) {
+        return(NULL)
+      }
       
       # matches is a matrix: col1=full match, col2=key, col3=value
       pairs <- setNames(as.list(trimws(matches[, 3])), trimws(matches[, 2]))

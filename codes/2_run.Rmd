@@ -60,8 +60,81 @@ for (group in ls_group) {
                  outdir_extractions_all))
 }
 
-# run CAPTUS align
-f_run_captus_alignment(params$exe_captus, outdir_extractions_all, outdir_alignments, params$thread, params$redo)
+# check if previous results are provided
+if (dir.exists(params$dir_locus_alignment)) {
+    # create doSNOW clusters
+    nwcl <- makeCluster(params$thread)
+    registerDoSNOW(nwcl)
+
+    # output directory
+    outdir_alignments_sequence <- file.path(outdir_alignments, "01_sequence")
+    outdir_alignments_mafftadd <- file.path(outdir_alignments, "02_mafftadd")
+    sapply(c(outdir_alignments_sequence, outdir_alignments_mafftadd), function(x) {
+        if (!dir.exists(x)) { dir.create(x, recursive=T) }})
+
+    # extract list of samples
+    ls_sample <- list.dirs(outdir_extractions_all, recursive=F, full.names=F)
+    ls_sample <- gsub("__captus-ext", "", ls_sample)
+
+    # iterate over samples
+    for (sample in ls_sample) {
+        # open matched DNA sequences
+        seqs <- Biostrings::readBStringSet(file.path(outdir_extractions_all, paste0(sample, "__captus-ext"), "04_misc_DNA", "DNA_matches.fna"))
+
+        # only keep the best hits for each locus
+        best_hits <- seqs[grepl("\\[hit=00\\]", names(seqs))]
+
+        # extract the list of locus
+        ls_locus <- sapply(names(best_hits), function(x) {
+            locus <- unlist(strsplit(x, split="__"))[2]
+            locus <- unlist(strsplit(locus, split=" "))[1]
+            locus
+        })
+
+        # iterate over loci
+        foreach (locus = unique(ls_locus)) %dopar% {
+            # output file
+            fn_locus_seqs <- file.path(outdir_alignments_sequence, paste0(locus, ".fna"))
+
+            # extract locus sequence
+            locus_seq <- best_hits[ls_locus==locus]
+            if (length(locus_seq)!=1) {
+                log4r::warn(fn_logger, paste0("Multiple sequences of ", locus, " for ", sample, "."))
+            }
+
+            writeXStringSet(locus_seq, filepath=fn_locus_seqs, append=T)
+        }
+    }
+
+    # add BUSCO sequences to existing alignment
+    ls_ref_locus <- list.files(params$dir_locus_alignment, recursive=F, full.names=T)
+    
+    # iterate over loci
+    foreach (locus_path = ls_ref_locus) %dopar% {
+        # extract locus name
+        locus <- tools::file_path_sans_ext(basename(locus_path))
+
+        # input file
+        fn_locus_seqs <- file.path(outdir_alignments_sequence, paste0(locus, ".fna"))
+        
+        # output file
+        fn_alignments_locus <- file.path(outdir_alignments_mafftadd, paste0(locus, ".fna"))
+
+        # run MAFFT --add
+        if (file.exists(fn_locus_seqs)) {
+            f_mafft_add(locus_path, fn_locus_seqs, fn_alignments_locus, params$exe_mafft)
+        } else {
+            system(paste("cp", locus_path, fn_alignments_locus))
+            log4r::warn(fn_logger, paste0("No additional sequences for ", locus, "."))
+        }
+    }
+
+    stopCluster(nwcl)
+
+} else {
+    # run CAPTUS align
+    f_run_captus_alignment(params$exe_captus, outdir_extractions_all, outdir_alignments, params$thread, params$redo)
+}
 ```
 
 ```{r filter-alignment}
@@ -80,7 +153,12 @@ fn_partition <- file.path(outdir_final_phylogeny, "partitions.nex")
 fn_concatenated_filtered <- file.path(outdir_final_phylogeny, "concatenated.fna")
 
 # extract list of locus
-ls_locus <- list.files(file.path(outdir_alignments, "03_trimmed", "05_naive", "04_misc_DNA", "01_matches"), recursive=F, full.names=F)
+ls_locus <- c()
+if (dir.exists(params$dir_locus_alignment)) {
+    ls_locus <- list.files(file.path(outdir_alignments, "02_mafftadd"), recursive=F, full.names=F)
+} else {
+    ls_locus <- list.files(file.path(outdir_alignments, "03_trimmed", "05_naive", "04_misc_DNA", "01_matches"), recursive=F, full.names=F)
+}   
 ls_locus <- gsub(".fna", "", ls_locus)
 
 # iterate over locus
@@ -112,7 +190,6 @@ f_amas_dna(input_regex=file.path(outdir_final_trimlabel, "*.fna"),
            exe_amas=params$exe_amas)
 f_unknown2gap(fn_concatenated, fn_concatenated_filtered)
 ```
-
 
 ```{r tree}
 # output files
