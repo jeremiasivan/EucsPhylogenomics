@@ -32,7 +32,7 @@ for (tips in ls_tips) {
     sptre_subset <- ape::drop.tip(sptre, tip=tips)
 
     # iterate over locus
-    foreach (locus = ls_locus) %dopar% {
+    foreach (locus=ls_locus) %dopar% {
         # output directory and file
         outdir_summary_tips_locus <- file.path(outdir_summary_tips, locus)
         if (!dir.exists(outdir_summary_tips_locus)) {
@@ -65,4 +65,53 @@ for (tips in ls_tips) {
 }
 
 stopCluster(nwcl)
+```
+
+```{r summary-treedist}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# initiate variable
+df_output <- NULL
+
+# iterate over species
+for (tips in ls_tips) {
+    # list locus
+    outdir_summary_tips <- file.path(outdir_summary, tips)
+    ls_locus <- list.dirs(outdir_summary_tips, recursive=F, full.names=F)
+
+    # iterate over locus
+    df_tips <- foreach (locus=ls_locus, .combine='rbind') %dopar% {
+        # open treefile
+        outdir_summary_tips_locus <- file.path(outdir_summary_tips, locus)
+        sptre_subset_locus <- ape::read.tree(file.path(outdir_summary_tips_locus, paste0(locus, ".treefile")))
+
+        # create a distance matrix
+        dist_matrix <- cophenetic.phylo(sptre_subset_locus)
+
+        # extract distances from the tip
+        dist_to_tips <- dist_matrix[tips, ]
+        dist_to_tips <- dist_to_tips[names(dist_to_tips) != tips]
+
+        # get the closest tip
+        closest_tip <- names(which.min(dist_to_tips))
+        closest_dist <- min(dist_to_tips)
+
+        return(data.table::data.table(tips=tips,
+                                      locus=locus,
+                                      n_tips=length(sptre_subset_locus$tip.label),
+                                      closest_tip=closest_tip,
+                                      closest_dist=closest_dist))
+    }
+
+    # update data.frame
+    df_output <- rbind(df_output, df_tips)
+}
+
+stopCluster(nwcl)
+
+# save data.frame
+fn_summary <- file.path(outdir_summary, "closest_tips.tsv")
+data.table::fwrite(df_output, file=fn_summary, quote=F, sep="\t")
 ```
