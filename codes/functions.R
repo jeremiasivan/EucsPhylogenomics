@@ -200,10 +200,13 @@ f_iqtree2_fixtop <- function(fn_input, fn_tree, fn_partition, prefix, thread, is
     cmd_iqtree2 <- paste(exe_iqtree2,
                          "-s", fn_input,
                          "-g", fn_tree,
-                         "-p", fn_partition,
                          "--prefix", prefix,
                          "-T", thread, "--quiet")
-                         
+
+    if (!is.null(fn_partition) && fn_partition != "") {
+        cmd_iqtree2 <- paste(cmd_iqtree2, "-p", fn_partition)
+    }        
+
     if (is_redo) {
         cmd_iqtree2 <- paste(cmd_iqtree2, "-redo")
     }

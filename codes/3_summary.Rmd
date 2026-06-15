@@ -1,0 +1,68 @@
+---
+title: "Summarise Tip Position"
+---
+
+```{r summary-setup, include=FALSE}
+# create output directories
+outdir_summary <- file.path(currentdir, "06_summary")
+if (!dir.exists(outdir_summary)) {
+    dir.create(outdir_summary, recursive=T)
+}
+```
+
+```{r summary-genetree}
+# open species tree
+sptre <- ape::read.tree(fn_iqtree_tre)
+ls_tips <- sptre$tip.label
+if (params$fn_species_tree!="" && file.exists(params$fn_species_tree)) {
+    previous_sptre <- ape::read.tree(params$fn_species_tree)
+    ls_tips <- ls_tips[!ls_tips%in%previous_sptre$tip.label]
+}
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over species
+for (tips in ls_tips) {
+    # output directory and file
+    outdir_summary_tips <- file.path(outdir_summary, tips)
+    
+    # subset species tree
+    sptre_subset <- ape::drop.tip(sptre, tip=tips)
+
+    # iterate over locus
+    foreach (locus = ls_locus) %dopar% {
+        # output directory and file
+        outdir_summary_tips_locus <- file.path(outdir_summary_tips, locus)
+        if (!dir.exists(outdir_summary_tips_locus)) {
+            dir.create(outdir_summary_tips_locus, recursive=T)
+        }
+
+        prefix <- paste0(outdir_summary_tips_locus, "/", locus)
+        fn_sptree_subset_locus <- file.path(outdir_summary_tips_locus, "iqtree_subset.tre")
+        
+        # check if tips exists on locus alignment
+        fn_input <- file.path(outdir_final_trimlabel, paste0(locus, ".fna"))
+        seq_subset <- Biostrings::readBStringSet(fn_input)
+        if (!tips%in%names(seq_subset)) {
+            return(NULL)
+        }
+
+        # subset species tree
+        sptre_subset_locus <- ape::keep.tip(sptre_subset, tip=sptre_subset$tip.label[sptre_subset$tip.label%in%names(seq_subset)])
+        ape::write.tree(sptre_subset_locus, file=fn_sptree_subset_locus)
+
+        # run IQ-TREE2
+        f_iqtree2_fixtop(fn_input=fn_input,
+                         fn_tree=fn_sptree_subset_locus,
+                         fn_partition=NULL,
+                         prefix=prefix,
+                         thread=1,
+                         is_redo=params$redo,
+                         exe_iqtree2=params$exe_iqtree)
+    }
+}
+
+stopCluster(nwcl)
+```
