@@ -91,7 +91,7 @@ for (tips in ls_tips) {
         sptre_subset_locus <- ape::read.tree(file.path(outdir_summary_tips_locus, paste0(locus, ".treefile")))
 
         # create a distance matrix
-        dist_matrix <- cophenetic.phylo(sptre_subset_locus)
+        dist_matrix <- ape::cophenetic.phylo(sptre_subset_locus)
 
         # extract distances from the tip
         dist_to_tips <- dist_matrix[tips, ]
@@ -134,7 +134,8 @@ df_output_per_section <- df_output %>%
                             group_by(tips) %>%
                             mutate(n_sum=n()) %>%
                             group_by(tips, section) %>%
-                            summarise(n=n(), percent=round(n/n_sum*100,2)) %>%
+                            reframe(n=n(), percent=round(n/n_sum*100,2)) %>%
+                            unique() %>%
                             arrange(tips, desc(percent))
 data.table::fwrite(df_output_per_section, file=fn_summary_per_section, quote=F, sep="\t")                            
 ```
