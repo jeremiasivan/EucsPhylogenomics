@@ -75,6 +75,9 @@ registerDoSNOW(nwcl)
 # initiate variable
 df_output <- NULL
 
+# open metadata file
+df_eucs_metadata <- readxl::read_xlsx(params$fn_eucs_metadata)
+
 # iterate over species
 for (tips in ls_tips) {
     # list locus
@@ -98,11 +101,19 @@ for (tips in ls_tips) {
         closest_tip <- names(which.min(dist_to_tips))
         closest_dist <- min(dist_to_tips)
 
+        # extract taxonomy
+        genus    <- df_eucs_metadata$genus[df_eucs_metadata$file==closest_tip]
+        subgenus <- df_eucs_metadata$subgenus[df_eucs_metadata$file==closest_tip]
+        section  <- df_eucs_metadata$section[df_eucs_metadata$file==closest_tip]
+
         return(data.table::data.table(tips=tips,
                                       locus=locus,
                                       n_tips=length(sptre_subset_locus$tip.label),
                                       closest_tip=closest_tip,
-                                      closest_dist=closest_dist))
+                                      closest_dist=closest_dist,
+                                      genus=genus,
+                                      subgenus=subgenus,
+                                      section=section))
     }
 
     # update data.frame
@@ -111,7 +122,19 @@ for (tips in ls_tips) {
 
 stopCluster(nwcl)
 
-# save data.frame
+# output files
 fn_summary <- file.path(outdir_summary, "closest_tips.tsv")
+fn_summary_per_section <- file.path(outdir_summary, "closest_tips_per_section.tsv")
+
+# save data.frame
 data.table::fwrite(df_output, file=fn_summary, quote=F, sep="\t")
+
+# summary per section
+df_output_per_section <- df_output %>%
+                            group_by(tips) %>%
+                            mutate(n_sum=n()) %>%
+                            group_by(tips, section) %>%
+                            summarise(n=n(), percent=round(n/n_sum*100,2)) %>%
+                            arrange(tips, desc(percent))
+data.table::fwrite(df_output_per_section, file=fn_summary_per_section, quote=F, sep="\t")                            
 ```

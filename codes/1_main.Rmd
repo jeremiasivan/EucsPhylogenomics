@@ -33,6 +33,8 @@ params:
   fn_species_tree: ""
   dir_locus_alignment: ""
   
+  # --- Summary Input Files -------------------------------------
+  fn_eucs_metadata: "/home/user/EucsPhylogenomics/files/eucs_metadata.xlsx"
 ---
 
 ```{r, include=FALSE}
