@@ -51,6 +51,8 @@ for (tips in ls_tips) {
 
         # subset species tree
         sptre_subset_locus <- ape::keep.tip(sptre_subset, tip=sptre_subset$tip.label[sptre_subset$tip.label%in%names(seq_subset)])
+        sptre_subset_locus$node.label <- NULL
+        sptre_subset_locus$edge.length <- NULL
         ape::write.tree(sptre_subset_locus, file=fn_sptree_subset_locus)
 
         # run IQ-TREE2
