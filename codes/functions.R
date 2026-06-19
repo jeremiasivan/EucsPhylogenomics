@@ -256,3 +256,75 @@ f_calculate_cf <- function(fn_all_trees, fn_sp_tree, dir_fasta, prefix, thread, 
     
     system(cmd_cf)
 }
+
+# function: extract all CAPTUS top hits
+f_extract_captus_hits <- function(fn_captus_matches, fn_out) {
+    # open the CAPTUS output
+    seq <- Biostrings::readBStringSet(fn_captus_matches)
+
+    # extract top hits for all loci
+    best_hits <- seq[grepl("\\[hit=00\\]", names(seq))]
+
+    # update sequence headers
+    names(best_hits) <- sapply(names(best_hits), function(x) {
+        locus <- unlist(strsplit(x, split="__"))[2]
+        locus <- unlist(strsplit(locus, split=" "))[1]
+        locus
+    })
+
+    # save output file
+    Biostrings::writeXStringSet(best_hits, filepath=fn_out)
+}
+
+# function: run BWA-MEM and index the BAM file
+f_bwa_mem <-  function(fn_reference, fn_fastq_r1, fn_fastq_r2, fn_bam, thread, exe_bwa, exe_samtools) {
+    cmd_bwa <- paste(exe_bwa, "mem",
+                     "-t", thread,
+                     "-R '@RG\tID:sample1\tSM:sample1'",
+                     fn_reference,
+                     fn_fastq_r1, fn_fastq_r2,
+                     "|",
+                     exe_samtools, "sort",
+                     "-@", thread,
+                     "-o", fn_bam, "-")
+    system(cmd_bwa)
+    system(paste(exe_samtools, "index", fn_bam))
+}
+
+# function: variant calling
+f_variant_calling <- function(fn_reference, fn_bam, fn_vcf_gz, fn_vcf_gz_filtered, thread, exe_bcftools) {
+    # do variant calling
+    cmd_vcf <- paste(exe_bcftools, "mpileup",
+                     "-f", fn_reference,
+                     "-q 20 -Q 20 -a AD,DP",
+                     "-Ou", fn_bam,
+                     "|",
+                     exe_bcftools, "call",
+                     "-mv -Oz -o", fn_vcf_gz)
+    system(cmd_vcf)
+    system(paste(exe_bcftools, "index -t", fn_vcf_gz))
+
+    # filter variants
+    cmd_vcf_filter <- paste(exe_bcftools, "view",
+                            "-m2 -M2",
+                            "-v snps,indels",
+                            "-Oz -o", fn_vcf_gz_filtered, fn_vcf_gz)
+    system(cmd_vcf_filter)
+    system(paste(exe_bcftools, "index -t", fn_vcf_gz_filtered))
+}
+
+# function: phasing
+f_whatshap <- function(fn_reference, fn_vcf_gz_filtered, fn_bam, fn_phased_vcf, fn_phased_bcf, exe_bcftools, exe_whatshap) {
+    cmd_whatshap <- paste(exe_whatshap, "phase",
+                          "--reference", fn_reference,
+                          "-o", fn_phased_vcf, fn_vcf_gz_filtered, fn_bam)
+    system(cmd_whatshap)
+    system(paste(exe_bcftools, "view -Ob -o", fn_phased_bcf, fn_phased_vcf))
+    system(paste(exe_bcftools, "index", fn_phased_bcf))
+}
+
+# function: generate haplotypes
+f_generate_haplotypes <- function(fn_reference, fn_phased_bcf, fn_hap1, fn_hap2, exe_bcftools) {
+    system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 1", fn_phased_bcf, ">", fn_hap1))
+    system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 2", fn_phased_bcf, ">", fn_hap2))
+}

@@ -24,6 +24,11 @@ params:
   exe_astral4: "astral4"
   exe_iqtree: "iqtree2"
 
+  exe_bwa: "bwa"
+  exe_samtools: "samtools"
+  exe_bcftools: "bcftools"
+  exe_whatshap: "whatshap"
+
   # --- CAPTUS Input Files --------------------------------------
   fn_captus_sample_metadata: ""
   fn_captus_target_metadata: ""
@@ -71,6 +76,12 @@ knitr::opts_knit$set(root.dir=currentdir)
 ```
 
 ```{r child = file.path(path.expand(params$codedir), "codes", "2_run.Rmd")}
+```
+
+```{r child = file.path(path.expand(params$codedir), "codes", "3_phasing.Rmd")}
+```
+
+```{r child = file.path(path.expand(params$codedir), "codes", "4_summary.Rmd")}
 ```
 
 ```{r, include=FALSE}

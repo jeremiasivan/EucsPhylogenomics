@@ -4,7 +4,7 @@ title: "Summarise Tip Position"
 
 ```{r summary-setup, include=FALSE}
 # create output directories
-outdir_summary <- file.path(currentdir, "06_summary")
+outdir_summary <- file.path(currentdir, "07_summary")
 if (!dir.exists(outdir_summary)) {
     dir.create(outdir_summary, recursive=T)
 }
