@@ -30,8 +30,8 @@ params:
   exe_whatshap: "whatshap"
 
   # --- CAPTUS Input Files --------------------------------------
-  fn_captus_sample_metadata: ""
-  fn_captus_target_metadata: ""
+  fn_captus_sample_metadata: "/home/user/EucsPhylogenomics/files/captus_sample_sample.tsv"
+  fn_captus_target_metadata: "/home/user/EucsPhylogenomics/files/captus_target_sample.tsv"
   dir_fastq: ""
 
   # Previous Results [Optional]
@@ -78,7 +78,7 @@ knitr::opts_knit$set(root.dir=currentdir)
 ```{r child = file.path(path.expand(params$codedir), "codes", "2_run.Rmd")}
 ```
 
-```{r child = file.path(path.expand(params$codedir), "codes", "3_phasing.Rmd")}
+```{r child = file.path(path.expand(params$codedir), "codes", "3_phasing.Rmd"), eval=F}
 ```
 
 ```{r child = file.path(path.expand(params$codedir), "codes", "4_summary.Rmd")}
