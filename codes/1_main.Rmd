@@ -24,19 +24,22 @@ params:
   exe_astral4: "astral4"
   exe_iqtree: "iqtree2"
 
-  exe_bwa: "bwa"
-  exe_samtools: "samtools"
-  exe_bcftools: "bcftools"
-  exe_whatshap: "whatshap"
-
   # --- CAPTUS Input Files --------------------------------------
-  fn_captus_sample_metadata: "/home/user/EucsPhylogenomics/files/captus_sample_sample.tsv"
-  fn_captus_target_metadata: "/home/user/EucsPhylogenomics/files/captus_target_sample.tsv"
+  fn_captus_sample_metadata: "/home/user/EucsPhylogenomics/files/captus_sample_metadata.tsv"
+  fn_captus_target_metadata: "/home/user/EucsPhylogenomics/files/captus_target_metadata.tsv"
   dir_fastq: ""
 
   # Previous Results [Optional]
   fn_species_tree: ""
   dir_locus_alignment: ""
+
+  # --- Phasing [Optional] --------------------------------------
+  run_phasing: FALSE
+
+  exe_bwa: "bwa"
+  exe_samtools: "samtools"
+  exe_bcftools: "bcftools"
+  exe_whatshap: "whatshap"
   
   # --- Summary Input Files -------------------------------------
   fn_eucs_metadata: "/home/user/EucsPhylogenomics/files/eucs_metadata.xlsx"
@@ -47,7 +50,7 @@ params:
 sys_tic <- Sys.time()
 
 # load libraries and function
-suppressPackageStartupMessages(library(doNOW))
+suppressPackageStartupMessages(library(doSNOW))
 suppressPackageStartupMessages(library(tidyverse))
 
 source(file.path(path.expand(params$codedir), "codes", "functions.R"), local=TRUE)
@@ -69,7 +72,7 @@ if (params$redo) {
 if (!file.exists(fn_log)) {
   readr::write_lines(c("####################################",
                        "####      EucsPhylogenomics     ####",
-                       "####################################"), path=fn_log)
+                       "####################################"), file=fn_log)
 }
 
 knitr::opts_knit$set(root.dir=currentdir)
@@ -78,7 +81,7 @@ knitr::opts_knit$set(root.dir=currentdir)
 ```{r child = file.path(path.expand(params$codedir), "codes", "2_run.Rmd")}
 ```
 
-```{r child = file.path(path.expand(params$codedir), "codes", "3_phasing.Rmd"), eval=F}
+```{r child = file.path(path.expand(params$codedir), "codes", "3_phasing.Rmd"), eval=params$run_phasing}
 ```
 
 ```{r child = file.path(path.expand(params$codedir), "codes", "4_summary.Rmd")}
@@ -90,5 +93,5 @@ sys_toc <- Sys.time()
 
 # write the system time in log file
 readr::write_lines(c("", paste0("Total elapsed time: ", round(as.numeric(difftime(sys_toc, sys_tic, units = "mins")), 3), " mins")),
-                   path=fn_log, append=T)
+                   file=fn_log, append=T)
 ```

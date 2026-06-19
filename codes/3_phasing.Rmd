@@ -5,9 +5,13 @@ title: "Phasing"
 ```{r phasing-setup, include=FALSE}
 # create output directories
 outdir_phasing <- file.path(currentdir, "06_phasing")
-if (!dir.exists(outdir_phasing)) {
-    dir.create(outdir_phasing, recursive=T)
-}
+outdir_phasing_samples <- file.path(outdir_phasing, "01_samples")
+outdir_phasing_sequences <- file.path(outdir_phasing, "02_sequences")
+outdir_phasing_alignment <- file.path(outdir_phasing, "03_alignment")
+outdir_phasing_phylogeny <- file.path(outdir_phasing, "04_phylogeny")
+outdir_phasing_genetrees <- file.path(outdir_phasing_phylogeny, "gene_tree")
+sapply(c(outdir_phasing_samples, outdir_phasing_sequences, outdir_phasing_alignment, outdir_phasing_genetrees), function(x) {
+  if (!dir.exists(x)) { dir.create(x, recursive=T) }})
 ```
 
 ```{r phasing-run}
@@ -22,7 +26,10 @@ if (params$fn_species_tree!="" && file.exists(params$fn_species_tree)) {
 # iterate over species
 for (tips in ls_tips) {
     # output directory and file
-    outdir_phasing_tips <- file.path(outdir_phasing, tips)
+    outdir_phasing_tips <- file.path(outdir_phasing_samples, tips)
+    if (!dir.exists(outdir_phasing_tips)) {
+        dir.create(outdir_phasing_tips, recursive=T)
+    }
     
     # output files
     fn_target_loci <- file.path(outdir_phasing_tips, "target_loci.fna")
@@ -60,4 +67,104 @@ for (tips in ls_tips) {
     # generate haplotypes
     f_generate_haplotypes(fn_target_loci, fn_phased_bcf, fn_hap1, fn_hap2, params$exe_bcftools) 
 }
+```
+
+```{r phasing-extract}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over species
+for (tips in ls_tips) {
+    # output directories
+    outdir_phasing_tips <- file.path(outdir_phasing_samples, tips)
+
+    # input files
+    fn_hap1 <- file.path(outdir_phasing_tips, paste0(tips, "_hap1.fna"))
+    fn_hap2 <- file.path(outdir_phasing_tips, paste0(tips, "_hap2.fna"))
+
+    # open input files
+    seq_hap1 <- Biostrings::readBStringSet(fn_hap1)
+    seq_hap2 <- Biostrings::readBStringSet(fn_hap2)
+
+    # extract list of locus
+    ls_locus <- unique(c(names(seq_hap1, seq_hap2)))
+
+    # iterate over loci
+    foreach (locus=ls_locus) %dopar% {
+        # output file
+        fn_locus <- file.path(outdir_phasing_sequences, paste0(locus, ".fna"))
+
+        # extract sequences
+        seq_subset_hap1 <- seq_hap1[names(seq_hap1)==locus]
+        seq_subset_hap2 <- seq_hap2[names(seq_hap2)==locus]
+
+        # add locus sequence into a file
+        if (length(seq_subset_hap1) > 0) {
+            names(seq_subset_hap1) <- paste0(tips, "_h0")
+            Biostrings::writeXStringSet(seq_subset_hap1, filepath=fn_locus, append=T)
+        }
+
+        if (length(seq_subset_hap2) > 0) {
+            names(seq_subset_hap2) <- paste0(tips, "_h1")
+            Biostrings::writeXStringSet(seq_subset_hap2, filepath=fn_locus, append=T)
+        }
+    }    
+}
+
+stopCluster(nwcl)
+```
+
+```{r phasing-alignment-tree}
+# extract list of locus
+ls_locus <- list.files(outdir_final_trimlabel, recursive=F, full.names=F)
+ls_locus <- gsub(".fna", "", ls_locus)
+
+# output files
+fn_concatenated_phased <- file.path(outdir_phasing_phylogeny, "concatenated.out")
+fn_partition_phased <- file.path(outdir_phasing_phylogeny, "partitions.nex")
+fn_concatenated_phased_filtered <- file.path(outdir_phasing_phylogeny, "concatenated.fna")
+
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# iterate over loci
+foreach (locus=ls_locus) %dopar% {
+    # input files
+    fn_ref_alignment <- file.path(outdir_final_trimlabel, paste0(locus, ".fna"))
+    fn_new_sequences <- file.path(outdir_phasing_sequences, paste0(locus, ".fna"))
+
+    # output file
+    fn_out <- file.path(outdir_phasing_alignment, paste0(locus, ".fna"))
+
+    # run MAFFT --add
+    if (file.exists(fn_new_sequences)) {
+        f_mafft_add(fn_ref_alignment, fn_new_sequences, fn_out, params$exe_mafft) 
+    } else {
+        system(paste("cp", fn_ref_alignment, fn_out))
+    }
+
+    # run IQ-TREE2
+    prefix <- paste0(outdir_phasing_genetrees, "/", locus)
+    f_iqtree2_singlethread(fn_out, prefix, params$redo, params$exe_iqtree2)
+}
+
+stopCluster(nwcl)
+
+# concatenate locus alignments
+f_amas_dna(input_regex=file.path(outdir_phasing_alignment, "*.fna"),
+           fn_output_aln=fn_concatenated_phased,
+           fn_output_part=fn_partition_phased,
+           exe_amas=params$exe_amas)
+f_unknown2gap(fn_concatenated_phased, fn_concatenated_phased_filtered)
+
+# run IQ-TREE2
+f_iqtree2(fn_input=fn_concatenated_phased_filtered,
+          fn_tree=fn_iqtree_tre,
+          fn_partition=fn_partition_phased,
+          prefix=paste0(outdir_phasing_phylogeny, "/iqtree"),
+          thread=params$thread,
+          is_redo=params$redo,
+          exe_iqtree2=params$exe_iqtree)
 ```
