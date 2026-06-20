@@ -19,7 +19,7 @@
         ```
     - Installing prerequisites
         ```
-        conda install r-ape r-data.table r-doSNOW r-log4r r-optparse r-rmarkdown r-tidyverse r-yaml bioconductor-biostrings aster bcftools bwa captus fasttree iqtree mafft samtools whatshap
+        conda install r-ape r-data.table r-doSNOW r-log4r r-optparse r-rmarkdown r-tidyverse r-yaml bioconductor-biostrings amas aster bcftools bwa captus fasttree iqtree mafft samtools whatshap
         ```
     
     If `bcftools` returns a `libgsl.so.25` <a href="https://github.com/samtools/bcftools/issues/1698">error</a>, you can try to set the `conda` channel priorities before installing any package:

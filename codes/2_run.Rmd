@@ -92,7 +92,7 @@ if (params$dir_locus_alignment!="" && dir.exists(params$dir_locus_alignment)) {
         })
 
         # iterate over loci
-        foreach (locus = unique(ls_locus)) %dopar% {
+        foreach (locus=unique(ls_locus), .packages="Biostrings") %dopar% {
             # output file
             fn_locus_seqs <- file.path(outdir_alignments_sequence, paste0(locus, ".fna"))
 
@@ -161,12 +161,21 @@ if (dir.exists(params$dir_locus_alignment)) {
 }   
 ls_locus <- gsub(".fna", "", ls_locus)
 
-# iterate over locus
-df_captus_label <- NULL
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
 
+# iterate over locus
 if (!file.exists(fn_captus_summary) || params$redo) {
-    for (locus in ls_locus) {
+    df_captus_label <- foreach (locus=ls_locus, .combine='rbind') %dopar% {
+        require(data.table)
+
+        # input files
         fn_input <- file.path(outdir_alignments, "03_trimmed", "05_naive", "04_misc_DNA", "01_matches", paste0(locus, ".fna"))
+        if (dir.exists(params$dir_locus_alignment)) {
+            fn_input <- file.path(outdir_alignments, "02_mafftadd", paste0(locus, ".fna"))
+        }
+
         fn_seq50 <- file.path(outdir_final_seq50, paste0(locus, ".fna"))
         fn_col50 <- file.path(outdir_final_col50, paste0(locus, ".fna"))
         fn_trimlabel <- file.path(outdir_final_trimlabel, paste0(locus, ".fna"))
@@ -176,12 +185,13 @@ if (!file.exists(fn_captus_summary) || params$redo) {
         f_remove_col(fn_seq50, fn_col50, 0.5)
         df_captus_label_locus <- f_trim_captus_label(fn_col50, locus, fn_trimlabel)
 
-        # update data.frame
-        df_captus_label <- rbind(df_captus_label, df_captus_label_locus)
+        return(df_captus_label_locus)
     }
 
     data.table::fwrite(df_captus_label, file=fn_captus_summary, sep="\t", quote=F)
 }
+
+stopCluster(nwcl)
 
 # concatenate locus alignments
 f_amas_dna(input_regex=file.path(outdir_final_trimlabel, "*.fna"),

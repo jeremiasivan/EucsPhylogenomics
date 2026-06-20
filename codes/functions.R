@@ -150,7 +150,7 @@ f_trim_captus_label <- function(fn_input, locus, fn_output) {
 
 # function: run AMAS
 f_amas_dna <- function(input_regex, fn_output_aln, fn_output_part, exe_amas) {
-    cmd_amas <- paste("python3", exe_amas, "concat -f fasta -d dna",
+    cmd_amas <- paste(exe_amas, "concat -f fasta -d dna",
                       "-i", input_regex,
                       "--part-format nexus",
                       "-t", fn_output_aln,
