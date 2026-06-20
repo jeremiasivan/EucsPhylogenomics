@@ -24,7 +24,7 @@ f_run_captus_assembly <- function(exe_captus, input_dir, output_dir, thread, is_
 
 # function: run CAPTUS to extract target loci
 f_run_captus_extraction <- function(exe_captus, fn_target_loci, input_dir, output_dir, thread, is_redo) {
-  captus_cmd <- paste(exe_captus, "extract -f", fn_target_loci, "-a", input_dir, "-o", output_dir, "--threads", thread)
+  captus_cmd <- paste(exe_captus, "extract -d", fn_target_loci, "-a", input_dir, "-o", output_dir, "--threads", thread)
 
   if (is_redo) {
     captus_cmd <- paste(captus_cmd, "--overwrite")

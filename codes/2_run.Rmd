@@ -48,7 +48,7 @@ for (group in ls_group) {
 
     # run CAPTUS extraction
     f_run_captus_extraction(params$exe_captus,
-                            df_captus_target_metadata$dir_target_loci, 
+                            df_captus_target_metadata$dir_target_loci[df_captus_target_metadata$group==group], 
                             outdir_assemblies_group,
                             outdir_extractions_group,
                             params$thread,
@@ -56,7 +56,7 @@ for (group in ls_group) {
 
     # move all CAPTUS extractions to one folder
     system(paste("mv",
-                 paste0(outdir_assemblies_group, "/*__captus-ext"),
+                 paste0(outdir_extractions_group, "/*captus-ext"),
                  outdir_extractions_all))
 }
 
