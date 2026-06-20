@@ -146,8 +146,8 @@ foreach (locus=ls_locus) %dopar% {
     }
 
     # run IQ-TREE2
-    prefix <- paste0(outdir_phasing_genetrees, "/", locus)
-    f_iqtree2_singlethread(fn_out, prefix, params$redo, params$exe_iqtree)
+    # prefix <- paste0(outdir_phasing_genetrees, "/", locus)
+    # f_iqtree2_singlethread(fn_out, prefix, params$redo, params$exe_iqtree)
 }
 
 stopCluster(nwcl)
@@ -160,11 +160,11 @@ f_amas_dna(input_regex=file.path(outdir_phasing_alignment, "*.fna"),
 f_unknown2gap(fn_concatenated_phased, fn_concatenated_phased_filtered)
 
 # run IQ-TREE2
-f_iqtree2(fn_input=fn_concatenated_phased_filtered,
-          fn_tree=fn_iqtree_tre,
-          fn_partition=fn_partition_phased,
-          prefix=paste0(outdir_phasing_phylogeny, "/iqtree"),
-          thread=params$thread,
-          is_redo=params$redo,
-          exe_iqtree2=params$exe_iqtree)
+f_iqtree2_fixtop(fn_input=fn_concatenated_phased_filtered,
+                 fn_tree=fn_iqtree_tre,
+                 fn_partition=fn_partition_phased,
+                 prefix=paste0(outdir_phasing_phylogeny, "/iqtree"),
+                 thread=params$thread,
+                 is_redo=params$redo,
+                 exe_iqtree2=params$exe_iqtree)
 ```
