@@ -125,10 +125,10 @@ f_trim_captus_label <- function(fn_input, locus, fn_output) {
     # extract CAPTUS headers (source: Claude)
     df_output <- rbindlist(lapply(names(seq), function(header) {
       # extract sequence ID
-      seq_id <- trimws(str_extract(header, "^\\S+"))
+      seq_id <- trimws(stringr::str_extract(header, "^\\S+"))
       
       # extract all [key=value] pairs
-      matches <- str_match_all(header, "\\[([^=]+)=([^]]+)\\]")[[1]]
+      matches <- stringr::str_match_all(header, "\\[([^=]+)=([^]]+)\\]")[[1]]
       if (nrow(matches) == 0) {
         return(NULL)
       }
