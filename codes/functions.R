@@ -141,6 +141,7 @@ f_trim_captus_label <- function(fn_input, locus, fn_output) {
 
     # update sequence headers
     names(seq) <- sapply(names(seq), function(x) { unlist(strsplit(x, split=" "))[1] })
+    names(seq) <- sapply(names(seq), function(x) { unlist(strsplit(x, split="__"))[1] })
 
     # save the new DNA alignment
     Biostrings::writeXStringSet(seq, filepath=fn_output)
