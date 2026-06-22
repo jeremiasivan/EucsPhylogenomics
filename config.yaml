@@ -1,0 +1,41 @@
+# ============================================================
+#  EucsPhylogenomics config file
+#
+#  Edit this file, then run:
+#    Rscript run_pipeline.R --config config.yaml
+# ============================================================
+
+# --- General -------------------------------------------------
+codedir:  "/home/user/EucsPhylogenomics/"   # path to EucsPhylogenomics directory
+prefix:   ""                                # output prefix (used for filenames) (default: "EucsPhylogenomics_output")
+outdir:   "/home/user/output/"              # output directory
+thread:   1                                 # number of parallel threads (default: 1)
+redo:     FALSE                             # re-run even if output files exist (default: FALSE)
+
+# --- Executables ---------------------------------------------
+exe_amas:     "AMAS.py"      # path to AMAS.py executable
+exe_captus:   "captus"       # path to Captus executable
+exe_mafft:    "mafft"        # path to MAFFT executable
+exe_fasttree: "fasttree"     # path to FastTree executable
+exe_astral4:  "astral4"      # path to ASTRAL-IV executable
+exe_iqtree:   "iqtree2"      # path to IQ-TREE2 executable
+
+# --- Captus Input Files ---------------------------------------
+fn_captus_sample_metadata: "/home/user/EucsPhylogenomics/files/captus_sample_metadata.tsv"   # path to Captus sample metadata (sample name + group name)
+fn_captus_target_metadata: "/home/user/EucsPhylogenomics/files/captus_target_metadata.tsv"   # path to Captus target metadata (group name + target loci)
+dir_fastq: ""                                                                                # path to directory of raw FASTQ files
+
+# --- Previous Results [Optional] -------------------------------
+fn_species_tree:     ""     # path to an existing species tree (default: "" (infer a new species tree))
+dir_locus_alignment: ""     # path to an existing directory of locus alignments (default: "" (infer locus alignments using Captus))
+
+# --- Phasing [Optional] -----------------------------------------
+run_phasing: FALSE         # run haplotype phasing on each locus (default: FALSE)
+
+exe_bwa:      "bwa"        # path to BWA executable (only if run_phasing==TRUE)
+exe_samtools: "samtools"   # path to samtools executable (only if run_phasing==TRUE)
+exe_bcftools: "bcftools"   # path to bcftools executable (only if run_phasing==TRUE)
+exe_whatshap: "whatshap"   # path to WhatsHap executable (only if run_phasing==TRUE)
+
+# --- Summary Input Files -----------------------------------------
+fn_eucs_metadata: "/home/user/EucsPhylogenomics/files/eucs_metadata.xlsx"   # path to Eucalypts sample metadata used for summary figures/tables
