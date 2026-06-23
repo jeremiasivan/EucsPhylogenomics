@@ -18,7 +18,7 @@ exe_captus:   "captus"       # path to Captus executable
 exe_mafft:    "mafft"        # path to MAFFT executable
 exe_fasttree: "fasttree"     # path to FastTree executable
 exe_astral4:  "astral4"      # path to ASTRAL-IV executable
-exe_iqtree:   "iqtree2"      # path to IQ-TREE2 executable
+exe_iqtree:   "iqtree3"      # path to IQ-TREE2 executable
 
 # --- Captus Input Files ---------------------------------------
 fn_captus_sample_metadata: "/home/user/EucsPhylogenomics/files/captus_sample_metadata.tsv"   # path to Captus sample metadata (sample name + group name)

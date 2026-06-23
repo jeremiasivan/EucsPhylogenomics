@@ -45,9 +45,7 @@ if (!file.exists(opt$config)) {
 cfg <- yaml::read_yaml(opt$config)
 
 # set required parameters
-required_fields <- c("codedir", "outdir", "fn_captus_sample_metadata", "fn_captus_target_metadata", "dir_fastq",
-                     "exe_amas", "exe_captus", "exe_mafft", "exe_fasttree", "exe_astral4", "exe_iqtree",
-                     "fn_eucs_metadata")
+required_fields <- c("codedir", "outdir", "fn_captus_sample_metadata", "fn_captus_target_metadata", "dir_fastq", "fn_eucs_metadata")
 missing <- setdiff(required_fields, names(cfg))
 if (length(missing) > 0) {
   stop(paste("Missing required config fields:", paste(missing, collapse=", ")))
@@ -95,7 +93,7 @@ render_params <- list(
   exe_mafft             = f_get_param(cfg$exe_mafft, "mafft"),
   exe_fasttree          = f_get_param(cfg$exe_fasttree, "fasttree"),
   exe_astral4           = f_get_param(cfg$exe_astral4, "astral4"),
-  exe_iqtree            = f_get_param(cfg$exe_iqtree, "iqtree2"),
+  exe_iqtree            = f_get_param(cfg$exe_iqtree, "iqtree3"),
 
   fn_captus_sample_metadata = cfg$fn_captus_sample_metadata,
   fn_captus_target_metadata = cfg$fn_captus_target_metadata,

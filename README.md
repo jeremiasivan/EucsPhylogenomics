@@ -50,7 +50,7 @@ EucsPhylogenomics requires a number of software and R packages to run. We recomm
         ```
     - Installing prerequisites
         ```
-        conda install r-ape r-data.table r-doSNOW r-log4r r-optparse r-rmarkdown r-tidyverse r-yaml bioconductor-biostrings amas aster bcftools bwa captus fasttree iqtree mafft samtools whatshap
+        conda install -c conda-forge -c bioconda r-ape r-data.table r-doSNOW r-log4r r-optparse r-rmarkdown r-tidyverse r-yaml bioconductor-biostrings amas aster bcftools bwa captus fasttree iqtree mafft samtools whatshap
         ```
     
     If `bcftools` returns a `libgsl.so.25` error, you can either download the software <a href="https://www.htslib.org/download/">here</a>, or try to set the `conda` channel priorities before installing any package:
@@ -112,4 +112,4 @@ EucsPhylogenomics requires a number of software and R packages to run. We recomm
 19. Anthropic. (<a href="https://claude.ai/">2026</a>). Claude 4.6 Sonnet was used to generate `config.yaml` and `run_pipeline.R`. 
 
 ---
-*Last update: 22 June 2026 by Jeremias Ivan*
+*Last update: 23 June 2026 by Jeremias Ivan*
