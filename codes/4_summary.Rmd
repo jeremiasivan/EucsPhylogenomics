@@ -90,32 +90,47 @@ for (tips in ls_tips) {
     df_tips <- foreach (locus=ls_locus, .combine='rbind') %dopar% {
         # open treefile
         outdir_summary_tips_locus <- file.path(outdir_summary_tips, locus)
-        sptre_subset_locus <- ape::read.tree(file.path(outdir_summary_tips_locus, paste0(locus, ".treefile")))
+        fn_sptre_subset_locus <- file.path(outdir_summary_tips_locus, paste0(locus, ".treefile"))
+        if (!file.exists(fn_sptre_subset_locus)) {
+            return(NULL)
+        }
 
         # create a distance matrix
+        sptre_subset_locus <- ape::read.tree(fn_sptre_subset_locus)
         dist_matrix <- ape::cophenetic.phylo(sptre_subset_locus)
 
         # extract distances from the tip
         dist_to_tips <- dist_matrix[tips, ]
         dist_to_tips <- dist_to_tips[names(dist_to_tips) != tips]
 
-        # get the closest tip
-        closest_tip <- names(which.min(dist_to_tips))
-        closest_dist <- min(dist_to_tips)
+        # get the five closest tips with their taxonomic groups
+        top5_hits <- data.table::data.table(tip=names(dist_to_tips), dist=dist_to_tips) %>% slice_min(dist, n=5)
+        top5_hits <- merge(top5_hits, df_eucs_metadata, by.x="tip", by.y="file", all.x=T)
 
-        # extract taxonomy
-        genus    <- df_eucs_metadata$genus[df_eucs_metadata$file==closest_tip]
-        subgenus <- df_eucs_metadata$subgenus[df_eucs_metadata$file==closest_tip]
-        section  <- df_eucs_metadata$section[df_eucs_metadata$file==closest_tip]
+        # get the majority grouping across five tips
+        genus <- top5_hits %>% count(genus) %>% slice_max(n, n=1) %>% pull(genus)
+        subgenus <- top5_hits %>% count(subgenus) %>% slice_max(n, n=1) %>% pull(subgenus)
+        section <- top5_hits %>% count(section) %>% slice_max(n, n=1) %>% pull(section)
+
+        # extract the best hit
+        best_hit <- top5_hits %>%
+            filter(genus==genus, subgenus==subgenus, section==section) %>%
+            slice_min(dist, n=1)
+
+        # check if the best hit exists
+        if (nrow(best_hit) == 0) {
+            best_hit <- top5_hits %>% slice_min(dist, n=1)
+        }
 
         return(data.table::data.table(tips=tips,
                                       locus=locus,
                                       n_tips=length(sptre_subset_locus$tip.label),
-                                      closest_tip=closest_tip,
-                                      closest_dist=closest_dist,
-                                      genus=genus,
-                                      subgenus=subgenus,
-                                      section=section))
+                                      closest_tip=best_hit$tip,
+                                      closest_dist=best_hit$dist,
+                                      genus=best_hit$genus,
+                                      subgenus=best_hit$subgenus,
+                                      section=best_hit$section,
+                                      ))
     }
 
     # update data.frame
@@ -135,7 +150,7 @@ data.table::fwrite(df_output, file=fn_summary, quote=F, sep="\t")
 df_output_per_section <- df_output %>%
                             group_by(tips) %>%
                             mutate(n_sum=n()) %>%
-                            group_by(tips, section) %>%
+                            group_by(tips, subgenus, section) %>%
                             reframe(n=n(), percent=round(n/n_sum*100,2)) %>%
                             unique() %>%
                             arrange(tips, desc(percent))
