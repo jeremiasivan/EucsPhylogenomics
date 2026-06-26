@@ -23,6 +23,9 @@ if (params$fn_species_tree!="" && file.exists(params$fn_species_tree)) {
 nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
 
+# output data.frame
+df_iqtree_input <- data.table::data.table()
+
 # iterate over species
 for (tips in ls_tips) {
     # output directory and file
@@ -32,7 +35,7 @@ for (tips in ls_tips) {
     sptre_subset <- ape::drop.tip(sptre, tip=tips)
 
     # iterate over locus
-    foreach (locus=ls_locus) %dopar% {
+    df_iqtree_input_tips <- foreach (locus=ls_locus, .combine='rbind') %dopar% {
         # output directory and file
         outdir_summary_tips_locus <- file.path(outdir_summary_tips, locus)
         if (!dir.exists(outdir_summary_tips_locus)) {
@@ -55,15 +58,24 @@ for (tips in ls_tips) {
         sptre_subset_locus$edge.length <- NULL
         ape::write.tree(sptre_subset_locus, file=fn_sptree_subset_locus)
 
-        # run IQ-TREE2
-        f_iqtree2_fixtop(fn_input=fn_input,
-                         fn_tree=fn_sptree_subset_locus,
-                         fn_partition=NULL,
-                         prefix=prefix,
-                         thread=1,
-                         is_redo=params$redo,
-                         exe_iqtree2=params$exe_iqtree)
+        return(data.table::data.table(fn_input=fn_input,
+                                      fn_tree=fn_sptree_subset_locus,
+                                      prefix=prefix))
     }
+
+    # update data.frame
+    df_iqtree_input <- rbind(df_iqtree_input, df_iqtree_input_tips)
+}
+
+# run IQ-TREE2
+foreach (i=1:nrow(df_iqtree_input)) %dopar% {
+    f_iqtree2_fixtop(fn_input=df_iqtree_input$fn_input[i],
+                     fn_tree=df_iqtree_input$fn_tree[i],
+                     fn_partition=NULL,
+                     prefix=df_iqtree_input$prefix[i],
+                     thread=1,
+                     is_redo=params$redo,
+                     exe_iqtree2=params$exe_iqtree)
 }
 
 stopCluster(nwcl)
