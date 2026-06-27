@@ -5,12 +5,13 @@ title: "Summarise Tip Position"
 ```{r summary-setup, include=FALSE}
 # create output directories
 outdir_summary <- file.path(currentdir, "07_summary")
-if (!dir.exists(outdir_summary)) {
-    dir.create(outdir_summary, recursive=T)
-}
+outdir_summary_constrained <- file.path(outdir_summary, "01_constrained")
+outdir_summary_raw <- file.path(outdir_summary, "02_raw")
+sapply(c(outdir_summary_constrained, outdir_summary_raw), function(x) {
+  if (!dir.exists(x)) { dir.create(x, recursive=T) }})
 ```
 
-```{r summary-genetree}
+```{r summary-genetree-constrained}
 # open species tree
 sptre <- ape::read.tree(fn_iqtree_tre)
 ls_tips <- sptre$tip.label
@@ -29,7 +30,7 @@ df_iqtree_input <- data.table::data.table()
 # iterate over species
 for (tips in ls_tips) {
     # output directory and file
-    outdir_summary_tips <- file.path(outdir_summary, tips)
+    outdir_summary_tips <- file.path(outdir_summary_constrained, tips)
     
     # subset species tree
     sptre_subset <- ape::drop.tip(sptre, tip=tips)
@@ -81,7 +82,7 @@ foreach (i=1:nrow(df_iqtree_input)) %dopar% {
 stopCluster(nwcl)
 ```
 
-```{r summary-treedist}
+```{r summary-treedist-constrained}
 # create doSNOW clusters
 nwcl <- makeCluster(params$thread)
 registerDoSNOW(nwcl)
@@ -95,7 +96,7 @@ df_eucs_metadata <- readxl::read_xlsx(params$fn_eucs_metadata)
 # iterate over species
 for (tips in ls_tips) {
     # list locus
-    outdir_summary_tips <- file.path(outdir_summary, tips)
+    outdir_summary_tips <- file.path(outdir_summary_constrained, tips)
     ls_locus <- list.dirs(outdir_summary_tips, recursive=F, full.names=F)
 
     # iterate over locus
@@ -152,8 +153,8 @@ for (tips in ls_tips) {
 stopCluster(nwcl)
 
 # output files
-fn_summary <- file.path(outdir_summary, "closest_tips.tsv")
-fn_summary_per_section <- file.path(outdir_summary, "closest_tips_per_section.tsv")
+fn_summary <- file.path(outdir_summary_constrained, "closest_tips.tsv")
+fn_summary_per_section <- file.path(outdir_summary_constrained, "closest_tips_per_section.tsv")
 
 # save data.frame
 data.table::fwrite(df_output, file=fn_summary, quote=F, sep="\t")
@@ -167,4 +168,115 @@ df_output_per_section <- df_output %>%
                             unique() %>%
                             arrange(tips, desc(percent))
 data.table::fwrite(df_output_per_section, file=fn_summary_per_section, quote=F, sep="\t")                            
+```
+
+```{r summary-treedist}
+# create doSNOW clusters
+nwcl <- makeCluster(params$thread)
+registerDoSNOW(nwcl)
+
+# output data.frame
+df_output <- NULL
+
+# extract list of loci
+ls_locus <- list.files(outdir_locus_tree, pattern="*.treefile$", recursive=F, full.names=F)
+ls_locus <- gsub(".treefile", "", ls_locus)
+
+# iterate over loci
+for (locus in ls_locus) {
+    # input file
+    fn_sptre_subset_locus <- file.path(outdir_locus_tree, paste0(locus, ".treefile"))
+
+    # calculate distance matrix
+    sptre_subset_locus <- ape::read.tree(fn_sptre_subset_locus)
+    dist_matrix <- ape::cophenetic.phylo(sptre_subset_locus)
+
+    # iterate over tips
+    df_output_locus <- foreach (tips=sptre_subset_locus$tip.label, .combine='rbind') %dopar% {
+        require(dplyr)
+
+        # extract distances from the tip
+        dist_to_tips <- dist_matrix[tips, ]
+        dist_to_tips <- dist_to_tips[names(dist_to_tips) != tips]
+
+        # get the closest tips with their taxonomic groups
+        df_neighbour_one <- f_extract_closest_group(dist_to_tips, 1, df_eucs_metadata)
+        df_neighbour_five <- f_extract_closest_group(dist_to_tips, 5, df_eucs_metadata)
+        df_neighbour_ten <- f_extract_closest_group(dist_to_tips, 10, df_eucs_metadata)
+
+        # return output data.frame
+        return(data.table::data.table(tips = tips,
+                                      locus = locus,
+                                      n_tips = length(sptre_subset_locus$tip.label),
+                                      n_neighbour = c(1, 5, 10),
+                                      closest_tip = c(df_neighbour_one$tip,
+                                                      df_neighbour_five$tip,
+                                                      df_neighbour_ten$tip),
+                                      closest_dist = c(df_neighbour_one$dist,
+                                                       df_neighbour_five$dist,
+                                                       df_neighbour_ten$dist),
+                                      genus = c(df_neighbour_one$genus,
+                                                df_neighbour_five$genus,
+                                                df_neighbour_ten$genus),
+                                      subgenus = c(df_neighbour_one$subgenus,
+                                                   df_neighbour_five$subgenus,
+                                                   df_neighbour_ten$subgenus),
+                                      section = c(df_neighbour_one$section,
+                                                  df_neighbour_five$section,
+                                                  df_neighbour_ten$section)))
+    }
+
+    # update data.frame
+    df_output <- rbind(df_output, df_output_locus)
+}
+
+# save data.frame
+fn_summary <- file.path(outdir_summary_raw, "all_hits.tsv")
+data.table::fwrite(df_output, file=fn_summary, sep="\t", quote=F)
+
+# extract one entry per locus
+df_output_subset <- df_output %>% group_by(tips, locus, n_neighbour) %>% slice_head(n=1)
+
+# extract percentages for individial taxonomic groups
+df_output_genus <- df_unique %>%
+                        group_by(tips, n_neighbour) %>%
+                        mutate(all_locus=n()) %>%
+                        group_by(tips, n_neighbour, genus) %>%
+                        reframe(n_locus=n(), prop_genus=n_locus/all_locus*100) %>%
+                        unique()
+df_output_subgenus <- df_unique %>%
+                        group_by(tips, n_neighbour) %>%
+                        mutate(all_locus=n(), subgenus=paste0(genus,"_",subgenus)) %>%
+                        group_by(tips, n_neighbour, subgenus) %>%
+                        reframe(n_locus=n(), prop_subgenus=n_locus/all_locus*100) %>%
+                        unique()
+df_output_section <- df_unique %>%
+                        group_by(tips, n_neighbour) %>%
+                        mutate(all_locus=n(), section=paste0(genus,"_",subgenus,"_",section)) %>%
+                        group_by(tips, n_neighbour, section) %>%
+                        reframe(n_locus=n(), prop_section=n_locus/all_locus*100) %>%
+                        unique()
+
+# update the groupings
+df_output_subgenus$subgenus <- gsub("\\_+$", "", df_output_subgenus$subgenus)
+df_output_section$section <- gsub("\\_+$", "", df_output_section$section)
+
+# extract the best hit per locus per tip
+df_output_genus_max <- df_output_genus %>% group_by(tips, n_neighbour) %>% slice_max(n_locus, n=1, with_ties=F)
+df_output_subgenus_max <- df_output_subgenus %>% group_by(tips, n_neighbour) %>% slice_max(n_locus, n=1, with_ties=F)
+df_output_section_max <- df_output_section %>% group_by(tips, n_neighbour) %>% slice_max(n_locus, n=1, with_ties=F)
+df_nlocus <- df_unique %>% group_by(tips) %>% reframe(n_locus=n())
+
+df_output_taxa_max <- df_output_genus_max %>%
+                        select(tips, n_neighbour, genus, prop_genus) %>%
+                        left_join(df_subgenus_max, by=c("tips", "n_neighbour")) %>%
+                        select(-n_locus) %>%
+                        left_join(df_section_max, by=c("tips", "n_neighbour")) %>%
+                        select(-n_locus) %>%
+                        left_join(df_locus, by="tips") %>%
+                        arrange(tips)
+
+# save data.frame
+fn_taxa_max <- file.path(outdir_summary_raw, "closest_hits.tsv")
+data.table::fwrite(df_output, file=fn_taxa_max, sep="\t", quote=F)
 ```

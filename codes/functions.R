@@ -329,3 +329,22 @@ f_generate_haplotypes <- function(fn_reference, fn_phased_bcf, fn_hap1, fn_hap2,
     system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 1", fn_phased_bcf, ">", fn_hap1))
     system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 2", fn_phased_bcf, ">", fn_hap2))
 }
+
+# extract the closest tips
+f_extract_closest_group <- function(dist_matrix, n_neighbour, df_eucs_metadata) {
+    # extract top hits and their taxonomic groups
+    top_hits <- data.table::data.table(tip=names(dist_matrix), dist=dist_matrix) %>% slice_min(dist, n=n_neighbour)
+    top_hits <- merge(top_hits, df_eucs_metadata, by.x="tip", by.y="file", all.x=T)
+
+    # get the majority grouping
+    genus <- top_hits %>% count(genus) %>% slice_max(n, n=1) %>% pull(genus)
+    subgenus <- top_hits %>% count(subgenus) %>% slice_max(n, n=1) %>% pull(subgenus)
+    section <- top_hits %>% count(section) %>% slice_max(n, n=1) %>% pull(section)
+
+    # extract the best hit
+    best_hit <- top_hits %>%
+        filter(genus==genus, subgenus==subgenus, section==section) %>%
+        slice_min(dist, n=1)
+
+    return(best_hit)
+}
