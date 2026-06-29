@@ -182,6 +182,12 @@ df_output <- NULL
 ls_locus <- list.files(outdir_locus_tree, pattern="*.treefile$", recursive=F, full.names=F)
 ls_locus <- gsub(".treefile", "", ls_locus)
 
+# update the groupings
+df_eucs_metadata <- df_eucs_metadata %>%
+                        mutate(section=paste0(genus,"_",subgenus,"_",section), subgenus=paste0(genus,"_",subgenus))
+df_eucs_metadata$subgenus <- gsub("_NA", "", df_eucs_metadata$subgenus)
+df_eucs_metadata$section <- gsub("_NA", "", df_eucs_metadata$section)
+
 # iterate over loci
 for (locus in ls_locus) {
     # input file
@@ -243,31 +249,27 @@ df_output_subset <- df_output %>% group_by(tips, locus, n_neighbour) %>% slice_h
 df_output_genus <- df_output_subset %>%
                         group_by(tips, n_neighbour) %>%
                         mutate(all_locus=n()) %>%
-                        group_by(tips, n_neighbour, genus) %>%
+                        group_by(tips, n_neighbour, genus, all_locus) %>%
                         reframe(n_locus=n(), prop_genus=n_locus/all_locus*100) %>%
                         unique()
 df_output_subgenus <- df_output_subset %>%
                         group_by(tips, n_neighbour) %>%
-                        mutate(all_locus=n(), subgenus=paste0(genus,"_",subgenus)) %>%
-                        group_by(tips, n_neighbour, subgenus) %>%
+                        mutate(all_locus=n()) %>%
+                        group_by(tips, n_neighbour, subgenus, all_locus) %>%
                         reframe(n_locus=n(), prop_subgenus=n_locus/all_locus*100) %>%
                         unique()
 df_output_section <- df_output_subset %>%
                         group_by(tips, n_neighbour) %>%
-                        mutate(all_locus=n(), section=paste0(genus,"_",subgenus,"_",section)) %>%
-                        group_by(tips, n_neighbour, section) %>%
+                        mutate(all_locus=n()) %>%
+                        group_by(tips, n_neighbour, section, all_locus) %>%
                         reframe(n_locus=n(), prop_section=n_locus/all_locus*100) %>%
                         unique()
-
-# update the groupings
-df_output_subgenus$subgenus <- gsub("\\_+$", "", df_output_subgenus$subgenus)
-df_output_section$section <- gsub("\\_+$", "", df_output_section$section)
 
 # extract the best hit per locus per tip
 df_output_genus_max <- df_output_genus %>% group_by(tips, n_neighbour) %>% slice_max(n_locus, n=1, with_ties=F)
 df_output_subgenus_max <- df_output_subgenus %>% group_by(tips, n_neighbour) %>% slice_max(n_locus, n=1, with_ties=F)
 df_output_section_max <- df_output_section %>% group_by(tips, n_neighbour) %>% slice_max(n_locus, n=1, with_ties=F)
-df_nlocus <- df_output_subset %>% group_by(tips) %>% reframe(n_locus=n())
+df_nlocus <- df_output_subset %>% group_by(tips, n_neighbour) %>% reframe(n_locus=n())
 
 df_output_taxa_max <- df_output_genus_max %>%
                         select(tips, n_neighbour, genus, prop_genus) %>%
@@ -275,8 +277,8 @@ df_output_taxa_max <- df_output_genus_max %>%
                         select(-n_locus) %>%
                         left_join(df_output_section_max, by=c("tips", "n_neighbour")) %>%
                         select(-n_locus) %>%
-                        left_join(df_nlocus, by="tips") %>%
-                        arrange(tips)
+                        left_join(df_nlocus, by=c("tips", "n_neighbour")) %>%
+                        arrange(tips, n_neighbour)
 
 # save data.frame
 fn_taxa_max <- file.path(outdir_summary_raw, "closest_hits.tsv")

@@ -337,13 +337,13 @@ f_extract_closest_group <- function(dist_matrix, n_neighbour, df_eucs_metadata) 
     top_hits <- merge(top_hits, df_eucs_metadata, by.x="tip", by.y="file", all.x=T)
 
     # get the majority grouping
-    genus <- top_hits %>% count(genus) %>% slice_max(n, n=1) %>% pull(genus)
-    subgenus <- top_hits %>% count(subgenus) %>% slice_max(n, n=1) %>% pull(subgenus)
-    section <- top_hits %>% count(section) %>% slice_max(n, n=1) %>% pull(section)
+    major_genus <- top_hits %>% count(genus) %>% slice_max(n, n=1) %>% pull(genus)
+    major_subgenus <- top_hits %>% count(subgenus) %>% slice_max(n, n=1) %>% pull(subgenus)
+    major_section <- top_hits %>% count(section) %>% slice_max(n, n=1) %>% pull(section)
 
     # extract the best hit
     best_hit <- top_hits %>%
-        filter(genus==genus, subgenus==subgenus, section==section) %>%
+        filter(genus==major_genus, subgenus==major_subgenus, section==major_section) %>%
         slice_min(dist, n=1)
 
     return(best_hit)
