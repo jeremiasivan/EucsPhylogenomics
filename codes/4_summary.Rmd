@@ -265,6 +265,11 @@ df_output_section <- df_output_subset %>%
                         reframe(n_locus=n(), prop_section=n_locus/all_locus*100) %>%
                         unique()
 
+# save data.frame
+data.table::fwrite(df_output_genus, file=file.path(outdir_summary_raw, "prop_genus.tsv"), sep="\t", quote=F)
+data.table::fwrite(df_output_subgenus, file=file.path(outdir_summary_raw, "prop_subgenus.tsv"), sep="\t", quote=F)
+data.table::fwrite(df_output_section, file=file.path(outdir_summary_raw, "prop_section.tsv"), sep="\t", quote=F)
+
 # extract the best hit per locus per tip
 df_output_genus_max <- df_output_genus %>% group_by(tips, n_neighbour) %>% slice_max(n_locus, n=1, with_ties=F)
 df_output_subgenus_max <- df_output_subgenus %>% group_by(tips, n_neighbour) %>% slice_max(n_locus, n=1, with_ties=F)
@@ -283,4 +288,26 @@ df_output_taxa_max <- df_output_genus_max %>%
 # save data.frame
 fn_taxa_max <- file.path(outdir_summary_raw, "closest_hits.tsv")
 data.table::fwrite(df_output_taxa_max, file=fn_taxa_max, sep="\t", quote=F)
+
+# calculate entropy
+df_entropy_genus <- df_output_genus %>%
+    mutate(prop_genus=prop_genus/100) %>%
+    group_by(tips, n_neighbour) %>%
+    summarise(eff_genus = exp(-sum(prop_genus * log(prop_genus))), .groups="drop")
+df_entropy_subgenus <- df_output_subgenus %>%
+    mutate(prop_subgenus=prop_subgenus/100) %>%
+    group_by(tips, n_neighbour) %>%
+    summarise(eff_subgenus = exp(-sum(prop_subgenus * log(prop_subgenus))), .groups="drop")
+df_entropy_section <- df_output_section %>%
+    mutate(prop_section=prop_section/100) %>%
+    group_by(tips, n_neighbour) %>%
+    summarise(eff_section = exp(-sum(prop_section * log(prop_section))), .groups="drop")
+
+# join all data.frames
+df_entropy_taxa <- df_entropy_genus %>%
+                        left_join(df_entropy_subgenus, by=c("tips", "n_neighbour")) %>%
+                        left_join(df_entropy_section, by=c("tips", "n_neighbour"))
+
+# save data.frame
+data.table::fwrite(df_entropy_taxa, file=file.path(outdir_summary_raw, "eff_all.tsv"), sep="\t", quote=F)
 ```
