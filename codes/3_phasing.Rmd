@@ -16,7 +16,7 @@ sapply(c(outdir_phasing_samples, outdir_phasing_sequences, outdir_phasing_alignm
 
 ```{r phasing-run}
 # open species tree
-sptre <- ape::read.tree(fn_iqtree_tre)
+sptre <- ape::read.tree(fn_concat_tre)
 ls_tips <- sptre$tip.label
 if (params$fn_species_tree!="" && file.exists(params$fn_species_tree)) {
     previous_sptre <- ape::read.tree(params$fn_species_tree)
@@ -161,7 +161,7 @@ f_unknown2gap(fn_concatenated_phased, fn_concatenated_phased_filtered)
 
 # run IQ-TREE2
 f_iqtree2_fixtop(fn_input=fn_concatenated_phased_filtered,
-                 fn_tree=fn_iqtree_tre,
+                 fn_tree=fn_concat_tre,
                  fn_partition=fn_partition_phased,
                  prefix=paste0(outdir_phasing_phylogeny, "/iqtree"),
                  thread=params$thread,

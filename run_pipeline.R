@@ -91,9 +91,10 @@ render_params <- list(
   exe_amas              = f_get_param(cfg$exe_amas, "AMAS.py"),
   exe_captus            = f_get_param(cfg$exe_captus, "captus"),
   exe_mafft             = f_get_param(cfg$exe_mafft, "mafft"),
-  exe_fasttree          = f_get_param(cfg$exe_fasttree, "fasttree"),
+  exe_veryfasttree      = f_get_param(cfg$exe_veryfasttree, "VeryFastTree"),
   exe_astral4           = f_get_param(cfg$exe_astral4, "astral4"),
   exe_iqtree            = f_get_param(cfg$exe_iqtree, "iqtree3"),
+  exe_treeshrink        = f_get_param(cfg$exe_treeshrink, "run_treeshrink.py"),
 
   fn_captus_sample_metadata = cfg$fn_captus_sample_metadata,
   fn_captus_target_metadata = cfg$fn_captus_target_metadata,
@@ -108,7 +109,8 @@ render_params <- list(
   exe_bcftools  = f_get_param(cfg$exe_bcftools, "bcftools"),
   exe_whatshap  = f_get_param(cfg$exe_whatshap, "whatshap"),
 
-  fn_eucs_metadata = cfg$fn_eucs_metadata
+  fn_eucs_metadata     = cfg$fn_eucs_metadata,
+  run_constrained_tree = as.logical(f_get_param(cfg$run_constrained_tree, FALSE))
 )
 
 # --- Run EucsPhylogenomics ------------------------------------

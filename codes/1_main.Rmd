@@ -21,9 +21,10 @@ params:
   exe_amas: "AMAS.py"
   exe_captus: "captus"
   exe_mafft: "mafft"
-  exe_fasttree: "fasttree"
+  exe_veryfasttree: "fasttree"
   exe_astral4: "astral4"
   exe_iqtree: "iqtree2"
+  exe_treeshrink: "run_treeshrink.py"
 
   # --- CAPTUS Input Files --------------------------------------
   fn_captus_sample_metadata: "/home/user/EucsPhylogenomics/files/captus_sample_metadata.tsv"
@@ -41,9 +42,10 @@ params:
   exe_samtools: "samtools"
   exe_bcftools: "bcftools"
   exe_whatshap: "whatshap"
-  
+
   # --- Summary Input Files -------------------------------------
   fn_eucs_metadata: "/home/user/EucsPhylogenomics/files/eucs_metadata.xlsx"
+  run_constrained_tree: FALSE
 ---
 
 ```{r, include=FALSE}

@@ -174,10 +174,10 @@ f_unknown2gap <- function(fn_fasta, fn_output) {
     Biostrings::writeXStringSet(seq, filepath=fn_output)
 }
 
-# function: run FastTree
-f_fasttree <- function(fn_fasta, fn_output, exe_fasttree) {
-    cmd_fasttree <- paste(exe_fasttree, "-gtr", fn_fasta, ">", fn_output)
-    system(cmd_fasttree)
+# function: run VeryFastTree
+f_veryfasttree <- function(fn_fasta, fn_output, thread, exe_veryfasttree) {
+    cmd_veryfasttree <- paste(exe_veryfasttree, "-gtr", fn_fasta, "-threads", thread, ">", fn_output)
+    system(cmd_veryfasttree)
 }
 
 # function: run IQ-Tree 2
@@ -239,6 +239,31 @@ f_astral4 <- function(fn_input, fn_tree, fn_output, fn_log, thread, exe_astral) 
                         "-t", thread,
                         "2>", fn_log)
     system(cmd_astral)
+}
+
+# function: run TreeShrink
+f_treeshrink <- function(fn_input, prefix, dir_output, exe_treeshrink) {
+    cmd_treeshrink <- paste(exe_treeshrink,
+                            "-t", fn_input,
+                            "-O", prefix,
+                            "-o", dir_output)
+    system(cmd_treeshrink)
+}
+
+# function: subset alignment based on tree
+f_subset_alignment <- function(fn_tree, fn_fasta, fn_output) {
+    # open tree
+    tree <- ape::read.tree(fn_tree)
+    tips <- tree$tip.label
+
+    # open alignment
+    seq <- Biostrings::readBStringSet(fn_fasta)
+
+    # subset the alignment based on tips
+    seq_subset <- seq[names(seq) %in% tips]
+
+    # save the new alignment
+    Biostrings::writeXStringSet(seq_subset, filepath=fn_output)
 }
 
 # function: calculate sCF and gCF

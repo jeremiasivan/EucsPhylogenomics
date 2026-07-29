@@ -1,0 +1,3 @@
+[submodule "TaxonomicConsistencyTest"]
+	path = TaxonomicConsistencyTest
+	url = https://github.com/jeremiasivan/TaxonomicConsistencyTest
