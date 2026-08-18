@@ -153,6 +153,7 @@ sapply(c(outdir_final_seq50, outdir_final_col50, outdir_final_trimlabel, outdir_
 fn_captus_summary <- file.path(currentdir, "captus_summary.tsv")
 fn_concatenated <- file.path(outdir_final_treeshrink, "concatenated.out")
 fn_partition <- file.path(outdir_final_treeshrink, "partitions.nex")
+fn_partition_model <- file.path(outdir_final_treeshrink, "partitions_with_models.nex")
 fn_concatenated_filtered <- file.path(outdir_final_treeshrink, "concatenated.fna")
 
 # extract list of locus
@@ -223,10 +224,38 @@ f_amas_dna(input_regex=file.path(outdir_locus_alignment, "*.fna"),
            fn_output_part=fn_partition,
            exe_amas=params$exe_amas)
 f_unknown2gap(fn_concatenated, fn_concatenated_filtered)
+
+# extract best models
+df_partition <- f_extract_best_models(outdir_final_genetrees, fn_partition)
+if (any(is.na(df_partition$model))) {
+    log4r::error(fn_logger, "One or more loci have no matched model. Exited.")
+    knitr::knit_exit()
+}
+
+# write the partitions and models
+con <- file(fn_partition_model, "w")
+writeLines("#nexus", con)
+writeLines("begin sets;", con)
+
+# add charset lines
+for (i in 1:nrow(df_partition)) {
+  writeLines(sprintf("    charset %s = %s;", df_partition$gene[i], df_partition$coords[i]),
+             con=con)
+}
+
+# add models
+ls_partition <- sprintf("%s:%s", df_partition$model, df_partition$gene)
+ls_partition <- paste(ls_partition, collapse=", ")
+writeLines(sprintf("    charpartition mine = %s;", partition_str),
+           con=con)
+
+writeLines("end;", con)
+close(con)
 ```
 
 ```{r tree}
 # output files
+fn_veryfasttree <- file.path(outdir_final_treeshrink, "veryfasttree.treefile")
 fn_concat_tre <- file.path(outdir_final_treeshrink, "concat.treefile")
 fn_alltrees_tre <- file.path(outdir_final_treeshrink, "alltrees.tre")
 fn_astral_tre <- file.path(outdir_final_treeshrink, "concat_qcf.tre")
@@ -237,7 +266,7 @@ if (params$fn_species_tree!="" && file.exists(params$fn_species_tree)) {
     # refine the species tree using IQ-TREE2
     f_iqtree2_fixtop(fn_input=fn_concatenated_filtered,
                      fn_tree=params$fn_species_tree,
-                     fn_partition=fn_partition,
+                     fn_partition=fn_partition_model,
                      prefix=paste0(outdir_final_treeshrink, "/concat"),
                      thread=params$thread,
                      is_redo=params$redo,
@@ -248,9 +277,18 @@ if (params$fn_species_tree!="" && file.exists(params$fn_species_tree)) {
     if (!file.exists(fn_concat_tre) || params$redo) {
         # infer VeryFastTree tree
         f_veryfasttree(fn_fasta=fn_concatenated_filtered,
-                       fn_output=fn_concat_tre,
+                       fn_output=fn_veryfasttree,
                        thread=params$thread,
                        exe_veryfasttree=params$exe_veryfasttree)
+
+        # refine the species tree using IQ-TREE2
+        f_iqtree2(fn_input=fn_concatenated_filtered,
+                  fn_tree=fn_veryfasttree,
+                  fn_partition=fn_partition_model,
+                  prefix=paste0(outdir_final_treeshrink, "/concat"),
+                  thread=params$thread,
+                  is_redo=params$redo,
+                  exe_iqtree2=params$exe_iqtree)
     }
 }
 

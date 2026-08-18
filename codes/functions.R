@@ -159,6 +159,57 @@ f_amas_dna <- function(input_regex, fn_output_aln, fn_output_part, exe_amas) {
     system(cmd_amas)
 }
 
+# function: extract best models for each partition
+f_extract_best_models <- function(dir_iqtree, fn_partition) {
+    # open nexus file
+    ls_partition <- readLines(fn_partition)
+
+    # extract .iqtree files
+    ls_iqtree <- list.files(dir_iqtree, pattern = "\\.iqtree$", full.names=TRUE)
+
+    # extract best models for each partition
+    ls_model <- lapply(ls_iqtree, function(file) {
+        # open the .iqtree file
+        lines <- readLines(file, warn = FALSE)
+
+        # extract the best-fit model line
+        hit <- grep("Best-fit model according to BIC", lines, value=TRUE)
+        if (length(hit) == 0) {
+            return(NA)
+        }
+
+        # extract the best-hit model name
+        model <- str_trim(str_split(hit[1], ":")[[1]][2])
+        locus <- tools::file_path_sans_ext(basename(file))
+        data.frame(locus=locus, model=model)
+    })
+
+    # combine the results into a single data frame
+    df_model <- do.call(rbind, ls_model)
+
+    # extract the partition names from the nexus file
+    ls_charset <- grep("charset", ls_partition, value=TRUE, ignore.case=TRUE)
+    ls_charset <- lapply(ls_charset, function(line) {
+        locus <- str_match(line, "charset\\s+(\\S+)\\s*=")[,2]
+        coords <- str_match(line, "=\\s*(.+?);")[,2]
+        data.frame(locus=locus, coords=str_trim(coords))
+    })
+
+    # combine the results into a single data frame
+    df_charset <- do.call(rbind, ls_charset)
+
+    # update locus name
+    df_charset$locus <- sapply(df_charset$locus, function(x) {
+        ls_parts <- unlist(strsplit(x, split="_"))
+        ls_parts[length(ls_parts)]
+    })
+
+    # merge the two data.frames
+    df_merge <- merge(df_charset, df_model, by="locus", all.x=TRUE)
+
+    return(df_merge)
+}
+
 # function: convert "N" and "?" to gaps
 f_unknown2gap <- function(fn_fasta, fn_output) {
     # read the DNA alignment
