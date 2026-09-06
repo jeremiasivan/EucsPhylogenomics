@@ -72,7 +72,7 @@ f_remove_seq <- function(fn_fasta, fn_output, threshold) {
 
     # iterate over sequences
     pl <- c()
-    for (i in 1:length(seq)) {
+    for (i in seq_along(seq)) {
         seq_chr <- as.character(seq[i])
         
         # count the proportion of gaps
@@ -216,7 +216,7 @@ f_unknown2gap <- function(fn_fasta, fn_output) {
     seq <- Biostrings::readBStringSet(fn_fasta, format="fasta")
 
     # convert "N" to gaps
-    for (i in 1:length(seq)) {
+    for (i in seq_along(seq)) {
         seq[i] <- gsub("N", "-", seq[i])
         seq[i] <- gsub("\\?", "-", seq[i])
     }
@@ -404,23 +404,4 @@ f_whatshap <- function(fn_reference, fn_vcf_gz_filtered, fn_bam, fn_phased_vcf, 
 f_generate_haplotypes <- function(fn_reference, fn_phased_bcf, fn_hap1, fn_hap2, exe_bcftools) {
     system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 1", fn_phased_bcf, ">", fn_hap1))
     system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 2", fn_phased_bcf, ">", fn_hap2))
-}
-
-# extract the closest tips
-f_extract_closest_group <- function(dist_matrix, n_neighbour, df_eucs_metadata) {
-    # extract top hits and their taxonomic groups
-    top_hits <- data.table::data.table(tip=names(dist_matrix), dist=dist_matrix) %>% slice_min(dist, n=n_neighbour)
-    top_hits <- merge(top_hits, df_eucs_metadata, by.x="tip", by.y="file", all.x=T)
-
-    # get the majority grouping
-    major_genus <- top_hits %>% count(genus) %>% slice_max(n, n=1) %>% pull(genus)
-    major_subgenus <- top_hits %>% count(subgenus) %>% slice_max(n, n=1) %>% pull(subgenus)
-    major_section <- top_hits %>% count(section) %>% slice_max(n, n=1) %>% pull(section)
-
-    # extract the best hit
-    best_hit <- top_hits %>%
-        filter(genus==major_genus, subgenus==major_subgenus, section==major_section) %>%
-        slice_min(dist, n=1)
-
-    return(best_hit)
 }

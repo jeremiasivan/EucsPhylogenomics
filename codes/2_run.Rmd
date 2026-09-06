@@ -23,6 +23,9 @@ ls_group <- unique(df_captus_target_metadata$group)
 # run CAPTUS to clean raw reads
 f_run_captus_cleaning(params$exe_captus, params$dir_fastq, outdir_clean_reads, params$thread, params$redo) 
 
+# extract all cleaned FASTQ files
+all_fastq <- list.files(outdir_clean_reads, full.names=FALSE)
+
 # run CAPTUS assemble and extraction for each group
 for (group in ls_group) {
     # update group name
@@ -38,9 +41,14 @@ for (group in ls_group) {
     # move the CAPTUS output directories
     ls_group_sample <- df_captus_sample_metadata$sample[df_captus_sample_metadata$group==group]
     for (sample in ls_group_sample) {
-        system(paste("mv",
-                     paste0(outdir_clean_reads, "/", sample, "*"),
-                     paste0(outdir_clean_reads_group, "/")))
+        # extract file pattern
+        pattern <- str_c(str_escape(sample), "(?![A-Za-z0-9])")
+        ls_match <- all_fastq[str_starts(all_fastq, pattern)]
+
+        if (length(ls_match) > 0) {
+            file.rename(file.path(outdir_clean_reads, ls_match),
+                        file.path(outdir_clean_reads_group, ls_match))
+        }
     }
 
     # run CAPTUS assemble
@@ -163,7 +171,7 @@ if (dir.exists(params$dir_locus_alignment)) {
 } else {
     ls_locus <- list.files(file.path(outdir_alignments, "03_trimmed", "05_naive", "04_misc_DNA", "01_matches"), recursive=F, full.names=F)
 }   
-ls_locus <- gsub(".fna", "", ls_locus)
+ls_locus <- gsub("\\.fna", "", ls_locus)
 
 # create doSNOW clusters
 nwcl <- makeCluster(params$thread)
@@ -238,15 +246,15 @@ writeLines("#nexus", con)
 writeLines("begin sets;", con)
 
 # add charset lines
-for (i in 1:nrow(df_partition)) {
-  writeLines(sprintf("    charset %s = %s;", df_partition$gene[i], df_partition$coords[i]),
+for (i in seq_len(nrow(df_partition))) {
+  writeLines(sprintf("    charset %s = %s;", df_partition$locus[i], df_partition$coords[i]),
              con=con)
 }
 
 # add models
-ls_partition <- sprintf("%s:%s", df_partition$model, df_partition$gene)
+ls_partition <- sprintf("%s:%s", df_partition$model, df_partition$locus)
 ls_partition <- paste(ls_partition, collapse=", ")
-writeLines(sprintf("    charpartition mine = %s;", partition_str),
+writeLines(sprintf("    charpartition mine = %s;", ls_partition),
            con=con)
 
 writeLines("end;", con)

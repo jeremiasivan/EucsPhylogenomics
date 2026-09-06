@@ -118,7 +118,7 @@ stopCluster(nwcl)
 ```{r phasing-alignment-tree}
 # extract list of locus
 ls_locus <- list.files(outdir_final_trimlabel, recursive=F, full.names=F)
-ls_locus <- gsub(".fna", "", ls_locus)
+ls_locus <- gsub("\\.fna", "", ls_locus)
 
 # output files
 fn_concatenated_phased <- file.path(outdir_phasing_phylogeny, "concatenated.out")
