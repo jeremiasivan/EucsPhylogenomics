@@ -21,7 +21,7 @@ params:
   exe_amas: "AMAS.py"
   exe_captus: "captus"
   exe_mafft: "mafft"
-  exe_veryfasttree: "fasttree"
+  exe_veryfasttree: "VeryFastTree"
   exe_astral4: "astral4"
   exe_iqtree: "iqtree2"
   exe_treeshrink: "run_treeshrink.py"
@@ -44,7 +44,7 @@ params:
   exe_whatshap: "whatshap"
 
   # --- Summary Input Files -------------------------------------
-  fn_eucs_metadata: "/home/user/EucsPhylogenomics/files/eucs_metadata.xlsx"
+  fn_eucs_metadata: "/home/user/EucsPhylogenomics/files/eucs_metadata.tsv"
   run_constrained_tree: FALSE
 ---
 

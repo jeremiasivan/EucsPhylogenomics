@@ -13,10 +13,10 @@ if (!dir.exists(outdir_summary_tct)) {
 
 ```{r}
 # open metadata file
-df_metadata <- readxl::read_xlsx(params$fn_eucs_metadata)
+df_metadata <- data.table::fread(params$fn_eucs_metadata)
 
 # extract df_metadata
-df_metadata_tsv <- df_metadata %>% select(label, genus, subgenus, section)
+df_metadata_tsv <- df_metadata %>% select(label, subgenus, section)
 
 fn_metadata_tsv <- file.path(outdir_summary, paste0(tools::file_path_sans_ext(basename(params$fn_eucs_metadata)), ".tsv"))
 data.table::fwrite(df_metadata_tsv, file=fn_metadata_tsv, sep="\t", quote=F)
@@ -31,7 +31,7 @@ rmarkdown::render(file.path(params$codedir, "TaxonomicConsistencyTest", "codes",
                               dir_gene_tree     = outdir_locus_tree,
                               file_taxonomy_metadata    = fn_metadata_tsv,
                               file_list_tips    = "",
-                              n_neighbour       = 5,
-                              taxonomic_rank    = c("genus", "subgenus", "section")
+                              n_neighbour       = c(1,3,5,10),
+                              taxonomic_rank    = c("subgenus", "section")
                               ))
 ```

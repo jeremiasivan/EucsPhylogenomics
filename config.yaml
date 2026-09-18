@@ -18,7 +18,7 @@ exe_captus:       "captus"              # path to Captus executable
 exe_mafft:        "mafft"               # path to MAFFT executable
 exe_veryfasttree: "VeryFastTree"        # path to VeryFastTree executable
 exe_astral4:      "astral4"             # path to ASTRAL-IV executable
-exe_iqtree:       "iqtree3"             # path to IQ-TREE2 executable
+exe_iqtree:       "iqtree2"             # path to IQ-TREE2 executable
 exe_treeshrink:   "run_treeshrink.py"   # path to TreeShrink executable
 
 # --- Captus Input Files ---------------------------------------
@@ -39,5 +39,5 @@ exe_bcftools: "bcftools"   # path to bcftools executable (only if run_phasing==T
 exe_whatshap: "whatshap"   # path to WhatsHap executable (only if run_phasing==TRUE)
 
 # --- Summary Input Files -----------------------------------------
-fn_eucs_metadata: "/home/user/EucsPhylogenomics/files/eucs_metadata.xlsx"   # path to Eucalypts sample metadata used for summary figures/tables
+fn_eucs_metadata: "/home/user/EucsPhylogenomics/files/eucs_metadata.tsv"   # path to eucalypt sample metadata used for taxonomic consistency test
 run_constrained_tree: FALSE         # run constrained gene tree analysis (default: FALSE)

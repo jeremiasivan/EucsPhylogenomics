@@ -53,7 +53,7 @@ for (tips in ls_tips) {
 
     # index reference loci
     system(paste(params$exe_samtools, "faidx", fn_target_loci))
-    system(paste(params$exe_bwa, "faidx", fn_target_loci))
+    system(paste(params$exe_bwa, "index", fn_target_loci))
 
     # run BWA-MEM
     f_bwa_mem(fn_target_loci, fn_fastq_r1, fn_fastq_r2, fn_bam, params$thread, params$exe_bwa, params$exe_samtools)

@@ -93,7 +93,7 @@ render_params <- list(
   exe_mafft             = f_get_param(cfg$exe_mafft, "mafft"),
   exe_veryfasttree      = f_get_param(cfg$exe_veryfasttree, "VeryFastTree"),
   exe_astral4           = f_get_param(cfg$exe_astral4, "astral4"),
-  exe_iqtree            = f_get_param(cfg$exe_iqtree, "iqtree3"),
+  exe_iqtree            = f_get_param(cfg$exe_iqtree, "iqtree2"),
   exe_treeshrink        = f_get_param(cfg$exe_treeshrink, "run_treeshrink.py"),
 
   fn_captus_sample_metadata = cfg$fn_captus_sample_metadata,

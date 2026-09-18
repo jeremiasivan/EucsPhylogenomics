@@ -5,6 +5,7 @@
 ## Table of Content
 - <a href="#prereqs">Prerequisites</a>
 - <a href="#genpipe">General Pipeline</a>
+- <a href="#inout">Input and Output Files</a>
 - <a href="#refs">References</a>
 
 ## <a id="prereqs">Prerequisites</a>
@@ -82,6 +83,39 @@ EucsPhylogenomics requires a number of software and R packages to run. We recomm
 
     In UNIX-based operating systems (e.g., Linux and MacOS), it is advisable to use `nohup` or `tmux` to run the whole pipeline. For Windows, you can use `psmux`. 
 
+## <a id="inout">Input and Output Files</a>
+
+### Input Files
+To run EucsPhylogenomics, users are required to provide the following files:
+- `fn_captus_sample_metadata`: Captus sample metadata (sample name + group name)
+- `fn_captus_target_metadata`: Captus target metadata (group name + target loci)
+- `dir_fastq`: directory of raw FASTQ files
+- `fn_eucs_metadata`: eucalypt sample metadata used for taxonomic consistency test
+
+If you have your own dataset that you want to put onto existing tree, you are required to provide these additional files:
+- `fn_species_tree`: previously-published species tree
+- `dir_locus_alignment`: previously-published directory of locus alignments
+
+    > [!IMPORTANT] 
+    > 1. Please make sure that all tips on `fn_species_tree` are present on individual locus alignments in `dir_locus_alignment`.
+    > 2. Please make sure that the list of loci in `dir_locus_alignment` is identical to the ones provided in `fn_captus_target_metadata` as target loci.
+
+### Output Directories and Files
+- `01_clean_reads/`: individual set of cleaned reads
+- `02_assemblies/`: individual <i>de novo</i> assemblies
+- `03_extractions/`: extracted sequences of individual target loci
+- `04_alignments/`: individual locus alignments
+- `05_final/`: filtered locus alignments and trees
+- `06_phasing/`: output folder from phasing (only if `run_phasing==TRUE`)
+- `07_summary/`: output folder from taxonomic consistency test
+
+Additionally, EucsPhylogenomics will generate the following files in the base output folder:
+- `prefix.log`          : EucsPhylogenomics log file
+- `prefix_report.html`  : EucsPhylogenomics HTML report
+
+### Example
+Please see <a href="/files/">`files/`</a> for example input files for running EucsPhylogenomics pipeline.
+
 ---
 ## <a id="refs">References</a>
 1. Borowiec, M.L. (<a href="https://doi.org/10.7717/peerj.1660">2016</a>). **AMAS: A fast tool for alignment manipulation and computing of summary statistics**. *PeerJ*, *4*, e1660.
@@ -127,4 +161,4 @@ EucsPhylogenomics requires a number of software and R packages to run. We recomm
 21. Anthropic. (<a href="https://claude.ai/">2026</a>). Claude 4.6 Sonnet was used to generate `config.yaml` and `run_pipeline.R`. 
 
 ---
-*Last update: 29 June 2026 by Jeremias Ivan*
+*Last update: 18 September 2026 by Jeremias Ivan*

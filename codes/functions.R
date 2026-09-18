@@ -231,15 +231,30 @@ f_veryfasttree <- function(fn_fasta, fn_output, thread, exe_veryfasttree) {
     system(cmd_veryfasttree)
 }
 
-# function: run IQ-Tree 2
+# function: run IQ-TREE2
 f_iqtree2 <- function(fn_input, fn_tree, fn_partition, prefix, thread, is_redo, exe_iqtree2) {
     cmd_iqtree2 <- paste(exe_iqtree2,
                          "-s", fn_input,
                          "-t", fn_tree,
                          "-p", fn_partition,
                          "--prefix", prefix,
-                         "-T", thread, "--quiet")
+                         "-B 1000 -T", thread, "--quiet")
                          
+    if (is_redo) {
+        cmd_iqtree2 <- paste(cmd_iqtree2, "-redo")
+    }
+
+    system(cmd_iqtree2)
+}
+
+# function: run ModelFinder only
+f_iqtree2_modelfinder <- function(fn_input, prefix, is_redo, exe_iqtree2) {
+    cmd_iqtree2 <- paste(exe_iqtree2,
+                         "-s", fn_input,
+                         "-m MF",
+                         "--prefix", prefix,
+                         "-T 1 --quiet")
+
     if (is_redo) {
         cmd_iqtree2 <- paste(cmd_iqtree2, "-redo")
     }

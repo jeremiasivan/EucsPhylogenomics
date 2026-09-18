@@ -181,6 +181,7 @@ registerDoSNOW(nwcl)
 if (!file.exists(fn_captus_summary) || params$redo) {
     df_captus_label <- foreach (locus=ls_locus, .combine='rbind') %dopar% {
         require(data.table)
+        require(stringr)
 
         # input files
         fn_input <- file.path(outdir_alignments, "03_trimmed", "05_naive", "04_misc_DNA", "01_matches", paste0(locus, ".fna"))
@@ -222,6 +223,9 @@ foreach (locus = ls_locus) %dopar% {
 
     # subset alignments
     f_subset_alignment(fn_treeshrink_tre, fn_input, fn_treeshrink_aln)
+
+    # rerun ModelFinder
+    f_iqtree2_modelfinder(fn_treeshrink_aln, file.path(outdir_locus_tree, locus), params$redo, params$exe_iqtree)
 }
 
 stopCluster(nwcl)
@@ -234,7 +238,7 @@ f_amas_dna(input_regex=file.path(outdir_locus_alignment, "*.fna"),
 f_unknown2gap(fn_concatenated, fn_concatenated_filtered)
 
 # extract best models
-df_partition <- f_extract_best_models(outdir_final_genetrees, fn_partition)
+df_partition <- f_extract_best_models(outdir_locus_tree, fn_partition)
 if (any(is.na(df_partition$model))) {
     log4r::error(fn_logger, "One or more loci have no matched model. Exited.")
     knitr::knit_exit()
