@@ -1,6 +1,6 @@
 # EucsPhylogenomics
 
-**EucsPhylogenomics (Eucalypts Phylogenomics)** is an R pipeline to extract BUSCO loci from short-read data of Eucalypt samples. It comprises of two main steps: BUSCO extraction using CAPTUS and taxonomic consistency test across inferred gene trees. This pipeline is mainly developed and tested using MacOS and Linux, so there might be incompatibilities using Windows.
+**EucsPhylogenomics (Eucalypts Phylogenomics)** is an R pipeline to extract BUSCO loci from short-read data of eucalypt samples. It comprises of three main steps: BUSCO extraction using Captus, calculation of concordance factors using IQ-TREE2 and ASTRAL-IV, and taxonomic consistency test across inferred gene trees. This pipeline is mainly developed and tested using MacOS and Linux, so there might be incompatibilities using Windows.
 
 ## Table of Content
 - <a href="#prereqs">Prerequisites</a>
@@ -96,11 +96,11 @@ If you have your own dataset that you want to put onto existing tree, you are re
 - `fn_species_tree`: previously-published species tree
 - `dir_locus_alignment`: previously-published directory of locus alignments
 
-    > [!IMPORTANT] 
-    > 1. Please make sure that all tips on `fn_species_tree` are present on individual locus alignments in `dir_locus_alignment`.
-    > 2. Please make sure that the list of loci in `dir_locus_alignment` is identical to the ones provided in `fn_captus_target_metadata` as target loci.
+> [!IMPORTANT]
+> - Please make sure that all tips on `fn_species_tree` are present on individual locus alignments in `dir_locus_alignment`.
+> - Please make sure that the list of loci in `dir_locus_alignment` is identical to the ones provided in `fn_captus_target_metadata` as target loci.
 
-### Output Directories and Files
+### Output Directories
 - `01_clean_reads/`: individual set of cleaned reads
 - `02_assemblies/`: individual <i>de novo</i> assemblies
 - `03_extractions/`: extracted sequences of individual target loci
