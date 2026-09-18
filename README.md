@@ -97,10 +97,10 @@ If you have your own dataset that you want to put onto existing tree, you are re
 - `dir_locus_alignment`: previously-published directory of locus alignments
 
 > [!IMPORTANT]
-> - Please make sure that all tips on `fn_species_tree` are present on individual locus alignments in `dir_locus_alignment`.
-> - Please make sure that the list of loci in `dir_locus_alignment` is identical to the ones provided in `fn_captus_target_metadata` as target loci.
+> - All tips on `fn_species_tree` must present on individual locus alignments in `dir_locus_alignment`
+> - Set of loci in `dir_locus_alignment` must include the ones provided in `fn_captus_target_metadata` as target loci
 
-### Output Directories
+### Output Directories and Files
 - `01_clean_reads/`: individual set of cleaned reads
 - `02_assemblies/`: individual <i>de novo</i> assemblies
 - `03_extractions/`: extracted sequences of individual target loci
