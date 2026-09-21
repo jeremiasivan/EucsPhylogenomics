@@ -1,6 +1,6 @@
 # EucsPhylogenomics
 
-**EucsPhylogenomics (Eucalypts Phylogenomics)** is an R pipeline to extract BUSCO loci from short-read data of eucalypt samples. It comprises of three main steps: BUSCO extraction using Captus, calculation of concordance factors using IQ-TREE2 and ASTRAL-IV, and taxonomic consistency test across inferred gene trees. This pipeline is mainly developed and tested using MacOS and Linux, so there might be incompatibilities using Windows.
+**EucsPhylogenomics (Eucalypts Phylogenomics)** is an R pipeline to extract target loci from short-read data of eucalypt samples. It comprises of three main steps: target locus extraction using Captus, calculation of concordance factors using IQ-TREE2 and ASTRAL-IV, and taxonomic consistency test across inferred gene trees. This pipeline is mainly developed and tested using MacOS and Linux, so there might be incompatibilities using Windows.
 
 ## Table of Content
 - <a href="#prereqs">Prerequisites</a>
@@ -97,7 +97,7 @@ If you have your own dataset that you want to put onto existing tree, you are re
 - `dir_locus_alignment`: previously-published directory of locus alignments
 
 > [!IMPORTANT]
-> - All tips on `fn_species_tree` must present on individual locus alignments in `dir_locus_alignment`
+> - All samples on `fn_species_tree` must also be found on individual locus alignments in `dir_locus_alignment`
 > - Set of loci in `dir_locus_alignment` must include the ones provided in `fn_captus_target_metadata` as target loci
 
 ### Output Directories and Files
@@ -106,6 +106,11 @@ If you have your own dataset that you want to put onto existing tree, you are re
 - `03_extractions/`: extracted sequences of individual target loci
 - `04_alignments/`: individual locus alignments
 - `05_final/`: filtered locus alignments and trees
+    - `01_seq50/`: locus alignments filtered by sequence gap threshold
+    - `02_col50/`: locus alignments filtered by column gap threshold
+    - `03_trimlabel/`: locus alignments with trimmed Captus headers
+    - `04_genetrees/`: locus trees inferred using IQ-TREE
+    - `05_treeshrink/`: locus alignments and trees filtered using TreeShrink
 - `06_phasing/`: output folder from phasing (only if `run_phasing==TRUE`)
 - `07_summary/`: output folder from taxonomic consistency test
 
@@ -122,19 +127,19 @@ Please see <a href="/files/">`files/`</a> for example input files for running Eu
 
 2. Zhang, C., et al. (<a href="https://doi.org/10.1093/molbev/msaf172">2025</a>). **ASTER: A package for large-scale phylogenomic reconstructions**. *Molecular Biology and Evolution*, *42*(8), msaf172.
 
-3. Danecek, P., et al. (<a href="https://doi.org/10.1093/gigascience/giab008">2021</a>). **Twelve years of SAMtools and BCFtools**. *GigaScience*, *10*(2), giab008.
+3. Ortiz, E.M., et al. (<a href="https://doi.org/10.1101/2023.10.27.564367">2023</a>). **A Novel Phylogenomics Pipeline Reveals Extensive Topological Conflict in the Evolution of the Angiosperm Order Cucurbitale**. *Systematic Biology*, syag046.
 
-4. Li, H. & Durbin, R. (<a href="https://doi.org/10.1093/bioinformatics/btp324">2009</a>). **Fast and accurate short read alignment with Burrows–Wheeler transform**. *Bioinformatics*, *25*(14), 1754–1760.
+4. Minh, B.Q., et al. (<a href="https://doi.org/10.1093/molbev/msaa015">2020</a>). **IQ-TREE 2: New models and efficient methods for phylogenetic inference in the genomic era**. *Molecular Biology and Evolution*, *37*(5), 1530–1534.
 
-5. Ortiz, E.M., et al. (<a href="https://doi.org/10.1101/2023.10.27.564367">2023</a>). **A novel phylogenomics pipeline reveals complex pattern of reticulate evolution in Cucurbitales**. *bioRxiv*.
+5. Katoh, K. & Standley, D.M. (<a href="https://doi.org/10.1093/molbev/mst010">2013</a>). **MAFFT multiple sequence alignment software version 7: Improvements in performance and usability**. *Molecular Biology and Evolution*, *30*(4), 772–780.
 
-6. Minh, B.Q., et al. (<a href="https://doi.org/10.1093/molbev/msaa015">2020</a>). **IQ-TREE 2: New models and efficient methods for phylogenetic inference in the genomic era**. *Molecular Biology and Evolution*, *37*(5), 1530–1534.
+6. Mai, U. & Mirarab, S. (<a href="https://doi.org/10.1186/s12864-018-4620-2">2018</a>). **TreeShrink: fast and accurate detection of outlier long branches in collections of phylogenetic trees**. *BMC Genomics*, *19*(272).
 
-7. Katoh, K. & Standley, D.M. (<a href="https://doi.org/10.1093/molbev/mst010">2013</a>). **MAFFT multiple sequence alignment software version 7: Improvements in performance and usability**. *Molecular Biology and Evolution*, *30*(4), 772–780.
+7. Piñeiro, C., et al. (<a href="https://doi.org/10.1093/bioinformatics/btaa582">2020</a>). **Very Fast Tree: speeding up the estimation of phylogenies for large alignments through parallelization and vectorization strategies**. *Bioinformatics*, *36*(17), 4658-4659.
 
-8. Mai, U. & Mirarab, S. (<a href="https://doi.org/10.1186/s12864-018-4620-2">2018</a>). **TreeShrink: fast and accurate detection of outlier long branches in collections of phylogenetic trees**. *BMC Genomics*, *19*(272).
+8. Danecek, P., et al. (<a href="https://doi.org/10.1093/gigascience/giab008">2021</a>). **Twelve years of SAMtools and BCFtools**. *GigaScience*, *10*(2), giab008.
 
-9. Piñeiro, C., et al. (<a href="https://doi.org/10.1093/bioinformatics/btaa582">2020</a>). **Very Fast Tree: speeding up the estimation of phylogenies for large alignments through parallelization and vectorization strategies**. *Bioinformatics*, *36*(17), 4658-4659.
+9. Li, H. & Durbin, R. (<a href="https://doi.org/10.1093/bioinformatics/btp324">2009</a>). **Fast and accurate short read alignment with Burrows–Wheeler transform**. *Bioinformatics*, *25*(14), 1754–1760.
 
 10. Martin, M., et al. (<a href="https://doi.org/10.1101/085050">2016</a>). **WhatsHap: Fast and accurate read-based phasing**. *bioRxiv*.
 
@@ -161,4 +166,4 @@ Please see <a href="/files/">`files/`</a> for example input files for running Eu
 21. Anthropic. (<a href="https://claude.ai/">2026</a>). Claude 4.6 Sonnet was used to generate `config.yaml` and `run_pipeline.R`. 
 
 ---
-*Last update: 18 September 2026 by Jeremias Ivan*
+*Last update: 21 September 2026 by Jeremias Ivan*
