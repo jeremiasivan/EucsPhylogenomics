@@ -372,7 +372,7 @@ f_extract_captus_hits <- function(fn_captus_matches, fn_out) {
 f_bwa_mem <-  function(fn_reference, fn_fastq_r1, fn_fastq_r2, fn_bam, thread, exe_bwa, exe_samtools) {
     cmd_bwa <- paste(exe_bwa, "mem",
                      "-t", thread,
-                     "-R '@RG\tID:sample1\tSM:sample1'",
+                     "-R '@RG\\tID:sample1\\tSM:sample1'",
                      fn_reference,
                      fn_fastq_r1, fn_fastq_r2,
                      "|",
@@ -417,6 +417,6 @@ f_whatshap <- function(fn_reference, fn_vcf_gz_filtered, fn_bam, fn_phased_vcf, 
 
 # function: generate haplotypes
 f_generate_haplotypes <- function(fn_reference, fn_phased_bcf, fn_hap1, fn_hap2, exe_bcftools) {
-    system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 1", fn_phased_bcf, ">", fn_hap1))
-    system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 2", fn_phased_bcf, ">", fn_hap2))
+    system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 1pIu", fn_phased_bcf, ">", fn_hap1))
+    system(paste(exe_bcftools, "consensus -f", fn_reference, "-s sample1 -H 2pIu", fn_phased_bcf, ">", fn_hap2))
 }
